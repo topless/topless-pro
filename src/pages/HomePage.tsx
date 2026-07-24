@@ -18,9 +18,26 @@ export function HomePage() {
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState<DressCode | 'all'>('all');
   const [error, setError] = useState('');
+  const [directoryStatus, setDirectoryStatus] = useState<'loading' | 'ready' | 'error'>('loading');
 
   useEffect(() => {
-    getBeaches().then(setBeaches).catch(() => setError('We could not load the directory. Please try again.'));
+    let active = true;
+
+    getBeaches()
+      .then((result) => {
+        if (!active) return;
+        setBeaches(result);
+        setDirectoryStatus('ready');
+      })
+      .catch(() => {
+        if (!active) return;
+        setError('We could not load the directory. Please try again.');
+        setDirectoryStatus('error');
+      });
+
+    return () => {
+      active = false;
+    };
   }, []);
 
   const visibleBeaches = useMemo(() => {
@@ -50,7 +67,13 @@ export function HomePage() {
             <p className="eyebrow">Directory</p>
             <h2 id="directory-title">Explore beaches</h2>
           </div>
-          <span>{visibleBeaches.length} result{visibleBeaches.length === 1 ? '' : 's'}</span>
+          <span aria-live="polite">
+            {directoryStatus === 'loading'
+              ? 'Loading directory'
+              : directoryStatus === 'error'
+                ? 'Directory unavailable'
+                : `${visibleBeaches.length} result${visibleBeaches.length === 1 ? '' : 's'}`}
+          </span>
         </div>
 
         <div className="filter-row" aria-label="Filter by clothing guidance">
@@ -67,10 +90,32 @@ export function HomePage() {
         </div>
 
         {error && <p className="error">{error}</p>}
+        {directoryStatus === 'loading' && <p className="directory-status" role="status">Checking the latest directory…</p>}
         <div className="beach-grid">
           {visibleBeaches.map((beach) => <BeachCard beach={beach} key={beach.id} />)}
         </div>
-        {!error && beaches.length > 0 && visibleBeaches.length === 0 && <p className="empty-state">No beaches match those filters yet.</p>}
+        {directoryStatus === 'ready' && beaches.length === 0 && (
+          <section className="launch-state" aria-labelledby="launch-state-title">
+            <div className="launch-state-copy">
+              <p className="eyebrow">Directory in verification</p>
+              <h3 id="launch-state-title">The first beach guides are being checked.</h3>
+              <p>We’re confirming current rules, local practice and reliable sources before publishing each listing.</p>
+              <p className="launch-status"><span aria-hidden="true" />No beaches are published yet</p>
+            </div>
+            <div className="guidance-key">
+              <p className="guidance-key-title">Every listing will give one clear answer</p>
+              <ul>
+                <li><span className="guidance-marker badge-swimwear-required" aria-hidden="true" />Swimwear required</li>
+                <li><span className="guidance-marker badge-topless-permitted" aria-hidden="true" />Topless permitted</li>
+                <li><span className="guidance-marker badge-clothing-optional" aria-hidden="true" />Clothing optional</li>
+                <li><span className="guidance-marker badge-nudity-permitted" aria-hidden="true" />Nudity permitted</li>
+                <li><span className="guidance-marker badge-unknown" aria-hidden="true" />Unknown or disputed</li>
+              </ul>
+              <p className="guidance-note">Official rules stay separate from tolerated custom, and conflicting reports are marked as disputed.</p>
+            </div>
+          </section>
+        )}
+        {directoryStatus === 'ready' && beaches.length > 0 && visibleBeaches.length === 0 && <p className="empty-state">No beaches match those filters yet.</p>}
       </section>
     </>
   );
