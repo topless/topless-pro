@@ -7,6 +7,19 @@ const jsonHeaders = {
 };
 
 describe('topless.pro Worker', () => {
+  it('redirects www requests to the apex while preserving the path and query', async () => {
+    const response = await exports.default.fetch(
+      new Request('https://www.topless.pro/beaches/example?ref=www', {
+        redirect: 'manual',
+      }),
+    );
+
+    expect(response.status).toBe(308);
+    expect(response.headers.get('Location')).toBe(
+      'https://topless.pro/beaches/example?ref=www',
+    );
+  });
+
   it('serves the health check, directory, and one beach', async () => {
     const health = await exports.default.fetch('https://example.com/api/health');
     expect(health.status).toBe(200);
