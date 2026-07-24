@@ -8,12 +8,16 @@
     {
       "pattern": "topless.pro",
       "custom_domain": true
+    },
+    {
+      "pattern": "www.topless.pro",
+      "custom_domain": true
     }
   ],
   "assets": {
     "binding": "ASSETS",
     "not_found_handling": "single-page-application",
-    "run_worker_first": ["/api/*"]
+    "run_worker_first": true
   },
   "d1_databases": [
     {

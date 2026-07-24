@@ -12,6 +12,8 @@ const BEACH_COLUMNS = `
 const MAX_CORRECTION_BODY_BYTES = 8_192;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const CANONICAL_HOST = 'topless.pro';
+const WWW_HOST = `www.${CANONICAL_HOST}`;
 
 interface BeachRow {
   id: string;
@@ -181,6 +183,16 @@ async function readBoundedJson(request: Request): Promise<unknown> {
 function requestPath(request: Request): string {
   return new URL(request.url).pathname;
 }
+
+app.use('*', async (c, next) => {
+  const url = new URL(c.req.url);
+  if (url.hostname === WWW_HOST) {
+    url.hostname = CANONICAL_HOST;
+    return Response.redirect(url.toString(), 308);
+  }
+
+  await next();
+});
 
 app.get('/api/health', (c) => c.json({ ok: true }));
 
