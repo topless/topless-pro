@@ -4,6 +4,12 @@
   "main": "worker/index.ts",
   "compatibility_date": "2026-07-24",
   "compatibility_flags": ["nodejs_compat"],
+  "routes": [
+    {
+      "pattern": "topless.pro",
+      "custom_domain": true
+    }
+  ],
   "assets": {
     "binding": "ASSETS",
     "not_found_handling": "single-page-application",
@@ -13,7 +19,7 @@
     {
       "binding": "DB",
       "database_name": "topless-pro-db",
-      "database_id": "REPLACE_WITH_D1_DATABASE_ID",
+      "database_id": "dcb94578-9182-45e6-b2fa-9d946614f149",
       "migrations_dir": "migrations"
     }
   ],
