@@ -8,6 +8,7 @@ export default defineConfig({
       miniflare: {
         bindings: {
           TEST_MIGRATIONS: await readD1Migrations('./migrations'),
+          TEST_FIXTURES: await readD1Migrations('./fixtures'),
         },
       },
     })),

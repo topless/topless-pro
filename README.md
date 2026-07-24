@@ -12,8 +12,6 @@ The directory uses five clothing classifications:
 
 Each record also carries a recognition level (`official`, `tolerated`, `community-reported`, or `disputed`) and a confidence level.
 
-> The seed records are demonstrations, not production-quality legal or travel guidance. Verify every classification with authoritative sources before launch.
-
 ## Architecture
 
 - React and TypeScript single-page application built with Vite
@@ -48,10 +46,27 @@ nvm use
 npm ci
 npm run typegen
 npm run db:migrate:local
+npm run db:seed:local
 npm run dev
 ```
 
-Local migrations and development use Wrangler's local Miniflare state. They do not modify a remote D1 database.
+`db:seed:local` is optional. It loads four clearly labelled demonstration records from
+`fixtures/0001_demo_beaches.sql` so the directory can be exercised before verified data is
+available.
+
+Local migrations, optional fixtures, and development use Wrangler's local Miniflare state.
+They do not modify a remote D1 database. Deployable migrations in `migrations/` contain schema
+only; local/test fixtures are deliberately kept outside that directory.
+
+If you ran the original demonstration migration before the fixtures were separated, its rows
+remain in that existing local state. Remove only those four exact demo records (and their local
+corrections) with:
+
+```bash
+npm run db:clear-demo:local
+```
+
+This cleanup command always targets local D1 state and is not a production migration.
 
 ## Validate
 
@@ -84,13 +99,15 @@ npm run db:migrate:remote
 npm run deploy
 ```
 
+The remote migration command applies schema only. There is intentionally no remote seed command.
+
 ## Connect topless.pro
 
 After the first approved Worker deployment, open the Cloudflare dashboard, select the `topless-pro` Worker, then add `topless.pro` and optionally `www.topless.pro` as custom domains.
 
 ## Suggested next steps
 
-1. Replace demonstration data with verified records and authoritative sources.
+1. Research and import verified records with authoritative sources.
 2. Add protected moderation endpoints and an editorial audit trail.
 3. Add Turnstile if the rate limiter and honeypot do not sufficiently control spam.
 4. Add map browsing once the directory has enough reliable entries.
