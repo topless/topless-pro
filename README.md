@@ -68,6 +68,28 @@ npm run db:clear-demo:local
 
 This cleanup command always targets local D1 state and is not a production migration.
 
+## Research beach candidates
+
+Editorial research is stored under `data/`, organized by country and locality. The first
+pilot is `data/gr/chalkidiki/sithonia/beaches.json`.
+
+The candidate format mirrors the existing D1 beach fields. Unknown required values stay
+`null`, unpublished candidates are never imported automatically, and the validator reports
+which values are still missing.
+
+See `data/README.md` for the format and run:
+
+```bash
+npm run data:validate
+```
+
+To validate, generate idempotent SQL, and import complete candidates into local
+D1 only:
+
+```bash
+npm run db:import:local
+```
+
 ## Validate
 
 ```bash

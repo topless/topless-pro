@@ -9,15 +9,19 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "check": "tsc -b && wrangler types worker-configuration.d.ts --include-runtime=false --check",
+    "check": "npm run data:validate && tsc -b && wrangler types worker-configuration.d.ts --include-runtime=false --check",
     "test": "npm run test:ui && npm run test:worker",
     "test:ui": "vitest run --config vitest.config.ts",
     "test:worker": "vitest run --config vitest.worker.config.ts",
+    "data:validate": "node scripts/validate-beach-data.mjs",
+    "data:sql": "npm run data:validate && node scripts/generate-beach-sql.mjs",
     "typegen": "wrangler types worker-configuration.d.ts --include-runtime=false",
     "deploy": "npm run build && wrangler deploy",
     "db:migrate:local": "wrangler d1 migrations apply DB --local",
     "db:seed:local": "wrangler d1 execute DB --local --file=fixtures/0001_demo_beaches.sql",
     "db:clear-demo:local": "wrangler d1 execute DB --local --file=fixtures/cleanup/clear-demo-beaches.sql",
+    "db:import:local": "npm run db:migrate:local && npm run data:sql && wrangler d1 execute DB --local --file=.wrangler/imports/beaches.sql",
+    "db:verify:local": "wrangler d1 execute DB --local --command=\"SELECT slug, name, dress_code, recognition, confidence, published FROM beaches ORDER BY name\"",
     "db:migrate:remote": "wrangler d1 migrations apply DB --remote"
   },
   "dependencies": {
