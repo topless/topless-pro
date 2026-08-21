@@ -14,6 +14,23 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const CANONICAL_HOST = 'topless.pro';
 const WWW_HOST = `www.${CANONICAL_HOST}`;
+const API_CACHE_CONTROL = 'public, max-age=300, stale-while-revalidate=3600';
+const CONTENT_SECURITY_POLICY = [
+  "default-src 'self'",
+  "script-src 'self'",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data:",
+  "connect-src 'self'",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'none'",
+  'upgrade-insecure-requests',
+].join('; ');
+
+function isLocalHostname(hostname: string): boolean {
+  return hostname === 'localhost' || hostname === '127.0.0.1' || hostname.endsWith('.localhost');
+}
 
 interface BeachRow {
   id: string;
@@ -185,6 +202,31 @@ function requestPath(request: Request): string {
 }
 
 app.use('*', async (c, next) => {
+  await next();
+
+  // 101 responses carry a live WebSocket (Vite HMR in dev); reconstructing
+  // them would break the upgrade, and headers are irrelevant there anyway.
+  if (c.res.status === 101) return;
+
+  // Redirect and asset responses can carry immutable headers, so rebuild.
+  const res = new Response(c.res.body, c.res);
+  res.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  res.headers.set('X-Content-Type-Options', 'nosniff');
+  res.headers.set('X-Frame-Options', 'DENY');
+  res.headers.set('Referrer-Policy', 'no-referrer');
+  res.headers.set('Permissions-Policy', 'camera=(), geolocation=(), microphone=()');
+  res.headers.set('Cross-Origin-Opener-Policy', 'same-origin');
+
+  // Vite dev mode injects an inline bootstrap script that a strict CSP
+  // would block, so the policy applies everywhere except local hosts.
+  if (!isLocalHostname(new URL(c.req.url).hostname)) {
+    res.headers.set('Content-Security-Policy', CONTENT_SECURITY_POLICY);
+  }
+
+  c.res = res;
+});
+
+app.use('*', async (c, next) => {
   const url = new URL(c.req.url);
   if (url.hostname === WWW_HOST) {
     url.hostname = CANONICAL_HOST;
@@ -204,6 +246,7 @@ app.get('/api/beaches', async (c) => {
     ORDER BY country_name, name`,
   ).all<BeachRow>();
 
+  c.header('Cache-Control', API_CACHE_CONTROL);
   return c.json(result.results.map(mapBeach));
 });
 
@@ -219,9 +262,12 @@ app.get('/api/beaches/:slug', async (c) => {
     WHERE published = 1 AND slug = ?`,
   ).bind(slug).first<BeachRow>();
 
-  return row === null
-    ? c.json({ error: 'Beach not found' }, 404)
-    : c.json(mapBeach(row));
+  if (row === null) {
+    return c.json({ error: 'Beach not found' }, 404);
+  }
+
+  c.header('Cache-Control', API_CACHE_CONTROL);
+  return c.json(mapBeach(row));
 });
 
 app.post('/api/corrections', async (c) => {

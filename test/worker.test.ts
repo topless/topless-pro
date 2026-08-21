@@ -7,6 +7,35 @@ const jsonHeaders = {
 };
 
 describe('topless.pro Worker', () => {
+  it('applies security and cache headers to API responses', async () => {
+    const health = await exports.default.fetch('https://topless.pro/api/health');
+    expect(health.headers.get('X-Content-Type-Options')).toBe('nosniff');
+    expect(health.headers.get('Referrer-Policy')).toBe('no-referrer');
+    expect(health.headers.get('X-Frame-Options')).toBe('DENY');
+    expect(health.headers.get('Strict-Transport-Security')).toContain('max-age=31536000');
+    expect(health.headers.get('Content-Security-Policy')).toContain("default-src 'self'");
+
+    const directory = await exports.default.fetch('https://topless.pro/api/beaches');
+    expect(directory.headers.get('Cache-Control')).toContain('max-age=300');
+
+    const missing = await exports.default.fetch('https://topless.pro/api/beaches/not-a-real-beach');
+    expect(missing.headers.get('Cache-Control')).toBeNull();
+  });
+
+  it('omits the CSP on local development hosts so Vite dev tooling works', async () => {
+    const local = await exports.default.fetch('http://localhost/api/health');
+    expect(local.headers.get('Content-Security-Policy')).toBeNull();
+    expect(local.headers.get('X-Content-Type-Options')).toBe('nosniff');
+  });
+
+  it('keeps security headers on the www redirect', async () => {
+    const response = await exports.default.fetch(
+      new Request('https://www.topless.pro/', { redirect: 'manual' }),
+    );
+    expect(response.status).toBe(308);
+    expect(response.headers.get('X-Content-Type-Options')).toBe('nosniff');
+  });
+
   it('redirects www requests to the apex while preserving the path and query', async () => {
     const response = await exports.default.fetch(
       new Request('https://www.topless.pro/beaches/example?ref=www', {
