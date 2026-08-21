@@ -37,7 +37,16 @@ const CONTENT_SECURITY_POLICY = [
 ].join('; ');
 
 function isLocalHostname(hostname: string): boolean {
-  return hostname === 'localhost' || hostname === '127.0.0.1' || hostname.endsWith('.localhost');
+  return (
+    hostname === 'localhost'
+    || hostname.endsWith('.localhost')
+    || hostname === '[::1]'
+    || hostname === '0.0.0.0'
+    || /^127\./.test(hostname)
+    || /^10\./.test(hostname)
+    || /^192\.168\./.test(hostname)
+    || /^172\.(1[6-9]|2\d|3[01])\./.test(hostname)
+  );
 }
 
 interface BeachRow {
@@ -123,7 +132,9 @@ function validateCorrection(value: Record<string, unknown>): CorrectionValidatio
     return { ok: false, error: 'Invalid beach' };
   }
 
-  if (message.length < 10 || message.length > 4_000) {
+  // SQLite's length() counts code points, so the CHECK constraint does too.
+  const messageLength = [...message].length;
+  if (messageLength < 10 || messageLength > 4_000) {
     return { ok: false, error: 'Message must be between 10 and 4000 characters' };
   }
 
@@ -226,9 +237,10 @@ function describeBeach(beach: Beach): string {
   if (!beach.summary) return guidance;
 
   const combined = `${guidance} ${beach.summary}`;
-  return combined.length <= META_DESCRIPTION_LIMIT
+  const codePoints = [...combined];
+  return codePoints.length <= META_DESCRIPTION_LIMIT
     ? combined
-    : `${combined.slice(0, META_DESCRIPTION_LIMIT - 1).trimEnd()}…`;
+    : `${codePoints.slice(0, META_DESCRIPTION_LIMIT - 1).join('').trimEnd()}…`;
 }
 
 function beachJsonLd(beach: Beach): Record<string, unknown> {
@@ -302,7 +314,17 @@ async function renderShell(c: AppContext, meta: PageMeta, status = 200): Promise
     })
     .transform(shell);
 
-  return new Response(transformed.body, { status, headers: transformed.headers });
+  // Keep only the content type: the shell asset's caching metadata (ETag,
+  // Cache-Control, Last-Modified) describes the static file, not the
+  // transformed page, and a shared strong ETag across different pages and
+  // statuses corrupts revalidation.
+  const headers = new Headers({
+    'content-type': transformed.headers.get('content-type') ?? 'text/html; charset=utf-8',
+  });
+  if (status === 200) {
+    headers.set('Cache-Control', API_CACHE_CONTROL);
+  }
+  return new Response(transformed.body, { status, headers });
 }
 
 async function getPublishedBeach(db: D1Database, slug: string): Promise<Beach | null> {
@@ -346,6 +368,11 @@ app.use('*', async (c, next) => {
   const url = new URL(c.req.url);
   if (url.hostname === WWW_HOST) {
     url.hostname = CANONICAL_HOST;
+    return Response.redirect(url.toString(), 308);
+  }
+
+  if (url.pathname.length > 1 && url.pathname.endsWith('/')) {
+    url.pathname = url.pathname.replace(/\/+$/, '');
     return Response.redirect(url.toString(), 308);
   }
 

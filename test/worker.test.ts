@@ -113,6 +113,57 @@ describe('topless.pro Worker', () => {
     await expect(unknownBeach.text()).resolves.toContain('<meta name="robots" content="noindex">');
   });
 
+  it('redirects trailing-slash page URLs to their canonical form', async () => {
+    const response = await exports.default.fetch(
+      new Request('https://topless.pro/about/?ref=x', { redirect: 'manual' }),
+    );
+    expect(response.status).toBe(308);
+    expect(response.headers.get('Location')).toBe('https://topless.pro/about?ref=x');
+  });
+
+  it('does not inherit the shell asset caching metadata on rendered pages', async () => {
+    const page = await exports.default.fetch('https://topless.pro/beaches/paradise-beach-mykonos');
+    expect(page.headers.get('ETag')).toBeNull();
+    expect(page.headers.get('Cache-Control')).toContain('max-age=300');
+
+    const notFound = await exports.default.fetch('https://topless.pro/no-such-page');
+    expect(notFound.headers.get('ETag')).toBeNull();
+    expect(notFound.headers.get('Cache-Control')).toBeNull();
+  });
+
+  it('lets the assets binding reject non-GET methods on page paths', async () => {
+    const response = await exports.default.fetch(
+      new Request('https://topless.pro/some-page', { method: 'POST' }),
+    );
+    expect(response.status).toBe(405);
+  });
+
+  it('counts correction message length in code points like the D1 constraint', async () => {
+    const tooShort = await exports.default.fetch(
+      new Request('https://topless.pro/api/corrections', {
+        method: 'POST',
+        headers: { ...jsonHeaders, 'CF-Connecting-IP': '192.0.2.6' },
+        body: JSON.stringify({
+          beachSlug: 'plage-des-eaux-vives',
+          message: '😀😀😀😀😀', // 10 UTF-16 units but only 5 characters
+        }),
+      }),
+    );
+    expect(tooShort.status).toBe(400);
+
+    const longEnough = await exports.default.fetch(
+      new Request('https://topless.pro/api/corrections', {
+        method: 'POST',
+        headers: { ...jsonHeaders, 'CF-Connecting-IP': '192.0.2.6' },
+        body: JSON.stringify({
+          beachSlug: 'plage-des-eaux-vives',
+          message: '😀😀😀😀😀😀😀😀😀😀',
+        }),
+      }),
+    );
+    expect(longEnough.status).toBe(201);
+  });
+
   it('passes non-HTML assets through untouched', async () => {
     const asset = await exports.default.fetch('https://topless.pro/favicon.svg');
     expect(asset.status).toBe(200);
