@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { BeachCard } from '../components/BeachCard';
 import { getBeaches } from '../lib/api';
 import { dressCodeLabels } from '../lib/labels';
+import { foldSearchText } from '../lib/search';
 import type { Beach, DressCode } from '../types';
 
 const filters: Array<DressCode | 'all'> = [
@@ -41,10 +42,10 @@ export function HomePage() {
   }, []);
 
   const visibleBeaches = useMemo(() => {
-    const needle = query.trim().toLowerCase();
+    const needle = foldSearchText(query.trim());
     return beaches.filter((beach) => {
       const matchesFilter = filter === 'all' || beach.dressCode === filter;
-      const haystack = [beach.name, beach.municipality, beach.region, beach.countryName].filter(Boolean).join(' ').toLowerCase();
+      const haystack = foldSearchText([beach.name, beach.municipality, beach.region, beach.countryName].filter(Boolean).join(' '));
       return matchesFilter && (!needle || haystack.includes(needle));
     });
   }, [beaches, filter, query]);

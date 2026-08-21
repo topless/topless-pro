@@ -2,8 +2,10 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "topless-pro",
   "main": "worker/index.ts",
-  "compatibility_date": "2026-07-24",
-  "compatibility_flags": ["nodejs_compat"],
+  // Keep in step with the @cloudflare/* toolchain versions: workers-types
+  // describes the latest runtime, and a stale date here would let TypeScript
+  // accept APIs the deployed worker does not have.
+  "compatibility_date": "2026-08-14",
   "routes": [
     {
       "pattern": "topless.pro",
@@ -16,7 +18,9 @@
   ],
   "assets": {
     "binding": "ASSETS",
-    "not_found_handling": "single-page-application",
+    // The Worker owns the SPA fallback (renderShell serves the shell with an
+    // honest status); the binding must report misses as real 404s.
+    "not_found_handling": "none",
     "run_worker_first": true
   },
   "d1_databases": [

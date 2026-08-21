@@ -1,29 +1,32 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { getBeach, submitCorrection } from '../lib/api';
-import type { Beach } from '../types';
+import { ApiError, getBeach, submitCorrection } from '../lib/api';
+import { makeBeach } from '../test/factories';
 import { BeachPage } from './BeachPage';
 
-vi.mock('../lib/api', () => ({
+vi.mock('../lib/api', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('../lib/api')>()),
   getBeach: vi.fn(),
   submitCorrection: vi.fn(),
 }));
 
-const beach: Beach = {
-  id: 'beach',
-  slug: 'example-beach',
-  name: 'Example Beach',
-  countryCode: 'GR',
-  countryName: 'Greece',
-  region: 'Crete',
-  latitude: 35,
-  longitude: 25,
-  dressCode: 'topless-permitted',
-  recognition: 'tolerated',
-  confidence: 'medium',
-  facilities: ['Showers'],
-};
+const beach = makeBeach({ region: 'Crete', recognition: 'tolerated', facilities: ['Showers'] });
+
+async function renderAndSubmit(message = 'The posted guidance changed this week.') {
+  render(
+    <MemoryRouter initialEntries={['/beaches/example-beach']}>
+      <Routes>
+        <Route path="/beaches/:slug" element={<BeachPage />} />
+      </Routes>
+    </MemoryRouter>,
+  );
+  await screen.findByRole('heading', { name: 'Example Beach' });
+  fireEvent.change(screen.getByLabelText('What should we update?'), {
+    target: { value: message },
+  });
+  fireEvent.click(screen.getByRole('button', { name: 'Submit correction' }));
+}
 
 describe('BeachPage', () => {
   beforeEach(() => {
@@ -61,4 +64,23 @@ describe('BeachPage', () => {
     });
     expect(await screen.findByRole('status')).toHaveTextContent('ready for review');
   });
+
+  it('tells a rate-limited visitor to wait instead of retrying immediately', async () => {
+    vi.mocked(submitCorrection).mockRejectedValueOnce(
+      new ApiError(429, 'Too many corrections. Please try again later.'),
+    );
+
+    await renderAndSubmit();
+
+    expect(await screen.findByRole('status')).toHaveTextContent('wait a minute');
+  });
+
+  it('surfaces server validation messages on rejected corrections', async () => {
+    vi.mocked(submitCorrection).mockRejectedValueOnce(new ApiError(400, 'Invalid email'));
+
+    await renderAndSubmit();
+
+    expect(await screen.findByRole('status')).toHaveTextContent('Invalid email');
+  });
+
 });

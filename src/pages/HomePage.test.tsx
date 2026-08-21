@@ -2,40 +2,16 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { getBeaches } from '../lib/api';
-import type { Beach } from '../types';
+import { makeBeach } from '../test/factories';
 import { HomePage } from './HomePage';
 
 vi.mock('../lib/api', () => ({
   getBeaches: vi.fn(),
 }));
 
-const beaches: Beach[] = [
-  {
-    id: 'unknown',
-    slug: 'mystery-beach',
-    name: 'Mystery Beach',
-    countryCode: 'GR',
-    countryName: 'Greece',
-    latitude: 37,
-    longitude: 25,
-    dressCode: 'unknown',
-    recognition: 'disputed',
-    confidence: 'low',
-    facilities: [],
-  },
-  {
-    id: 'official',
-    slug: 'official-beach',
-    name: 'Official Beach',
-    countryCode: 'FR',
-    countryName: 'France',
-    latitude: 43,
-    longitude: 3,
-    dressCode: 'nudity-permitted',
-    recognition: 'official',
-    confidence: 'high',
-    facilities: ['Toilets'],
-  },
+const beaches = [
+  makeBeach({ id: 'unknown', slug: 'mystery-beach', name: 'Mystery Beach', dressCode: 'unknown', recognition: 'disputed', confidence: 'low' }),
+  makeBeach({ id: 'official', slug: 'official-beach', name: 'Official Beach', countryCode: 'FR', countryName: 'France', dressCode: 'nudity-permitted', recognition: 'official', confidence: 'high', facilities: ['Toilets'] }),
 ];
 
 describe('HomePage', () => {
@@ -59,6 +35,30 @@ describe('HomePage', () => {
     expect(unknownFilter).toHaveAttribute('aria-pressed', 'true');
     expect(screen.getByText('Mystery Beach')).toBeInTheDocument();
     expect(screen.queryByText('Official Beach')).not.toBeInTheDocument();
+  });
+
+  it('matches unaccented search queries against accented beach names', async () => {
+    vi.mocked(getBeaches).mockResolvedValueOnce([
+      makeBeach({ id: 'accented', slug: 'kallithea', name: 'Kallithéa' }),
+    ]);
+
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>,
+    );
+
+    expect(await screen.findByText('Kallithéa')).toBeInTheDocument();
+
+    fireEvent.change(screen.getByLabelText('Search beaches, cities or countries'), {
+      target: { value: 'kallithea' },
+    });
+    expect(screen.getByText('Kallithéa')).toBeInTheDocument();
+
+    fireEvent.change(screen.getByLabelText('Search beaches, cities or countries'), {
+      target: { value: 'somewhere-else' },
+    });
+    expect(screen.queryByText('Kallithéa')).not.toBeInTheDocument();
   });
 
   it('shows the verification launch state only after an empty directory loads', async () => {

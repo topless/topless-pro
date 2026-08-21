@@ -18,7 +18,7 @@ button, input, textarea { font: inherit; }
 .directory, .content-page { max-width: 1180px; margin: auto; padding: 5rem 5vw; }
 .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 1rem; }
 .section-heading h2 { margin: .3rem 0 0; font-size: clamp(2rem, 5vw, 3.4rem); letter-spacing: -.045em; }
-.filter-row { display: flex; gap: .65rem; overflow-x: auto; padding: 1.6rem 0 2.4rem; }
+.filter-row { display: flex; flex-wrap: wrap; gap: .65rem; padding: 1.6rem 0 2.4rem; }
 .filter-row button { white-space: nowrap; cursor: pointer; border: 1px solid #b9c3bf; background: transparent; padding: .72rem 1rem; border-radius: 999px; font-weight: 750; color: #17322f; }
 .filter-row button.active { background: #173f3a; color: white; border-color: #173f3a; }
 .beach-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
@@ -34,6 +34,10 @@ button, input, textarea { font: inherit; }
 .badge-clothing-optional { background: #e4dcf5; color: #4f3475; }
 .badge-nudity-permitted { background: #dcedd8; color: #265328; }
 .badge-unknown, .badge-neutral { background: #eceae3; color: #4e514c; }
+.badge-recognition-official { background: #173f3a; color: #f7f4ea; }
+.badge-recognition-tolerated { background: #d9e7e0; color: #1d4a44; }
+.badge-recognition-community-reported { background: #eceae3; color: #4e514c; }
+.badge-recognition-disputed { background: #fbe3dd; color: #8a2415; border: 1.5px solid #dd5947; }
 .content-page { min-height: 72vh; }
 .content-page h1 { max-width: 850px; font-size: clamp(2.6rem, 7vw, 5.4rem); line-height: .98; letter-spacing: -.06em; margin: .7rem 0 1.4rem; }
 .lead, .prose > p { max-width: 760px; font-size: 1.2rem; line-height: 1.65; color: #465a56; }

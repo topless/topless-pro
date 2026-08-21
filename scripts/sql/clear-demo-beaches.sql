@@ -1,4 +1,4 @@
--- Local cleanup for the exact demonstration records in ../0001_demo_beaches.sql.
+-- Local cleanup for the exact demonstration records in fixtures/0001_demo_beaches.sql.
 DELETE FROM corrections
 WHERE beach_slug IN (
   SELECT slug

@@ -15,9 +15,12 @@ jobs:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
         with:
-          node-version: 22
+          node-version-file: .nvmrc
           cache: npm
       - run: npm ci
+      # Gate only shipped dependencies; dev-toolchain advisories arrive via
+      # Dependabot instead of freezing unrelated PRs.
+      - run: npm audit --omit=dev --audit-level=high
       - run: npm run check
       - run: npm test
       - run: npm run build

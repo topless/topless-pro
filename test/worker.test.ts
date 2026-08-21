@@ -7,6 +7,35 @@ const jsonHeaders = {
 };
 
 describe('topless.pro Worker', () => {
+  it('applies security and cache headers to API responses', async () => {
+    const health = await exports.default.fetch('https://topless.pro/api/health');
+    expect(health.headers.get('X-Content-Type-Options')).toBe('nosniff');
+    expect(health.headers.get('Referrer-Policy')).toBe('no-referrer');
+    expect(health.headers.get('X-Frame-Options')).toBe('DENY');
+    expect(health.headers.get('Strict-Transport-Security')).toContain('max-age=31536000');
+    expect(health.headers.get('Content-Security-Policy')).toContain("default-src 'self'");
+
+    const directory = await exports.default.fetch('https://topless.pro/api/beaches');
+    expect(directory.headers.get('Cache-Control')).toContain('max-age=300');
+
+    const missing = await exports.default.fetch('https://topless.pro/api/beaches/not-a-real-beach');
+    expect(missing.headers.get('Cache-Control')).toBeNull();
+  });
+
+  it('omits the CSP on local development hosts so Vite dev tooling works', async () => {
+    const local = await exports.default.fetch('http://localhost/api/health');
+    expect(local.headers.get('Content-Security-Policy')).toBeNull();
+    expect(local.headers.get('X-Content-Type-Options')).toBe('nosniff');
+  });
+
+  it('keeps security headers on the www redirect', async () => {
+    const response = await exports.default.fetch(
+      new Request('https://www.topless.pro/', { redirect: 'manual' }),
+    );
+    expect(response.status).toBe(308);
+    expect(response.headers.get('X-Content-Type-Options')).toBe('nosniff');
+  });
+
   it('redirects www requests to the apex while preserving the path and query', async () => {
     const response = await exports.default.fetch(
       new Request('https://www.topless.pro/beaches/example?ref=www', {
@@ -40,6 +69,132 @@ describe('topless.pro Worker', () => {
       dressCode: 'topless-permitted',
       facilities: ['Sunbeds', 'Food', 'Toilets'],
     });
+  });
+
+  it('injects per-beach metadata and structured data into the HTML shell', async () => {
+    const response = await exports.default.fetch(
+      'https://topless.pro/beaches/paradise-beach-mykonos',
+    );
+    expect(response.status).toBe(200);
+    expect(response.headers.get('content-type')).toContain('text/html');
+
+    const html = await response.text();
+    expect(html).toContain('<title>Paradise Beach, Greece — topless.pro</title>');
+    expect(html).toContain('Topless permitted (community reported, low confidence)');
+    expect(html).toContain('<link rel="canonical" href="https://topless.pro/beaches/paradise-beach-mykonos">');
+    expect(html).toContain('"@type":"Beach"');
+    expect(html).toContain('<meta property="og:title"');
+    expect(html).not.toContain('noindex');
+  });
+
+  it('injects canonical metadata on the home and about pages', async () => {
+    const home = await exports.default.fetch('https://topless.pro/');
+    expect(home.status).toBe(200);
+    const homeHtml = await home.text();
+    expect(homeHtml).toContain('<link rel="canonical" href="https://topless.pro/">');
+    expect(homeHtml).toContain('<title>topless.pro — Know before you go</title>');
+
+    const about = await exports.default.fetch('https://topless.pro/about');
+    expect(about.status).toBe(200);
+    await expect(about.text()).resolves.toContain(
+      '<link rel="canonical" href="https://topless.pro/about">',
+    );
+  });
+
+  it('returns real 404s with noindex for unknown pages and beaches', async () => {
+    const junk = await exports.default.fetch('https://topless.pro/this-path-does-not-exist');
+    expect(junk.status).toBe(404);
+    const junkHtml = await junk.text();
+    expect(junkHtml).toContain('<meta name="robots" content="noindex">');
+    expect(junkHtml).toContain('<div id="root">');
+
+    const unknownBeach = await exports.default.fetch('https://topless.pro/beaches/not-a-real-beach');
+    expect(unknownBeach.status).toBe(404);
+    await expect(unknownBeach.text()).resolves.toContain('<meta name="robots" content="noindex">');
+  });
+
+  it('redirects trailing-slash page URLs to their canonical form', async () => {
+    const response = await exports.default.fetch(
+      new Request('https://topless.pro/about/?ref=x', { redirect: 'manual' }),
+    );
+    expect(response.status).toBe(308);
+    expect(response.headers.get('Location')).toBe('https://topless.pro/about?ref=x');
+  });
+
+  it('does not inherit the shell asset caching metadata on rendered pages', async () => {
+    const page = await exports.default.fetch('https://topless.pro/beaches/paradise-beach-mykonos');
+    expect(page.headers.get('ETag')).toBeNull();
+    expect(page.headers.get('Cache-Control')).toContain('max-age=300');
+
+    const notFound = await exports.default.fetch('https://topless.pro/no-such-page');
+    expect(notFound.headers.get('ETag')).toBeNull();
+    expect(notFound.headers.get('Cache-Control')).toBeNull();
+  });
+
+  it('mirrors asset method handling: 405 on real assets, 404 shell elsewhere', async () => {
+    const asset = await exports.default.fetch(
+      new Request('https://topless.pro/favicon.svg', { method: 'POST' }),
+    );
+    expect(asset.status).toBe(405);
+
+    const page = await exports.default.fetch(
+      new Request('https://topless.pro/some-page', { method: 'POST' }),
+    );
+    expect(page.status).toBe(404);
+    expect(page.headers.get('content-type')).toContain('text/html');
+  });
+
+  it('counts correction message length in code points like the D1 constraint', async () => {
+    const tooShort = await exports.default.fetch(
+      new Request('https://topless.pro/api/corrections', {
+        method: 'POST',
+        headers: { ...jsonHeaders, 'CF-Connecting-IP': '192.0.2.6' },
+        body: JSON.stringify({
+          beachSlug: 'plage-des-eaux-vives',
+          message: '😀😀😀😀😀', // 10 UTF-16 units but only 5 characters
+        }),
+      }),
+    );
+    expect(tooShort.status).toBe(400);
+
+    const longEnough = await exports.default.fetch(
+      new Request('https://topless.pro/api/corrections', {
+        method: 'POST',
+        headers: { ...jsonHeaders, 'CF-Connecting-IP': '192.0.2.6' },
+        body: JSON.stringify({
+          beachSlug: 'plage-des-eaux-vives',
+          message: '😀😀😀😀😀😀😀😀😀😀',
+        }),
+      }),
+    );
+    expect(longEnough.status).toBe(201);
+  });
+
+  it('passes non-HTML assets through untouched', async () => {
+    const asset = await exports.default.fetch('https://topless.pro/favicon.svg');
+    expect(asset.status).toBe(200);
+    expect(asset.headers.get('content-type')).toContain('image/svg+xml');
+  });
+
+  it('serves robots.txt pointing at the sitemap', async () => {
+    const robots = await exports.default.fetch('https://topless.pro/robots.txt');
+    expect(robots.status).toBe(200);
+    expect(robots.headers.get('content-type')).toContain('text/plain');
+    const body = await robots.text();
+    expect(body).toContain('User-agent: *');
+    expect(body).toContain('Sitemap: https://topless.pro/sitemap.xml');
+  });
+
+  it('serves a sitemap of the static pages and published beaches', async () => {
+    const sitemap = await exports.default.fetch('https://topless.pro/sitemap.xml');
+    expect(sitemap.status).toBe(200);
+    expect(sitemap.headers.get('content-type')).toContain('application/xml');
+
+    const body = await sitemap.text();
+    expect(body).toContain('<loc>https://topless.pro/</loc>');
+    expect(body).toContain('<loc>https://topless.pro/about</loc>');
+    expect(body).toContain('<loc>https://topless.pro/beaches/paradise-beach-mykonos</loc>');
+    expect(body).toContain('<loc>https://topless.pro/beaches/red-beach-matala</loc>');
   });
 
   it('returns JSON 404 responses for missing API resources', async () => {

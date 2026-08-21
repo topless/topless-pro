@@ -1,0 +1,16 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      # Grouped so compatibility_date in wrangler.jsonc can advance with them.
+      cloudflare:
+        patterns:
+          - "wrangler"
+          - "@cloudflare/*"
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly

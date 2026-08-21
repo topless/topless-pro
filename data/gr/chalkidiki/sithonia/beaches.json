@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Chalkidiki",
+    "municipality": "Sithonia"
+  },
+  "beaches": [
+    {
+      "slug": "paradeisos-neos-marmaras",
+      "name": "Paradeisos",
+      "latitude": 40.1035012,
+      "longitude": 23.7755545,
+      "dressCode": "topless-permitted",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": null,
+      "facilities": [],
+      "sourceUrl": null,
+      "lastVerifiedAt": null,
+      "published": false
+    },
+    {
+      "slug": "kavourotrypes",
+      "name": "Kavourotrypes",
+      "latitude": 40.1265909,
+      "longitude": 23.9693838,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": null,
+      "facilities": [],
+      "sourceUrl": null,
+      "lastVerifiedAt": null,
+      "published": false
+    },
+    {
+      "slug": "nikiti",
+      "name": "Nikiti",
+      "latitude": 40.2107693,
+      "longitude": 23.6731341,
+      "dressCode": "swimwear-required",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": null,
+      "facilities": [],
+      "sourceUrl": null,
+      "lastVerifiedAt": null,
+      "published": false
+    },
+    {
+      "slug": "lagomandra",
+      "name": "Lagomandra",
+      "latitude": 40.1356687,
+      "longitude": 23.7469179,
+      "dressCode": "topless-permitted",
+      "recognition": "community-reported",
+      "confidence": "medium",
+      "summary": null,
+      "facilities": [],
+      "sourceUrl": null,
+      "lastVerifiedAt": null,
+      "published": false
+    },
+    {
+      "slug": "marmaras",
+      "name": "Marmaras",
+      "latitude": 40.0878594,
+      "longitude": 23.7921952,
+      "dressCode": "topless-permitted",
+      "recognition": "community-reported",
+      "confidence": "medium",
+      "summary": null,
+      "facilities": [],
+      "sourceUrl": null,
+      "lastVerifiedAt": null,
+      "published": false
+    },
+    {
+      "slug": "sarti",
+      "name": "Sarti",
+      "latitude": 40.0894624,
+      "longitude": 23.9791046,
+      "dressCode": "topless-permitted",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": null,
+      "facilities": [],
+      "sourceUrl": null,
+      "lastVerifiedAt": null,
+      "published": false
+    },
+    {
+      "slug": "toroni",
+      "name": "Toroni",
+      "latitude": 39.9831091,
+      "longitude": 23.9038206,
+      "dressCode": "clothing-optional",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": null,
+      "facilities": [],
+      "sourceUrl": null,
+      "lastVerifiedAt": null,
+      "published": false
+    }
+  ]
+}

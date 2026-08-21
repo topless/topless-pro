@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { getBeach, submitCorrection } from '../lib/api';
-import { confidenceLabels, dressCodeLabels, recognitionLabels } from '../lib/labels';
+import { ApiError, getBeach, submitCorrection } from '../lib/api';
+import { confidenceLabels, dressCodeLabels, formatBeachLocation, recognitionLabels } from '../lib/labels';
 import type { Beach } from '../types';
 
 export function BeachPage() {
@@ -43,8 +43,14 @@ export function BeachPage() {
       });
       formElement.reset();
       setStatus('Thanks — your report is ready for review.');
-    } catch {
-      setStatus('The report could not be sent. Please try again.');
+    } catch (error) {
+      if (error instanceof ApiError && error.status === 429) {
+        setStatus('You’ve sent several reports in a short time. Please wait a minute and try again.');
+      } else if (error instanceof ApiError && error.status >= 400 && error.status < 500) {
+        setStatus(error.message);
+      } else {
+        setStatus('The report could not be sent. Please try again.');
+      }
     } finally {
       setSubmitting(false);
     }
@@ -56,11 +62,11 @@ export function BeachPage() {
   return (
     <section className="content-page beach-detail">
       <Link className="back-link" to="/">← All beaches</Link>
-      <p className="eyebrow">{beach.municipality ?? beach.region}, {beach.countryName}</p>
+      <p className="eyebrow">{formatBeachLocation(beach)}</p>
       <h1>{beach.name}</h1>
       <div className="badges large">
         <span className={`badge badge-${beach.dressCode}`}>{dressCodeLabels[beach.dressCode]}</span>
-        <span className="badge badge-neutral">{recognitionLabels[beach.recognition]}</span>
+        <span className={`badge badge-recognition-${beach.recognition}`}>{recognitionLabels[beach.recognition]}</span>
       </div>
       <p className="lead">{beach.summary}</p>
 

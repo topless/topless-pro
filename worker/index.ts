@@ -1,5 +1,9 @@
 import { Hono } from 'hono';
+import type { Context } from 'hono';
+import { confidenceLabels, dressCodeLabels, formatBeachLocation, recognitionLabels } from '../src/lib/labels';
 import type { Beach, Confidence, DressCode, Recognition } from '../src/types';
+
+type AppContext = Context<{ Bindings: Env }>;
 
 const app = new Hono<{ Bindings: Env }>();
 
@@ -14,6 +18,36 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const CANONICAL_HOST = 'topless.pro';
 const WWW_HOST = `www.${CANONICAL_HOST}`;
+const CANONICAL_ORIGIN = `https://${CANONICAL_HOST}`;
+const SITE_TITLE = 'topless.pro — Know before you go';
+const SITE_DESCRIPTION = 'Clear, community-maintained clothing guidance for beaches worldwide.';
+const META_DESCRIPTION_LIMIT = 160;
+const PUBLIC_CACHE_CONTROL = 'public, max-age=300, stale-while-revalidate=3600';
+const CONTENT_SECURITY_POLICY = [
+  "default-src 'self'",
+  "script-src 'self'",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data:",
+  "connect-src 'self'",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'none'",
+  'upgrade-insecure-requests',
+].join('; ');
+
+function isLocalHostname(hostname: string): boolean {
+  return (
+    hostname === 'localhost'
+    || hostname.endsWith('.localhost')
+    || hostname === '[::1]'
+    || hostname === '0.0.0.0'
+    || /^127\./.test(hostname)
+    || /^10\./.test(hostname)
+    || /^192\.168\./.test(hostname)
+    || /^172\.(1[6-9]|2\d|3[01])\./.test(hostname)
+  );
+}
 
 interface BeachRow {
   id: string;
@@ -98,7 +132,9 @@ function validateCorrection(value: Record<string, unknown>): CorrectionValidatio
     return { ok: false, error: 'Invalid beach' };
   }
 
-  if (message.length < 10 || message.length > 4_000) {
+  // SQLite's length() counts code points, so the CHECK constraint does too.
+  const messageLength = [...message].length;
+  if (messageLength < 10 || messageLength > 4_000) {
     return { ok: false, error: 'Message must be between 10 and 4000 characters' };
   }
 
@@ -184,10 +220,163 @@ function requestPath(request: Request): string {
   return new URL(request.url).pathname;
 }
 
+function isApiPath(path: string): boolean {
+  return path === '/api' || path.startsWith('/api/');
+}
+
+function escapeHtml(value: string): string {
+  return value
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;');
+}
+
+function describeBeach(beach: Beach): string {
+  const guidance = `${beach.name}, ${formatBeachLocation(beach)} — ${dressCodeLabels[beach.dressCode]} (${recognitionLabels[beach.recognition].toLowerCase()}, ${confidenceLabels[beach.confidence].toLowerCase()}).`;
+  if (!beach.summary) return guidance;
+
+  const combined = `${guidance} ${beach.summary}`;
+  const codePoints = [...combined];
+  return codePoints.length <= META_DESCRIPTION_LIMIT
+    ? combined
+    : `${codePoints.slice(0, META_DESCRIPTION_LIMIT - 1).join('').trimEnd()}…`;
+}
+
+function beachJsonLd(beach: Beach, description: string): Record<string, unknown> {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Beach',
+    name: beach.name,
+    url: `${CANONICAL_ORIGIN}/beaches/${beach.slug}`,
+    description,
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: beach.latitude,
+      longitude: beach.longitude,
+    },
+    address: {
+      '@type': 'PostalAddress',
+      addressCountry: beach.countryCode,
+      ...(beach.municipality ? { addressLocality: beach.municipality } : {}),
+      ...(beach.region ? { addressRegion: beach.region } : {}),
+    },
+  };
+}
+
+interface PageMeta {
+  title: string;
+  description: string;
+  canonicalPath?: string;
+  noindex?: boolean;
+  jsonLd?: Record<string, unknown>;
+}
+
+function fetchShell(c: AppContext): Promise<Response> {
+  return c.env.ASSETS.fetch(new Request(new URL('/', c.req.url)));
+}
+
+async function renderShell(c: AppContext, meta: PageMeta, status = 200, prefetchedShell?: Response): Promise<Response> {
+  const shell = prefetchedShell ?? await fetchShell(c);
+
+  const headExtras: string[] = [
+    '<meta property="og:site_name" content="topless.pro">',
+    '<meta property="og:type" content="website">',
+    `<meta property="og:title" content="${escapeHtml(meta.title)}">`,
+    `<meta property="og:description" content="${escapeHtml(meta.description)}">`,
+    '<meta name="twitter:card" content="summary">',
+  ];
+  if (meta.canonicalPath !== undefined) {
+    const canonicalUrl = `${CANONICAL_ORIGIN}${meta.canonicalPath}`;
+    headExtras.push(`<link rel="canonical" href="${escapeHtml(canonicalUrl)}">`);
+    headExtras.push(`<meta property="og:url" content="${escapeHtml(canonicalUrl)}">`);
+  }
+  if (meta.noindex) {
+    headExtras.push('<meta name="robots" content="noindex">');
+  }
+  if (meta.jsonLd) {
+    headExtras.push(
+      `<script type="application/ld+json">${JSON.stringify(meta.jsonLd).replaceAll('<', '\\u003c')}</script>`,
+    );
+  }
+
+  const transformed = new HTMLRewriter()
+    .on('title', {
+      element(element) {
+        element.setInnerContent(meta.title);
+      },
+    })
+    .on('meta[name="description"]', {
+      element(element) {
+        element.setAttribute('content', meta.description);
+      },
+    })
+    .on('head', {
+      element(element) {
+        element.append(`    ${headExtras.join('\n    ')}\n  `, { html: true });
+      },
+    })
+    .transform(shell);
+
+  // Keep only the content type: the shell asset's caching metadata (ETag,
+  // Cache-Control, Last-Modified) describes the static file, not the
+  // transformed page, and a shared strong ETag across different pages and
+  // statuses corrupts revalidation.
+  const headers = new Headers({
+    'content-type': transformed.headers.get('content-type') ?? 'text/html; charset=utf-8',
+  });
+  if (status === 200) {
+    headers.set('Cache-Control', PUBLIC_CACHE_CONTROL);
+  }
+  return new Response(transformed.body, { status, headers });
+}
+
+async function getPublishedBeach(db: D1Database, slug: string): Promise<Beach | null> {
+  if (!SLUG_PATTERN.test(slug) || slug.length > 120) return null;
+
+  const row = await db.prepare(
+    `SELECT ${BEACH_COLUMNS}
+    FROM beaches
+    WHERE published = 1 AND slug = ?`,
+  ).bind(slug).first<BeachRow>();
+
+  return row === null ? null : mapBeach(row);
+}
+
+app.use('*', async (c, next) => {
+  await next();
+
+  // 101 responses carry a live WebSocket (Vite HMR in dev); reconstructing
+  // them would break the upgrade, and headers are irrelevant there anyway.
+  if (c.res.status === 101) return;
+
+  // Redirect and asset responses can carry immutable headers, so rebuild.
+  const res = new Response(c.res.body, c.res);
+  res.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  res.headers.set('X-Content-Type-Options', 'nosniff');
+  res.headers.set('X-Frame-Options', 'DENY');
+  res.headers.set('Referrer-Policy', 'no-referrer');
+  res.headers.set('Permissions-Policy', 'camera=(), geolocation=(), microphone=()');
+  res.headers.set('Cross-Origin-Opener-Policy', 'same-origin');
+
+  // Vite dev mode injects an inline bootstrap script that a strict CSP
+  // would block, so the policy applies everywhere except local hosts.
+  if (!isLocalHostname(new URL(c.req.url).hostname)) {
+    res.headers.set('Content-Security-Policy', CONTENT_SECURITY_POLICY);
+  }
+
+  c.res = res;
+});
+
 app.use('*', async (c, next) => {
   const url = new URL(c.req.url);
   if (url.hostname === WWW_HOST) {
     url.hostname = CANONICAL_HOST;
+    return Response.redirect(url.toString(), 308);
+  }
+
+  if (url.pathname.length > 1 && url.pathname.endsWith('/')) {
+    url.pathname = url.pathname.replace(/\/+$/, '');
     return Response.redirect(url.toString(), 308);
   }
 
@@ -204,24 +393,18 @@ app.get('/api/beaches', async (c) => {
     ORDER BY country_name, name`,
   ).all<BeachRow>();
 
+  c.header('Cache-Control', PUBLIC_CACHE_CONTROL);
   return c.json(result.results.map(mapBeach));
 });
 
 app.get('/api/beaches/:slug', async (c) => {
-  const slug = c.req.param('slug');
-  if (!SLUG_PATTERN.test(slug) || slug.length > 120) {
+  const beach = await getPublishedBeach(c.env.DB, c.req.param('slug'));
+  if (beach === null) {
     return c.json({ error: 'Beach not found' }, 404);
   }
 
-  const row = await c.env.DB.prepare(
-    `SELECT ${BEACH_COLUMNS}
-    FROM beaches
-    WHERE published = 1 AND slug = ?`,
-  ).bind(slug).first<BeachRow>();
-
-  return row === null
-    ? c.json({ error: 'Beach not found' }, 404)
-    : c.json(mapBeach(row));
+  c.header('Cache-Control', PUBLIC_CACHE_CONTROL);
+  return c.json(beach);
 });
 
 app.post('/api/corrections', async (c) => {
@@ -283,11 +466,98 @@ app.post('/api/corrections', async (c) => {
   return c.json({ ok: true }, 201);
 });
 
-app.notFound((c) => {
+app.get('/', (c) =>
+  renderShell(c, {
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    canonicalPath: '/',
+  }));
+
+app.get('/about', (c) =>
+  renderShell(c, {
+    title: 'About — topless.pro',
+    description: 'How topless.pro separates official beach rules from tolerated and community-reported customs.',
+    canonicalPath: '/about',
+  }));
+
+app.get('/beaches/:slug', async (c) => {
+  const [beach, shell] = await Promise.all([
+    getPublishedBeach(c.env.DB, c.req.param('slug')),
+    fetchShell(c),
+  ]);
+  if (beach === null) {
+    return renderShell(c, {
+      title: 'Beach not found — topless.pro',
+      description: SITE_DESCRIPTION,
+      noindex: true,
+    }, 404, shell);
+  }
+
+  const description = describeBeach(beach);
+  return renderShell(c, {
+    title: `${beach.name}, ${beach.countryName} — topless.pro`,
+    description,
+    canonicalPath: `/beaches/${beach.slug}`,
+    jsonLd: beachJsonLd(beach, description),
+  }, 200, shell);
+});
+
+app.get('/robots.txt', (c) => {
+  c.header('Cache-Control', 'public, max-age=3600');
+  return c.text(`User-agent: *\nAllow: /\n\nSitemap: ${CANONICAL_ORIGIN}/sitemap.xml\n`);
+});
+
+app.get('/sitemap.xml', async (c) => {
+  const result = await c.env.DB.prepare(
+    `SELECT slug, updated_at AS updatedAt
+    FROM beaches
+    WHERE published = 1
+    ORDER BY slug`,
+  ).all<{ slug: string; updatedAt: string }>();
+
+  const entries = [
+    { path: '/' },
+    { path: '/about' },
+    ...result.results.map((row) => ({
+      path: `/beaches/${row.slug}`,
+      lastmod: row.updatedAt.slice(0, 10),
+    })),
+  ];
+
+  const body = [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    ...entries.map((entry) => {
+      const lastmod = 'lastmod' in entry && entry.lastmod ? `<lastmod>${entry.lastmod}</lastmod>` : '';
+      return `  <url><loc>${escapeHtml(`${CANONICAL_ORIGIN}${entry.path}`)}</loc>${lastmod}</url>`;
+    }),
+    '</urlset>',
+    '',
+  ].join('\n');
+
+  c.header('Cache-Control', 'public, max-age=3600');
+  return c.body(body, 200, { 'content-type': 'application/xml; charset=utf-8' });
+});
+
+app.notFound(async (c) => {
   const path = requestPath(c.req.raw);
-  return path === '/api' || path.startsWith('/api/')
-    ? c.json({ error: 'Not found' }, 404)
-    : c.env.ASSETS.fetch(c.req.raw);
+  if (isApiPath(path)) {
+    return c.json({ error: 'Not found' }, 404);
+  }
+
+  const asset = await c.env.ASSETS.fetch(c.req.raw);
+  if (asset.status !== 404) {
+    return asset;
+  }
+
+  // No such asset and no known route: serve the shell so the client-side
+  // not-found page renders, but answer crawlers with an honest 404.
+  await asset.body?.cancel();
+  return renderShell(c, {
+    title: 'Page not found — topless.pro',
+    description: SITE_DESCRIPTION,
+    noindex: true,
+  }, 404);
 });
 
 app.onError((error, c) => {
@@ -299,7 +569,7 @@ app.onError((error, c) => {
     path,
   }));
 
-  return path === '/api' || path.startsWith('/api/')
+  return isApiPath(path)
     ? c.json({ error: 'Internal server error' }, 500)
     : new Response('Internal Server Error', { status: 500 });
 });
