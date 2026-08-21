@@ -1,0 +1,33 @@
+name: Smoke check
+
+# Cloudflare's Free plan has no Workers alerting; a scheduled job that fails loudly is the
+# alert. A failure emails the workflow file's last committer.
+on:
+  schedule:
+    - cron: '17 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pages, API and sitemap respond
+        run: |
+          set -euo pipefail
+          curl -sSf -o /dev/null https://topless.pro/api/health
+          curl -sSf -o /dev/null https://topless.pro/
+          curl -sSf -o /dev/null https://topless.pro/about
+          curl -sSf -o /dev/null https://topless.pro/sitemap.xml
+          curl -sS https://topless.pro/robots.txt | grep -q 'Sitemap: https://topless.pro/sitemap.xml'
+
+      # A slug that cannot exist: the Worker must consult the database and answer 404,
+      # never 500 — so a broken write path is noticed without storing anything.
+      - name: Report endpoint reaches the database
+        run: |
+          code=$(curl -sS -o /dev/null -w '%{http_code}' -X POST https://topless.pro/api/corrections \
+            -H 'content-type: application/json' \
+            -d '{"beachSlug":"smoke-check-not-a-beach","message":"Automated smoke check, please ignore."}')
+          test "$code" = "404"

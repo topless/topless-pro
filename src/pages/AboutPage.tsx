@@ -56,7 +56,10 @@ export function AboutPage() {
       <p>Every published listing has a source that supports the clothing guidance itself, not just the beach’s existence, plus a short summary and the date we last checked it. A map pin is not evidence. High confidence always has a supporting source; local knowledge without a citable source is at most medium.</p>
 
       <h2>Your reports and privacy</h2>
-      <p>This site sets no cookies and runs no analytics. When you send a correction we store what you typed, and your email address if you give one, only to review the report and reply. Your IP address is used to limit repeat submissions and isn’t stored with your report. To have a report deleted, send a correction from the same beach page saying so and we’ll remove it.</p>
+      <p>This site sets no cookies and runs no tracking script. Cloudflare, which hosts it, keeps a log of each request’s method and path for a few days so that errors can be found; we don’t use it to identify visitors. When you send a report we store what you typed, and your email address if you give one, only to review the report and reply. Your IP address is used to limit repeat submissions and isn’t stored with your report. To have a report or a listing removed, send a report from the same beach page saying so, or open an issue on GitHub; we act on every such request.</p>
+
+      <h2>Reuse this data</h2>
+      <p>The listings are published under the <a href="https://creativecommons.org/licenses/by/4.0/" rel="noreferrer">Creative Commons Attribution 4.0<span aria-hidden="true"> ↗</span></a> licence: reuse and adapt them with a credit to topless.pro and a link to the licence. The code is MIT. Facts themselves belong to no one; the licence covers our summaries and the compilation.</p>
 
       <h2>Important</h2>
       <p>This is general information, not legal advice, and it can go out of date. Public nudity — and in some places toplessness — can be an offence even where it’s customary, and anything that isn’t an official rule can be enforced against at any time. Check current signage, and when in doubt, follow what the people around you are doing.</p>

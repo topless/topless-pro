@@ -98,6 +98,39 @@ requires:
 The validator enforces all of the above, and `npm run check` runs it, so CI fails
 on any candidate that breaks policy.
 
+## Writing a summary
+
+One to three sentences in the present tense. Say what the practice is, where on the beach
+it applies, what the source says, and any enforcement note you have a source for. No
+adjectives, no advice, no marketing; the disclaimer is shown beside every listing already.
+The first sentence must stand on its own in under about 85 characters: it is appended to the
+search-result description after the name, place and classification. Write in English; quote
+sources in their original language in the pull request, not in the summary.
+
+Good: "Nude bathing is usual in the coves at the southern end; the main beach is ordinary
+swimwear use. The municipality's beach page lists the coves as a naturist area."
+
+Not good: "A stunning hidden gem where free spirits can enjoy the sun as nature intended."
+
+## Sourcing checklist
+
+- Search in the local language as well as English; official pages rarely use the word
+  "topless".
+- What kind of source is it? Authority or signage → can carry `official`. Operator policy
+  or a long-standing naturist-organisation listing → can carry `tolerated`. Blogs, forums
+  and reviews → `community-reported` at most, `low` confidence unless several independent
+  and consistent accounts exist.
+- Does the page say something about **what people wear**, or only that the beach exists?
+  Only the former is a `sourceUrl`.
+- Is it a map pin, a shortener, or a page that merely embeds a map? Then it is not evidence.
+- Record `lastVerifiedAt` as the day you opened the source, in `YYYY-MM-DD`.
+- If sources conflict, use `disputed` and say so in the summary; never average them.
+
+## Licence
+
+The data is published under CC BY 4.0; see `LICENSE.md` in this directory. Contributing a
+change means agreeing that it may be published under that licence, edited, without naming you.
+
 ## Validation and status
 
 ```bash

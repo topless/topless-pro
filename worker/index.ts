@@ -510,7 +510,7 @@ app.get('/beaches/:slug', async (c) => {
 
 app.get('/robots.txt', (c) => {
   c.header('Cache-Control', 'public, max-age=3600');
-  return c.text(`User-agent: *\nAllow: /\n\nSitemap: ${CANONICAL_ORIGIN}/sitemap.xml\n`);
+  return c.text(`User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: ${CANONICAL_ORIGIN}/sitemap.xml\n`);
 });
 
 app.get('/sitemap.xml', async (c) => {
