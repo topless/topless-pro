@@ -10,6 +10,19 @@ updates:
         patterns:
           - "wrangler"
           - "@cloudflare/*"
+      # Routine dev-toolchain bumps arrive as one PR instead of one per package.
+      dev-minor-patch:
+        dependency-type: development
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
+    ignore:
+      # Node types must track the runtime pinned in .nvmrc, not the newest Node.
+      - dependency-name: "@types/node"
+        update-types:
+          - version-update:semver-major
   - package-ecosystem: github-actions
     directory: /
     schedule:

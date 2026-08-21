@@ -6,6 +6,11 @@
   // describes the latest runtime, and a stale date here would let TypeScript
   // accept APIs the deployed worker does not have.
   "compatibility_date": "2026-08-14",
+  // Routes already make Wrangler infer workers_dev=false; stated explicitly so the
+  // custom domain is the only public host and no preview URLs exist. Production is
+  // reached only by deploying main.
+  "workers_dev": false,
+  "preview_urls": false,
   "routes": [
     {
       "pattern": "topless.pro",

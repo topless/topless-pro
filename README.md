@@ -40,7 +40,7 @@ The Worker exposes:
 
 ## Requirements
 
-- Node.js 22.21.0, as recorded in `.nvmrc`
+- The Node.js release recorded in `.nvmrc` (currently 22.23.2)
 - npm 10 or later
 
 Using `nvm`:
@@ -116,9 +116,11 @@ npm run deploy
 
 The remote migration command applies schema only. There is intentionally no remote seed command.
 
-## Connect topless.pro
+## Custom domains
 
-After the first approved Worker deployment, open the Cloudflare dashboard, select the `topless-pro` Worker, then add `topless.pro` and optionally `www.topless.pro` as custom domains.
+`wrangler.jsonc` declares `topless.pro` and `www.topless.pro` as custom-domain routes, so
+`wrangler deploy` creates the DNS records and certificates itself; nothing has to be added in
+the dashboard. `workers_dev` and `preview_urls` are off, so the custom domain is the only host.
 
 ## Post-deploy check
 
@@ -127,15 +129,8 @@ front of the Worker. After deploying, fetch `https://topless.pro/robots.txt` and
 confirm the `Sitemap:` line from the Worker survives; if the managed file replaces
 it, disable the managed robots.txt in the Cloudflare dashboard.
 
-## Suggested next steps
+## Roadmap
 
-1. Re-source the Sithonia pilot to the evidence policy in `data/README.md` and
-   publish the first verified listings.
-2. Treat `data/` as the editorial source of truth: pull requests are the
-   moderation queue and review history is the audit trail, with D1 as a
-   rebuildable projection. Correction submissions feed PRs.
-3. Add server-side filtering and pagination to `GET /api/beaches` before
-   importing a dataset larger than a few hundred rows; the client currently
-   filters the full list in memory.
-4. Add Turnstile if the rate limiter and honeypot stop controlling spam.
-5. Add map browsing once the directory has enough reliable entries.
+The sequenced plan for the next phase — production data pipeline, public submissions, maps and
+the supporting work — lives in [`docs/ROADMAP.md`](docs/ROADMAP.md), together with the
+decisions that shaped it and the status of each milestone.
