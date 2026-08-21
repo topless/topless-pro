@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { getBeach, submitCorrection } from '../lib/api';
+import { ApiError, getBeach, submitCorrection } from '../lib/api';
 import { confidenceLabels, dressCodeLabels, formatBeachLocation, recognitionLabels } from '../lib/labels';
 import type { Beach } from '../types';
 
@@ -43,8 +43,14 @@ export function BeachPage() {
       });
       formElement.reset();
       setStatus('Thanks — your report is ready for review.');
-    } catch {
-      setStatus('The report could not be sent. Please try again.');
+    } catch (error) {
+      if (error instanceof ApiError && error.status === 429) {
+        setStatus('You’ve sent several reports in a short time. Please wait a minute and try again.');
+      } else if (error instanceof ApiError && error.status >= 400 && error.status < 500) {
+        setStatus(error.message);
+      } else {
+        setStatus('The report could not be sent. Please try again.');
+      }
     } finally {
       setSubmitting(false);
     }
