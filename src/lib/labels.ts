@@ -6,6 +6,7 @@ export const SITE_TITLE = 'topless.pro — Beach dress codes: official, tolerate
 export const SITE_DESCRIPTION = 'Beach-by-beach guidance on topless and nude bathing — the official rule, the local custom and the source, kept separate. Starting in Greece.';
 export const ABOUT_TITLE = 'How we classify beaches — topless.pro';
 export const ABOUT_DESCRIPTION = 'How topless.pro labels beaches: official rules, local custom and unconfirmed reports kept apart, with a confidence level for each.';
+export const REPO_URL = 'https://github.com/topless/topless-pro';
 
 export const DRESS_CODES: readonly DressCode[] = [
   'swimwear-required',
@@ -48,7 +49,7 @@ export const dressCodeDescriptions: Record<DressCode, string> = {
   'swimwear-required': 'Keep swimwear on. Topless or nude bathing isn’t the norm here.',
   'topless-permitted': 'Women sunbathing topless is normal here. Full nudity isn’t expected.',
   'clothing-optional': 'Nude and clothed bathers share the whole beach, and neither stands out.',
-  'nudity-permitted': 'Nude bathing is accepted, usually in one part of the beach. The rest is an ordinary beach.',
+  'nudity-permitted': 'Nude bathing is accepted in a recognisable part of the beach — an end, a cove, beyond a marker. The rest is an ordinary beach.',
   unknown: 'Not enough evidence to say.',
 };
 
@@ -62,7 +63,7 @@ export const recognitionDescriptions: Record<Recognition, string> = {
 export const confidenceDescriptions: Record<Confidence, string> = {
   high: 'Recent, specific and well-supported.',
   medium: 'Credible but limited, or not recently re-checked.',
-  low: 'Tentative, old, vague, or based on a single weak report.',
+  low: 'Tentative, old, vague or based on a single weak report.',
 };
 
 export function formatBeachLocation(beach: Pick<Beach, 'municipality' | 'region' | 'countryName'>): string {
@@ -74,7 +75,9 @@ export function formatBeachTitle(
   beach: Pick<Beach, 'name' | 'municipality' | 'region' | 'countryName' | 'dressCode'>,
 ): string {
   const place = beach.municipality ?? beach.region ?? beach.countryName;
-  return `${beach.name}, ${place}: ${dressCodeLabels[beach.dressCode]} — topless.pro`;
+  // Out of context, a bare 'Unknown' does not say what is unknown.
+  const answer = beach.dressCode === 'unknown' ? 'Dress code unknown' : dressCodeLabels[beach.dressCode];
+  return `${beach.name}, ${place}: ${answer} — topless.pro`;
 }
 
 export function sourceHostname(url: string): string {
@@ -93,12 +96,20 @@ const dateFormatter = new Intl.DateTimeFormat('en-GB', {
 });
 const monthFormatter = new Intl.DateTimeFormat('en-GB', { month: 'short', year: 'numeric', timeZone: 'UTC' });
 
-/** Formats an ISO date (YYYY-MM-DD) for display; UTC so the day never rolls back. */
+function parseIsoDate(iso: string): Date | null {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return null;
+  const date = new Date(`${iso}T00:00:00Z`);
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
+/** Formats an ISO date (YYYY-MM-DD) for display; UTC so the day never rolls back. Unparseable input is shown as-is. */
 export function formatDate(iso: string): string {
-  return dateFormatter.format(new Date(`${iso}T00:00:00Z`));
+  const date = parseIsoDate(iso);
+  return date ? dateFormatter.format(date) : iso;
 }
 
 /** Short form for list rows: "Jul 2026". */
 export function formatMonthYear(iso: string): string {
-  return monthFormatter.format(new Date(`${iso}T00:00:00Z`));
+  const date = parseIsoDate(iso);
+  return date ? monthFormatter.format(date) : iso;
 }

@@ -182,7 +182,7 @@ async function readBoundedJson(request: Request): Promise<unknown> {
       throw new RequestBodyError(400, 'Invalid Content-Length');
     }
     if (size > MAX_CORRECTION_BODY_BYTES) {
-      throw new RequestBodyError(413, 'Correction is too large');
+      throw new RequestBodyError(413, 'That report is too long. Please keep it under 4,000 characters.');
     }
   }
 
@@ -202,7 +202,7 @@ async function readBoundedJson(request: Request): Promise<unknown> {
       size += value.byteLength;
       if (size > MAX_CORRECTION_BODY_BYTES) {
         await reader.cancel();
-        throw new RequestBodyError(413, 'Correction is too large');
+        throw new RequestBodyError(413, 'That report is too long. Please keep it under 4,000 characters.');
       }
       chunks.push(value);
     }
@@ -432,7 +432,7 @@ app.post('/api/corrections', async (c) => {
   }
 
   if (!isRecord(body)) {
-    return c.json({ error: 'Invalid correction' }, 400);
+    return c.json({ error: 'That report couldn’t be read.' }, 400);
   }
 
   if (typeof body.website === 'string' && body.website.trim()) {
@@ -468,7 +468,7 @@ app.post('/api/corrections', async (c) => {
     .run();
 
   if (result.meta.changes === 0) {
-    return c.json({ error: 'Beach not found' }, 404);
+    return c.json({ error: 'We couldn’t find that listing. It may have been removed or not published yet.' }, 404);
   }
 
   return c.json({ ok: true }, 201);

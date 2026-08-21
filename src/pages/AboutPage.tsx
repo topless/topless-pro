@@ -4,6 +4,7 @@ import {
   CONFIDENCES,
   DRESS_CODES,
   RECOGNITIONS,
+  REPO_URL,
   confidenceDescriptions,
   confidenceLabels,
   dressCodeDescriptions,
@@ -11,8 +12,6 @@ import {
   recognitionDescriptions,
   recognitionLabels,
 } from '../lib/labels';
-
-const REPO_URL = 'https://github.com/topless/topless-pro';
 
 export function AboutPage() {
   useDocumentTitle(ABOUT_TITLE);
@@ -33,7 +32,7 @@ export function AboutPage() {
           </div>
         ))}
       </dl>
-      <h3>How sure we are</h3>
+      <h3>How established it is</h3>
       <dl className="definitions">
         {RECOGNITIONS.map((level) => (
           <div key={level}>

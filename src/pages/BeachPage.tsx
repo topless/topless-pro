@@ -2,6 +2,7 @@ import { FormEvent, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ApiError, getBeach, submitCorrection } from '../lib/api';
 import { useDocumentTitle } from '../lib/document-title';
+import { useRestoreScroll } from '../lib/scroll-memory';
 import {
   confidenceDescriptions,
   confidenceLabels,
@@ -29,6 +30,7 @@ export function BeachPage() {
   useDocumentTitle(
     beach === undefined ? null : beach === null ? 'No listing here — topless.pro' : formatBeachTitle(beach),
   );
+  useRestoreScroll(beach !== undefined);
 
   useEffect(() => {
     let cancelled = false;
@@ -161,9 +163,9 @@ export function BeachPage() {
               {submitting ? 'Sending…' : 'Submit correction'}
             </button>
             <p className="form-note">We keep your message, and your email if you give one, only to review this report and reply. Your IP address is used to limit repeat submissions and isn’t stored with your report.</p>
-            <p className="form-status" role="status" aria-live="polite">{status}</p>
           </form>
         </details>
+        <p className="form-status" role="status" aria-live="polite">{status}</p>
       </div>
     </section>
   );

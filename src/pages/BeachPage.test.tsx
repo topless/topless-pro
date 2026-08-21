@@ -45,7 +45,7 @@ describe('BeachPage', () => {
 
     expect(await screen.findByRole('heading', { name: 'Example Beach' })).toBeInTheDocument();
     expect(getBeach).toHaveBeenCalledWith('example-beach');
-    expect(document.title).toBe('Example Beach, Crete: Topless accepted — topless.pro');
+    await waitFor(() => expect(document.title).toBe('Example Beach, Crete: Topless accepted — topless.pro'));
     expect(screen.getByText('21 July 2026').closest('time')).toHaveAttribute('dateTime', '2026-07-21');
     expect(screen.getByRole('link', { name: /Open in maps/ })).toHaveAttribute(
       'href',

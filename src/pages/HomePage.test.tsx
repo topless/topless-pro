@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { getBeaches } from '../lib/api';
@@ -76,7 +76,7 @@ describe('HomePage', () => {
     expect(screen.getByText('Before launch')).toBeInTheDocument();
     expect(screen.getByText('No beaches are published yet')).toBeInTheDocument();
     expect(screen.getByText('What to wear')).toBeInTheDocument();
-    expect(screen.getByText('How sure we are')).toBeInTheDocument();
+    expect(screen.getByText('How established it is')).toBeInTheDocument();
     expect(screen.getByText('Disputed')).toHaveClass('recog-disputed');
     // No dead controls while nothing is published.
     expect(screen.queryByRole('group', { name: 'Filter by what to wear' })).not.toBeInTheDocument();
@@ -124,6 +124,6 @@ describe('HomePage', () => {
     );
 
     await screen.findByText('Mystery Beach');
-    expect(document.title).toBe('topless.pro — Beach dress codes: official, tolerated or disputed');
+    await waitFor(() => expect(document.title).toBe('topless.pro — Beach dress codes: official, tolerated or disputed'));
   });
 });

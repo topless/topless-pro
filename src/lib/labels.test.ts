@@ -6,6 +6,12 @@ describe('formatDate', () => {
     expect(formatDate('2026-07-21')).toBe('21 July 2026');
     expect(formatDate('2026-01-01')).toBe('1 January 2026');
   });
+
+  it('shows unparseable input as-is instead of throwing', () => {
+    expect(formatDate('21/07/2026')).toBe('21/07/2026');
+    expect(formatDate('2026-13-45')).toBe('2026-13-45');
+    expect(formatDate('')).toBe('');
+  });
 });
 
 describe('formatBeachLocation', () => {
@@ -22,6 +28,6 @@ describe('formatBeachTitle', () => {
     expect(formatBeachTitle({ name: 'Kavourotrypes', municipality: 'Sithonia', region: 'Chalkidiki', countryName: 'Greece', dressCode: 'nudity-permitted' }))
       .toBe('Kavourotrypes, Sithonia: Nudity accepted — topless.pro');
     expect(formatBeachTitle({ name: 'Red Beach', countryName: 'Greece', dressCode: 'unknown' }))
-      .toBe('Red Beach, Greece: Unknown — topless.pro');
+      .toBe('Red Beach, Greece: Dress code unknown — topless.pro');
   });
 });
