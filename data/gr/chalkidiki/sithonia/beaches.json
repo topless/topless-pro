@@ -1,4 +1,5 @@
 {
+  "$schema": "../../../beaches.schema.json",
   "schemaVersion": 1,
   "scope": {
     "countryCode": "GR",
