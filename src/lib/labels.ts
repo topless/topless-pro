@@ -7,6 +7,8 @@ export const SITE_DESCRIPTION = 'Beach-by-beach guidance on topless and nude bat
 export const ABOUT_TITLE = 'How we classify beaches — topless.pro';
 export const ABOUT_DESCRIPTION = 'How topless.pro labels beaches: official rules, local custom and unconfirmed reports kept apart, with a confidence level for each.';
 export const REPO_URL = 'https://github.com/topless/topless-pro';
+// The issue form asks for a source that shows the rule, so suggestions arrive pre-filtered.
+export const SUGGEST_URL = `${REPO_URL}/issues/new?template=suggest-a-beach.yml`;
 
 export const DRESS_CODES: readonly DressCode[] = [
   'swimwear-required',

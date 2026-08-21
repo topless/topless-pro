@@ -1,9 +1,23 @@
 import type { Beach } from '../types';
 
-export async function getBeaches(): Promise<Beach[]> {
+async function fetchBeaches(): Promise<Beach[]> {
   const response = await fetch('/api/beaches');
   if (!response.ok) throw new Error('Unable to load beaches');
   return response.json();
+}
+
+// The directory is fetched once per page load and reused on Back navigation; a failure is
+// never cached, and "Try again" asks for a fresh copy.
+let directory: Promise<Beach[]> | null = null;
+
+export function getBeaches({ fresh = false } = {}): Promise<Beach[]> {
+  if (fresh || directory === null) {
+    directory = fetchBeaches().catch((error: unknown) => {
+      directory = null;
+      throw error;
+    });
+  }
+  return directory;
 }
 
 export async function getBeach(slug: string): Promise<Beach | null> {

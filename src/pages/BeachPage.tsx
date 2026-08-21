@@ -1,7 +1,9 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { dataFilePath } from '../../shared/place.mjs';
 import { ApiError, getBeach, submitCorrection } from '../lib/api';
 import { useDocumentTitle } from '../lib/document-title';
+import { mapLinks } from '../lib/map-links';
 import { useRestoreScroll } from '../lib/scroll-memory';
 import {
   confidenceDescriptions,
@@ -11,15 +13,12 @@ import {
   formatBeachLocation,
   formatBeachTitle,
   formatDate,
+  REPO_URL,
   recognitionDescriptions,
   recognitionLabels,
   sourceHostname,
 } from '../lib/labels';
 import type { Beach } from '../types';
-
-function mapsUrl(beach: Pick<Beach, 'latitude' | 'longitude'>): string {
-  return `https://www.google.com/maps/search/?api=1&query=${beach.latitude},${beach.longitude}`;
-}
 
 export function BeachPage() {
   const { slug = '' } = useParams();
@@ -133,12 +132,25 @@ export function BeachPage() {
         <div>
           <dt>Location</dt>
           <dd>
-            <a href={mapsUrl(beach)} rel="noreferrer">Open in maps<span aria-hidden="true"> ↗</span></a>
-            <small>{beach.latitude}, {beach.longitude}</small>
+            <ul className="location-links">
+              {mapLinks(beach).map((link) => (
+                <li key={link.label}><a href={link.href} rel="noreferrer">{link.label}<span aria-hidden="true"> ↗</span></a></li>
+              ))}
+            </ul>
+            <small>{beach.latitude}, {beach.longitude} · opens in another app or site</small>
           </dd>
         </div>
         {beach.facilities.length > 0 && (
           <div><dt>Facilities</dt><dd>{beach.facilities.join(', ')}</dd></div>
+        )}
+        {beach.region && beach.municipality && (
+          <div>
+            <dt>Listing history</dt>
+            <dd>
+              <a href={`${REPO_URL}/commits/main/${dataFilePath({ countryCode: beach.countryCode, region: beach.region, municipality: beach.municipality })}`} rel="noreferrer">Every change, on GitHub<span aria-hidden="true"> ↗</span></a>
+              <small>Who changed what, and when.</small>
+            </dd>
+          </div>
         )}
       </dl>
 

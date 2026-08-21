@@ -276,7 +276,11 @@ interface PageMeta {
   canonicalPath?: string;
   noindex?: boolean;
   jsonLd?: Record<string, unknown>;
+  /** One of the static cards in public/og/; the site card when absent. */
+  ogImage?: { path: string; alt: string };
 }
+
+const DEFAULT_OG_IMAGE = { path: '/og/default.png', alt: 'topless.pro — beach dress-code reference' };
 
 function fetchShell(c: AppContext): Promise<Response> {
   return c.env.ASSETS.fetch(new Request(new URL('/', c.req.url)));
@@ -290,7 +294,11 @@ async function renderShell(c: AppContext, meta: PageMeta, status = 200, prefetch
     '<meta property="og:type" content="website">',
     `<meta property="og:title" content="${escapeHtml(meta.title)}">`,
     `<meta property="og:description" content="${escapeHtml(meta.description)}">`,
-    '<meta name="twitter:card" content="summary">',
+    `<meta property="og:image" content="${escapeHtml(`${CANONICAL_ORIGIN}${(meta.ogImage ?? DEFAULT_OG_IMAGE).path}`)}">`,
+    '<meta property="og:image:width" content="1200">',
+    '<meta property="og:image:height" content="630">',
+    `<meta property="og:image:alt" content="${escapeHtml((meta.ogImage ?? DEFAULT_OG_IMAGE).alt)}">`,
+    '<meta name="twitter:card" content="summary_large_image">',
   ];
   if (meta.canonicalPath !== undefined) {
     const canonicalUrl = `${CANONICAL_ORIGIN}${meta.canonicalPath}`;
@@ -505,6 +513,7 @@ app.get('/beaches/:slug', async (c) => {
     description,
     canonicalPath: `/beaches/${beach.slug}`,
     jsonLd: beachJsonLd(beach, description),
+    ogImage: { path: `/og/${beach.dressCode}.png`, alt: `${beach.name}: ${dressCodeLabels[beach.dressCode]}` },
   }, 200, shell);
 });
 

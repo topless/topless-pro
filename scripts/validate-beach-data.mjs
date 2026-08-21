@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
+import { dataFilePath } from '../shared/place.mjs';
 import { DATA_ROOT, REQUIRED_D1_FIELDS, SCHEMA_FILE, findBeachFiles } from './lib/beach-data.mjs';
 const DRESS_CODES = new Set([
   'swimwear-required',
@@ -201,10 +202,14 @@ function validateFile(file, data) {
       }
     }
 
-    const countryFolder = path.relative(DATA_ROOT, file).split(path.sep)[0];
-    if (isNonEmptyString(data.scope.countryCode)
-      && countryFolder !== data.scope.countryCode.toLowerCase()) {
-      addError(file, 'scope.countryCode', `does not match country folder "${countryFolder}"`);
+    // The folder is derived from the scope (shared/place.mjs), which is how the site links
+    // a listing to this file's history on GitHub.
+    if (['countryCode', 'region', 'municipality'].every((property) => isNonEmptyString(data.scope[property]))) {
+      const expected = dataFilePath(data.scope);
+      const actual = path.relative(process.cwd(), file).split(path.sep).join('/');
+      if (actual !== expected) {
+        addError(file, 'scope', `belongs at ${expected} (derived from countryCode, region and municipality)`);
+      }
     }
   }
 
