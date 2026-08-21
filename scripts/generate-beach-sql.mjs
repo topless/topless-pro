@@ -40,12 +40,11 @@ function sqlValue(value) {
   return `'${String(value).replaceAll("'", "''")}'`;
 }
 
-function beachRow(scope, beach, file) {
-  const missing = REQUIRED_FIELDS.filter((field) => beach[field] === null || beach[field] === undefined);
-  if (missing.length > 0) {
-    throw new Error(`${path.relative(process.cwd(), file)}:${beach.slug ?? 'unknown'} missing ${missing.join(', ')}`);
-  }
+function isComplete(beach) {
+  return REQUIRED_FIELDS.every((field) => beach[field] !== null && beach[field] !== undefined);
+}
 
+function beachRow(scope, beach) {
   return [
     beach.slug,
     beach.slug,
@@ -69,16 +68,25 @@ function beachRow(scope, beach, file) {
 
 const files = await findBeachFiles(DATA_ROOT);
 const rows = [];
+const skipped = [];
 
 for (const file of files) {
   const data = JSON.parse(await readFile(file, 'utf8'));
   for (const beach of data.beaches) {
-    rows.push(beachRow(data.scope, beach, file));
+    if (isComplete(beach)) {
+      rows.push(beachRow(data.scope, beach));
+    } else {
+      skipped.push(`${path.relative(process.cwd(), file)}:${beach.slug ?? 'unknown'}`);
+    }
   }
 }
 
+for (const draft of skipped) {
+  console.log(`Skipping incomplete candidate ${draft}`);
+}
+
 if (rows.length === 0) {
-  throw new Error('No beach records found');
+  throw new Error('No complete beach records found');
 }
 
 const values = rows.map((row) => `  (${row.join(', ')})`).join(',\n');

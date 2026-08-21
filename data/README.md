@@ -68,9 +68,9 @@ in the beach's identity:
 `sourceUrl` must point at evidence for the **dress-code claim**, not merely for the
 beach's existence. Acceptable sources include municipal or port-authority pages,
 posted signage (photographed and hosted somewhere linkable), operator websites that
-state a policy, or established naturist-organisation listings. Map pins
-(`maps.app.goo.gl`, Google Maps links) identify a place, not a norm — the validator
-rejects them in `sourceUrl`.
+state a policy, or established naturist-organisation listings. Map pins — Google, Apple, Bing, and
+OpenStreetMap map links, and `goo.gl` shorteners — identify a place, not a norm;
+the validator rejects them in `sourceUrl`.
 
 Confidence is capped by evidence:
 

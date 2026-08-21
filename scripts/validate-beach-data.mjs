@@ -17,13 +17,22 @@ const RECOGNITION_LEVELS = new Set([
   'disputed',
 ]);
 const CONFIDENCE_LEVELS = new Set(['low', 'medium', 'high']);
-// Hosts that identify a place but cannot support a dress-code claim.
-const LOCATION_PIN_HOSTS = [
+// Map services identify a place but cannot support a dress-code claim, and
+// shorteners hide whatever they point at.
+const LOCATION_PIN_HOSTS = new Set([
   'maps.app.goo.gl',
   'goo.gl',
-  'maps.google.com',
-  'www.google.com',
-  'google.com',
+  'maps.apple.com',
+  'osm.org',
+]);
+const LOCATION_PIN_HOST_PATTERNS = [
+  /(^|\.)maps\.google\.[a-z.]+$/,
+  /(^|\.)openstreetmap\.org$/,
+];
+// Hosts that are pins only when the path is their maps product.
+const LOCATION_PIN_PATH_PREFIXES = [
+  [/(^|\.)google\.[a-z.]+$/, '/maps'],
+  [/(^|\.)bing\.com$/, '/maps'],
 ];
 
 const errors = [];
@@ -60,9 +69,11 @@ function isHttpUrl(value) {
 function isLocationPinUrl(value) {
   try {
     const url = new URL(value);
-    return LOCATION_PIN_HOSTS.includes(url.hostname)
-      && (url.hostname !== 'www.google.com' || url.pathname.startsWith('/maps'))
-      && (url.hostname !== 'google.com' || url.pathname.startsWith('/maps'));
+    if (LOCATION_PIN_HOSTS.has(url.hostname)) return true;
+    if (LOCATION_PIN_HOST_PATTERNS.some((pattern) => pattern.test(url.hostname))) return true;
+    return LOCATION_PIN_PATH_PREFIXES.some(
+      ([pattern, prefix]) => pattern.test(url.hostname) && url.pathname.startsWith(prefix),
+    );
   } catch {
     return false;
   }
