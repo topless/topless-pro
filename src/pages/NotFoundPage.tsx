@@ -8,7 +8,7 @@ export function NotFoundPage() {
     <section className="content-page">
       <p className="eyebrow">Page not found</p>
       <h1>That page doesn’t exist.</h1>
-      <Link className="back-link" to="/">Return to the directory</Link>
+      <Link className="back-link" to="/"><span aria-hidden="true">← </span>All beaches</Link>
     </section>
   );
 }

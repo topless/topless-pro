@@ -39,11 +39,13 @@ During research, unknown required values are `null` and `published` stays
 
 - `swimwear-required` — swimwear is expected; topless or nude use should not be
   relied on.
-- `topless-permitted` — topless bathing is accepted; full nudity is not implied.
-- `clothing-optional` — clothed and nude bathers are both expected to be
-  welcome throughout the described area.
-- `nudity-permitted` — full nudity is accepted in the described area, but the
-  beach may not operate as a generally clothing-optional venue.
+- `topless-permitted` — women sunbathing topless is accepted across the beach;
+  full nudity is not.
+- `clothing-optional` — nude and clothed use mix across the whole beach, and
+  neither stands out. Use this only when the mix covers the whole beach.
+- `nudity-permitted` — nude bathing is accepted in a recognisable part of the
+  beach (an end, a cove, beyond a marker) while the rest is ordinary swimwear
+  use.
 - `unknown` — there is not enough information to classify the beach.
 
 `recognition` describes the standing of that dress-code practice:

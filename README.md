@@ -2,15 +2,18 @@
 
 A mobile-first directory describing beach clothing requirements while keeping official rules separate from tolerated or community-reported customs.
 
-The directory uses five clothing classifications:
+The directory uses five clothing classifications, shown to visitors as:
 
-- Swimwear required
-- Topless permitted
+- Swimwear expected
+- Topless accepted
 - Clothing optional
-- Nudity permitted
+- Nudity accepted
 - Unknown
 
-Each record also carries a recognition level (`official`, `tolerated`, `community-reported`, or `disputed`) and a confidence level.
+Each record also carries a recognition level (`official`, `tolerated`, `community-reported`, or
+`disputed` — shown as Official, Local custom, Unconfirmed report, Disputed) and a confidence
+level. Display labels and their one-line definitions live in `src/lib/labels.ts`; the keys in
+`data/` and D1 never change.
 
 ## Architecture
 

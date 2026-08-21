@@ -1,5 +1,12 @@
 import type { Beach, Confidence, DressCode, Recognition } from '../types';
 
+// Site-wide copy shared by the SPA, the Worker's injected metadata and the
+// static shell, so the product is described the same way everywhere.
+export const SITE_TITLE = 'topless.pro — Beach dress codes: official, tolerated or disputed';
+export const SITE_DESCRIPTION = 'Beach-by-beach guidance on topless and nude bathing — the official rule, the local custom and the source, kept separate. Starting in Greece.';
+export const ABOUT_TITLE = 'How we classify beaches — topless.pro';
+export const ABOUT_DESCRIPTION = 'How topless.pro labels beaches: official rules, local custom and unconfirmed reports kept apart, with a confidence level for each.';
+
 export const DRESS_CODES: readonly DressCode[] = [
   'swimwear-required',
   'topless-permitted',
@@ -10,18 +17,21 @@ export const DRESS_CODES: readonly DressCode[] = [
 export const RECOGNITIONS: readonly Recognition[] = ['official', 'tolerated', 'community-reported', 'disputed'];
 export const CONFIDENCES: readonly Confidence[] = ['high', 'medium', 'low'];
 
+// Dress code says what happens here; recognition says how firm that is. The
+// dress labels deliberately avoid permission verbs so the two read sensibly
+// side by side ("Swimwear expected · Local custom", never "required · tolerated").
 export const dressCodeLabels: Record<DressCode, string> = {
-  'swimwear-required': 'Swimwear required',
-  'topless-permitted': 'Topless permitted',
+  'swimwear-required': 'Swimwear expected',
+  'topless-permitted': 'Topless accepted',
   'clothing-optional': 'Clothing optional',
-  'nudity-permitted': 'Nudity permitted',
+  'nudity-permitted': 'Nudity accepted',
   unknown: 'Unknown',
 };
 
 export const recognitionLabels: Record<Recognition, string> = {
-  official: 'Official designation',
-  tolerated: 'Commonly tolerated',
-  'community-reported': 'Community reported',
+  official: 'Official',
+  tolerated: 'Local custom',
+  'community-reported': 'Unconfirmed report',
   disputed: 'Disputed',
 };
 
@@ -59,8 +69,12 @@ export function formatBeachLocation(beach: Pick<Beach, 'municipality' | 'region'
   return [...new Set([beach.municipality, beach.region, beach.countryName].filter(Boolean))].join(', ');
 }
 
-export function formatBeachTitle(beach: Pick<Beach, 'name' | 'countryName'>): string {
-  return `${beach.name}, ${beach.countryName} — topless.pro`;
+/** Search-result title: the place people search for and the answer they came for. */
+export function formatBeachTitle(
+  beach: Pick<Beach, 'name' | 'municipality' | 'region' | 'countryName' | 'dressCode'>,
+): string {
+  const place = beach.municipality ?? beach.region ?? beach.countryName;
+  return `${beach.name}, ${place}: ${dressCodeLabels[beach.dressCode]} — topless.pro`;
 }
 
 export function sourceHostname(url: string): string {

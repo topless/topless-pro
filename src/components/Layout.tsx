@@ -29,7 +29,7 @@ export function Layout({ children }: { children: ReactNode }) {
       </header>
       <main ref={mainRef} tabIndex={-1}>{children}</main>
       <footer>
-        <strong>Know before you go.</strong>
+        <strong>Rules, custom and hearsay — kept apart.</strong>
         <p>Rules and customs change. Follow posted signs and local authorities.</p>
       </footer>
     </div>

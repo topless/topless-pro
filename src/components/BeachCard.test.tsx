@@ -23,7 +23,7 @@ describe('BeachCard', () => {
       </MemoryRouter>,
     );
 
-    expect(screen.getByText('Nudity permitted')).toHaveClass('chip-nudity-permitted');
+    expect(screen.getByText('Nudity accepted')).toHaveClass('chip-nudity-permitted');
     expect(screen.getByText('Disputed')).toHaveClass('recog-disputed');
     expect(screen.getByRole('link', { name: 'Example Beach' })).toHaveAttribute('href', '/beaches/example-beach');
   });

@@ -79,8 +79,8 @@ describe('topless.pro Worker', () => {
     expect(response.headers.get('content-type')).toContain('text/html');
 
     const html = await response.text();
-    expect(html).toContain('<title>Paradise Beach, Greece — topless.pro</title>');
-    expect(html).toContain('Topless permitted (community reported, low confidence)');
+    expect(html).toContain('<title>Paradise Beach, Mykonos: Topless accepted — topless.pro</title>');
+    expect(html).toContain('Topless accepted (unconfirmed report, low confidence)');
     expect(html).toContain('<link rel="canonical" href="https://topless.pro/beaches/paradise-beach-mykonos">');
     expect(html).toContain('"@type":"Beach"');
     expect(html).toContain('<meta property="og:title"');
@@ -92,7 +92,7 @@ describe('topless.pro Worker', () => {
     expect(home.status).toBe(200);
     const homeHtml = await home.text();
     expect(homeHtml).toContain('<link rel="canonical" href="https://topless.pro/">');
-    expect(homeHtml).toContain('<title>topless.pro — Know before you go</title>');
+    expect(homeHtml).toContain('<title>topless.pro — Beach dress codes: official, tolerated or disputed</title>');
 
     const about = await exports.default.fetch('https://topless.pro/about');
     expect(about.status).toBe(200);

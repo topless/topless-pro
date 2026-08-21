@@ -5,6 +5,8 @@ import { useDocumentTitle } from '../lib/document-title';
 import {
   DRESS_CODES,
   RECOGNITIONS,
+  SITE_DESCRIPTION,
+  SITE_TITLE,
   dressCodeLabels,
   recognitionDescriptions,
   recognitionLabels,
@@ -16,7 +18,7 @@ const REPO_URL = 'https://github.com/topless/topless-pro';
 const filters: Array<DressCode | 'all'> = ['all', ...DRESS_CODES];
 
 export function HomePage() {
-  useDocumentTitle('topless.pro — Know before you go');
+  useDocumentTitle(SITE_TITLE);
 
   const [beaches, setBeaches] = useState<Beach[]>([]);
   const [query, setQuery] = useState('');
@@ -64,21 +66,21 @@ export function HomePage() {
 
   // An empty directory shows no dead controls: no search, filters or count.
   const launchState = directoryStatus === 'ready' && beaches.length === 0;
+  const count = visibleBeaches.length;
 
   return (
     <>
       <section className="hero">
-        <p className="eyebrow">A practical beach directory</p>
-        <h1>Know what to wear. Know where you’re welcome.</h1>
-        <p className="hero-copy">Clear, community-maintained clothing guidance for beaches worldwide.</p>
+        <p className="eyebrow">Beach dress-code reference</p>
+        <h1>Allowed, tolerated, or just hearsay?</h1>
+        <p className="hero-copy">{SITE_DESCRIPTION}</p>
         {!launchState && (
           <label className="search-box">
-            <span>Search beaches, cities or countries</span>
+            <span>Search by beach, town or country</span>
             <input
               type="search"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
-              placeholder="Try Mykonos, Geneva or France"
               enterKeyHint="search"
               autoCapitalize="none"
               autoComplete="off"
@@ -100,12 +102,12 @@ export function HomePage() {
                 ? 'Directory unavailable'
                 : launchState
                   ? ''
-                  : `${visibleBeaches.length} result${visibleBeaches.length === 1 ? '' : 's'}`}
+                  : `${count} ${count === 1 ? 'beach' : 'beaches'}`}
           </span>
         </div>
 
         {!launchState && (
-          <div className="filter-row" role="group" aria-label="Filter by clothing guidance">
+          <div className="filter-row" role="group" aria-label="Filter by what to wear">
             {filters.map((item) => (
               <button
                 key={item}
@@ -134,9 +136,9 @@ export function HomePage() {
         {launchState && (
           <section className="launch-state" aria-labelledby="launch-state-title">
             <div className="launch-state-copy">
-              <p className="eyebrow">Directory in verification</p>
-              <h3 id="launch-state-title">The first beach guides are being checked.</h3>
-              <p>We’re confirming current rules, local practice and reliable sources before publishing each listing.</p>
+              <p className="eyebrow">Before launch</p>
+              <h3 id="launch-state-title">A beach is listed only when we can show the evidence.</h3>
+              <p>Every listing needs a source for its dress-code claim, a short summary and a last-checked date. The first listings — Sithonia, Chalkidiki, Greece — are being sourced now.</p>
               <p className="launch-status"><span aria-hidden="true" />No beaches are published yet</p>
               <p className="launch-next">
                 Know a source for a beach? <a href={REPO_URL} rel="noreferrer">Suggest it on GitHub<span aria-hidden="true"> ↗</span></a>

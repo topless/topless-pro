@@ -22,7 +22,7 @@ async function renderAndSubmit(message = 'The posted guidance changed this week.
     </MemoryRouter>,
   );
   await screen.findByRole('heading', { name: 'Example Beach' });
-  fireEvent.change(screen.getByLabelText('What should we update?'), {
+  fireEvent.change(screen.getByLabelText('What did you see, and when?'), {
     target: { value: message },
   });
   fireEvent.click(screen.getByRole('button', { name: 'Submit correction' }));
@@ -45,7 +45,7 @@ describe('BeachPage', () => {
 
     expect(await screen.findByRole('heading', { name: 'Example Beach' })).toBeInTheDocument();
     expect(getBeach).toHaveBeenCalledWith('example-beach');
-    expect(document.title).toBe('Example Beach, Greece — topless.pro');
+    expect(document.title).toBe('Example Beach, Crete: Topless accepted — topless.pro');
     expect(screen.getByText('21 July 2026').closest('time')).toHaveAttribute('dateTime', '2026-07-21');
     expect(screen.getByRole('link', { name: /Open in maps/ })).toHaveAttribute(
       'href',
@@ -53,12 +53,12 @@ describe('BeachPage', () => {
     );
     expect(screen.getByRole('heading', { name: 'What this means' })).toBeInTheDocument();
     // The label appears twice: as the chip and again in "What this means".
-    expect(screen.getAllByText('Topless permitted')[0]).toHaveClass('chip-topless-permitted');
+    expect(screen.getAllByText('Topless accepted')[0]).toHaveClass('chip-topless-permitted');
 
-    fireEvent.change(screen.getByLabelText('Email (optional)'), {
+    fireEvent.change(screen.getByLabelText(/Email \(optional\)/), {
       target: { value: 'traveller@example.com' },
     });
-    fireEvent.change(screen.getByLabelText('What should we update?'), {
+    fireEvent.change(screen.getByLabelText('What did you see, and when?'), {
       target: { value: 'The posted guidance changed this week.' },
     });
     fireEvent.click(screen.getByRole('button', { name: 'Submit correction' }));
@@ -71,7 +71,7 @@ describe('BeachPage', () => {
         website: '',
       });
     });
-    expect(await screen.findByRole('status')).toHaveTextContent('ready for review');
+    expect(await screen.findByRole('status')).toHaveTextContent('check it before changing anything');
   });
 
   it('tells a rate-limited visitor to wait instead of retrying immediately', async () => {

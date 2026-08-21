@@ -27,7 +27,7 @@ export function BeachPage() {
   const [submitting, setSubmitting] = useState(false);
 
   useDocumentTitle(
-    beach === undefined ? null : beach === null ? 'Beach not found — topless.pro' : formatBeachTitle(beach),
+    beach === undefined ? null : beach === null ? 'No listing here — topless.pro' : formatBeachTitle(beach),
   );
 
   useEffect(() => {
@@ -63,7 +63,7 @@ export function BeachPage() {
         website: String(form.get('website') ?? ''),
       });
       formElement.reset();
-      setStatus('Thanks — your report is ready for review.');
+      setStatus('Thanks. We’ve got your report and will check it before changing anything.');
     } catch (error) {
       if (error instanceof ApiError && error.status === 429) {
         setStatus('You’ve sent several reports in a short time. Please wait a minute and try again.');
@@ -87,9 +87,10 @@ export function BeachPage() {
   }
   if (beach === null) {
     return (
-      <section className="content-page">
+      <section className="content-page prose">
         <p className="eyebrow">Not found</p>
-        <h1>Beach not found</h1>
+        <h1>No listing here.</h1>
+        <p>It may have been removed, or it hasn’t been published yet.</p>
         <Link className="back-link" to="/"><span aria-hidden="true">← </span>All beaches</Link>
       </section>
     );
@@ -139,8 +140,8 @@ export function BeachPage() {
       </dl>
 
       <div className="correction-panel">
-        <h2>Something changed?</h2>
-        <p>Send a correction. Reports are reviewed before publication.</p>
+        <h2>Is this wrong or out of date?</h2>
+        <p>Tell us what you saw and when. A link to signage or an official page helps most. We check every report before changing a listing.</p>
         <details>
           <summary>Report a change</summary>
           <form onSubmit={onSubmit}>
@@ -148,11 +149,18 @@ export function BeachPage() {
               Leave this field blank
               <input type="text" name="website" tabIndex={-1} autoComplete="off" />
             </label>
-            <label>Email (optional)<input type="email" name="email" autoComplete="email" /></label>
-            <label>What should we update?<textarea name="message" required minLength={10} maxLength={4000} rows={5} /></label>
+            <label>
+              Email (optional) <small>— only if you’d like a reply</small>
+              <input type="email" name="email" autoComplete="email" />
+            </label>
+            <label>
+              What did you see, and when?
+              <textarea name="message" required minLength={10} maxLength={4000} rows={5} />
+            </label>
             <button type="submit">
               {submitting ? 'Sending…' : 'Submit correction'}
             </button>
+            <p className="form-note">We keep your message, and your email if you give one, only to review this report and reply. Your IP address is used to limit repeat submissions and isn’t stored with your report.</p>
             <p className="form-status" role="status" aria-live="polite">{status}</p>
           </form>
         </details>
