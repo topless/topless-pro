@@ -18,7 +18,7 @@ type AppContext = Context<{ Bindings: Env }>;
 const app = new Hono<{ Bindings: Env }>();
 
 const BEACH_COLUMNS = `
-  id, slug, name, country_code AS countryCode, country_name AS countryName,
+  slug, name, country_code AS countryCode, country_name AS countryName,
   region, municipality, latitude, longitude, dress_code AS dressCode,
   recognition, confidence, summary, facilities_json AS facilitiesJson,
   source_url AS sourceUrl, last_verified_at AS lastVerifiedAt
@@ -58,7 +58,6 @@ function isLocalHostname(hostname: string): boolean {
 }
 
 interface BeachRow {
-  id: string;
   slug: string;
   name: string;
   countryCode: string;
@@ -106,7 +105,6 @@ function parseFacilities(value: string): string[] {
 
 function mapBeach(row: BeachRow): Beach {
   const beach: Beach = {
-    id: row.id,
     slug: row.slug,
     name: row.name,
     countryCode: row.countryCode,
@@ -454,7 +452,7 @@ app.post('/api/corrections', async (c) => {
   }
 
   const result = await c.env.DB.prepare(`
-    INSERT INTO corrections (id, beach_slug, email, message)
+    INSERT INTO submissions (id, beach_slug, email, message)
     SELECT ?, slug, ?, ?
     FROM beaches
     WHERE slug = ? AND published = 1

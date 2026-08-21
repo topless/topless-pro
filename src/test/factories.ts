@@ -2,7 +2,6 @@ import type { Beach } from '../types';
 
 export function makeBeach(overrides: Partial<Beach> = {}): Beach {
   return {
-    id: 'beach',
     slug: 'example-beach',
     name: 'Example Beach',
     countryCode: 'GR',

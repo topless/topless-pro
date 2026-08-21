@@ -243,7 +243,7 @@ describe('topless.pro Worker', () => {
     expect(nonexistent.status).toBe(404);
 
     const count = await env.DB.prepare(
-      'SELECT count(*) AS count FROM corrections WHERE beach_slug = ?',
+      'SELECT count(*) AS count FROM submissions WHERE beach_slug = ?',
     ).bind('not-a-real-beach').first<number>('count');
     expect(count).toBe(0);
   });
@@ -267,7 +267,7 @@ describe('topless.pro Worker', () => {
     expect(valid.status).toBe(201);
 
     const stored = await env.DB.prepare(
-      'SELECT count(*) AS count FROM corrections WHERE beach_slug = ?',
+      'SELECT count(*) AS count FROM submissions WHERE beach_slug = ?',
     ).bind('paradise-beach-mykonos').first<number>('count');
     expect(stored).toBe(1);
 
@@ -288,7 +288,7 @@ describe('topless.pro Worker', () => {
     expect(honeypot.status).toBe(201);
 
     const afterHoneypot = await env.DB.prepare(
-      'SELECT count(*) AS count FROM corrections WHERE beach_slug = ?',
+      'SELECT count(*) AS count FROM submissions WHERE beach_slug = ?',
     ).bind('paradise-beach-mykonos').first<number>('count');
     expect(afterHoneypot).toBe(1);
   });
@@ -315,5 +315,56 @@ describe('topless.pro Worker', () => {
     expect(responses.slice(0, 5).every((response) => response.status === 201)).toBe(true);
     expect(responses[5].status).toBe(429);
     expect(responses[5].headers.get('Retry-After')).toBe('60');
+  });
+it('keeps unpublished beaches out of the API, the pages and the sitemap', async () => {
+    const directory = await exports.default.fetch('https://topless.pro/api/beaches');
+    const slugs = ((await directory.json()) as Array<{ slug: string }>).map((beach) => beach.slug);
+    expect(slugs).toContain('red-beach-matala');
+    expect(slugs).not.toContain('demo-unpublished-cove');
+
+    const detail = await exports.default.fetch('https://topless.pro/api/beaches/demo-unpublished-cove');
+    expect(detail.status).toBe(404);
+
+    const page = await exports.default.fetch('https://topless.pro/beaches/demo-unpublished-cove');
+    expect(page.status).toBe(404);
+    await expect(page.text()).resolves.toContain('<meta name="robots" content="noindex">');
+
+    const sitemap = await exports.default.fetch('https://topless.pro/sitemap.xml');
+    await expect(sitemap.text()).resolves.not.toContain('demo-unpublished-cove');
+
+    const report = await exports.default.fetch(
+      new Request('https://topless.pro/api/corrections', {
+        method: 'POST',
+        headers: { ...jsonHeaders, 'CF-Connecting-IP': '192.0.2.7' },
+        body: JSON.stringify({
+          beachSlug: 'demo-unpublished-cove',
+          message: 'This listing is not public yet, so this report must not be stored.',
+        }),
+      }),
+    );
+    expect(report.status).toBe(404);
+    const stored = await env.DB.prepare(
+      'SELECT count(*) AS count FROM submissions WHERE beach_slug = ?',
+    ).bind('demo-unpublished-cove').first<number>('count');
+    expect(stored).toBe(0);
+  });
+
+  it('dates sitemap entries from the row timestamp', async () => {
+    await env.DB.prepare(
+      "UPDATE beaches SET updated_at = '2026-03-04 05:06:07' WHERE slug = 'red-beach-matala'",
+    ).run();
+    const sitemap = await exports.default.fetch('https://topless.pro/sitemap.xml');
+    await expect(sitemap.text()).resolves.toContain(
+      '<url><loc>https://topless.pro/beaches/red-beach-matala</loc><lastmod>2026-03-04</lastmod></url>',
+    );
+  });
+
+  it('sends exactly the intended Content-Security-Policy', async () => {
+    const response = await exports.default.fetch('https://topless.pro/');
+    expect(response.headers.get('Content-Security-Policy')).toBe(
+      "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; "
+      + "connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; "
+      + 'upgrade-insecure-requests',
+    );
   });
 });
