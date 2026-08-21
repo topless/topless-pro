@@ -1,14 +1,23 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ApiError, getBeach, submitCorrection } from '../lib/api';
-import { confidenceLabels, dressCodeLabels, formatBeachLocation, recognitionLabels } from '../lib/labels';
+import { useDocumentTitle } from '../lib/document-title';
+import { confidenceLabels, dressCodeLabels, formatBeachLocation, formatBeachTitle, formatDate, recognitionLabels } from '../lib/labels';
 import type { Beach } from '../types';
+
+function mapsUrl(beach: Pick<Beach, 'latitude' | 'longitude'>): string {
+  return `https://www.google.com/maps/search/?api=1&query=${beach.latitude},${beach.longitude}`;
+}
 
 export function BeachPage() {
   const { slug = '' } = useParams();
   const [beach, setBeach] = useState<Beach | null>();
   const [status, setStatus] = useState('');
   const [submitting, setSubmitting] = useState(false);
+
+  useDocumentTitle(
+    beach === undefined ? null : beach === null ? 'Beach not found — topless.pro' : formatBeachTitle(beach),
+  );
 
   useEffect(() => {
     let cancelled = false;
@@ -29,6 +38,7 @@ export function BeachPage() {
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (submitting) return;
     const formElement = event.currentTarget;
     const form = new FormData(formElement);
     setSubmitting(true);
@@ -57,11 +67,18 @@ export function BeachPage() {
   }
 
   if (beach === undefined) return <section className="content-page"><p>Loading beach…</p></section>;
-  if (beach === null) return <section className="content-page"><h1>Beach not found</h1><Link to="/">Return to the directory</Link></section>;
+  if (beach === null) {
+    return (
+      <section className="content-page">
+        <h1>Beach not found</h1>
+        <Link className="back-link" to="/">Return to the directory</Link>
+      </section>
+    );
+  }
 
   return (
     <section className="content-page beach-detail">
-      <Link className="back-link" to="/">← All beaches</Link>
+      <Link className="back-link" to="/"><span aria-hidden="true">← </span>All beaches</Link>
       <p className="eyebrow">{formatBeachLocation(beach)}</p>
       <h1>{beach.name}</h1>
       <div className="badges large">
@@ -72,12 +89,25 @@ export function BeachPage() {
 
       <dl className="facts">
         <div><dt>Confidence</dt><dd>{confidenceLabels[beach.confidence]}</dd></div>
-        <div><dt>Last verified</dt><dd>{beach.lastVerifiedAt ?? 'Not recorded'}</dd></div>
-        <div><dt>Coordinates</dt><dd>{beach.latitude}, {beach.longitude}</dd></div>
-        <div><dt>Facilities</dt><dd>{beach.facilities.length ? beach.facilities.join(', ') : 'Not recorded'}</dd></div>
+        <div>
+          <dt>Last verified</dt>
+          <dd>{beach.lastVerifiedAt ? <time dateTime={beach.lastVerifiedAt}>{formatDate(beach.lastVerifiedAt)}</time> : 'Not recorded'}</dd>
+        </div>
+        <div>
+          <dt>Location</dt>
+          <dd>
+            <a href={mapsUrl(beach)} rel="noreferrer">Open in maps<span aria-hidden="true"> ↗</span></a>
+            <small>{beach.latitude}, {beach.longitude}</small>
+          </dd>
+        </div>
+        {beach.facilities.length > 0 && (
+          <div><dt>Facilities</dt><dd>{beach.facilities.join(', ')}</dd></div>
+        )}
       </dl>
 
-      {beach.sourceUrl && <a className="source-link" href={beach.sourceUrl} target="_blank" rel="noreferrer">View supporting source ↗</a>}
+      {beach.sourceUrl && (
+        <a className="source-link" href={beach.sourceUrl} rel="noreferrer">View supporting source<span aria-hidden="true"> ↗</span></a>
+      )}
 
       <div className="correction-panel">
         <h2>Something changed?</h2>
@@ -87,12 +117,12 @@ export function BeachPage() {
             Leave this field blank
             <input type="text" name="website" tabIndex={-1} autoComplete="off" />
           </label>
-          <label>Email (optional)<input type="email" name="email" /></label>
-          <label>What should we update?<textarea name="message" required minLength={10} rows={5} /></label>
-          <button type="submit" disabled={submitting}>
+          <label>Email (optional)<input type="email" name="email" autoComplete="email" /></label>
+          <label>What should we update?<textarea name="message" required minLength={10} maxLength={4000} rows={5} /></label>
+          <button type="submit">
             {submitting ? 'Sending…' : 'Submit correction'}
           </button>
-          {status && <p role="status">{status}</p>}
+          <p className="form-status" role="status" aria-live="polite">{status}</p>
         </form>
       </div>
     </section>

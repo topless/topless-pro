@@ -1,4 +1,8 @@
+import { useDocumentTitle } from '../lib/document-title';
+
 export function AboutPage() {
+  useDocumentTitle('About — topless.pro');
+
   return (
     <section className="content-page prose">
       <p className="eyebrow">About topless.pro</p>

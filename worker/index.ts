@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
 import type { Context } from 'hono';
-import { confidenceLabels, dressCodeLabels, formatBeachLocation, recognitionLabels } from '../src/lib/labels';
+import { confidenceLabels, dressCodeLabels, formatBeachLocation, formatBeachTitle, recognitionLabels } from '../src/lib/labels';
 import type { Beach, Confidence, DressCode, Recognition } from '../src/types';
 
 type AppContext = Context<{ Bindings: Env }>;
@@ -495,7 +495,7 @@ app.get('/beaches/:slug', async (c) => {
 
   const description = describeBeach(beach);
   return renderShell(c, {
-    title: `${beach.name}, ${beach.countryName} — topless.pro`,
+    title: formatBeachTitle(beach),
     description,
     canonicalPath: `/beaches/${beach.slug}`,
     jsonLd: beachJsonLd(beach, description),

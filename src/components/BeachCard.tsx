@@ -4,10 +4,10 @@ import type { Beach } from '../types';
 
 export function BeachCard({ beach }: { beach: Beach }) {
   return (
-    <Link className="beach-card" to={`/beaches/${beach.slug}`}>
+    <article className="beach-card">
       <div>
         <p className="eyebrow">{formatBeachLocation(beach)}</p>
-        <h2>{beach.name}</h2>
+        <h2><Link to={`/beaches/${beach.slug}`}>{beach.name}</Link></h2>
       </div>
       <div className="badges">
         <span className={`badge badge-${beach.dressCode}`}>{dressCodeLabels[beach.dressCode]}</span>
@@ -15,6 +15,6 @@ export function BeachCard({ beach }: { beach: Beach }) {
       </div>
       <p>{beach.summary}</p>
       <span className="confidence">{confidenceLabels[beach.confidence]}</span>
-    </Link>
+    </article>
   );
 }

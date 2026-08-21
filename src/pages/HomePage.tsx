@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { BeachCard } from '../components/BeachCard';
 import { getBeaches } from '../lib/api';
+import { useDocumentTitle } from '../lib/document-title';
 import { dressCodeLabels } from '../lib/labels';
 import { foldSearchText } from '../lib/search';
 import type { Beach, DressCode } from '../types';
@@ -15,14 +16,18 @@ const filters: Array<DressCode | 'all'> = [
 ];
 
 export function HomePage() {
+  useDocumentTitle('topless.pro — Know before you go');
+
   const [beaches, setBeaches] = useState<Beach[]>([]);
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState<DressCode | 'all'>('all');
   const [error, setError] = useState('');
   const [directoryStatus, setDirectoryStatus] = useState<'loading' | 'ready' | 'error'>('loading');
 
-  useEffect(() => {
+  const load = useCallback(() => {
     let active = true;
+    setDirectoryStatus('loading');
+    setError('');
 
     getBeaches()
       .then((result) => {
@@ -41,6 +46,8 @@ export function HomePage() {
     };
   }, []);
 
+  useEffect(() => load(), [load]);
+
   const visibleBeaches = useMemo(() => {
     const needle = foldSearchText(query.trim());
     return beaches.filter((beach) => {
@@ -50,15 +57,28 @@ export function HomePage() {
     });
   }, [beaches, filter, query]);
 
+  function clearFilters() {
+    setFilter('all');
+    setQuery('');
+  }
+
   return (
     <>
       <section className="hero">
         <p className="eyebrow">A practical beach directory</p>
-        <h1>Know what to wear.<br />Know where you’re welcome.</h1>
+        <h1>Know what to wear. <br />Know where you’re welcome.</h1>
         <p className="hero-copy">Clear, community-maintained clothing guidance for beaches worldwide.</p>
         <label className="search-box">
           <span>Search beaches, cities or countries</span>
-          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Try Mykonos, Geneva or France" />
+          <input
+            type="search"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="Try Mykonos, Geneva or France"
+            enterKeyHint="search"
+            autoCapitalize="none"
+            autoComplete="off"
+          />
         </label>
       </section>
 
@@ -77,7 +97,7 @@ export function HomePage() {
           </span>
         </div>
 
-        <div className="filter-row" aria-label="Filter by clothing guidance">
+        <div className="filter-row" role="group" aria-label="Filter by clothing guidance">
           {filters.map((item) => (
             <button
               key={item}
@@ -90,7 +110,12 @@ export function HomePage() {
           ))}
         </div>
 
-        {error && <p className="error">{error}</p>}
+        {directoryStatus === 'error' && (
+          <div className="error" role="alert">
+            <p style={{ margin: 0 }}>{error}</p>
+            <button type="button" onClick={() => load()}>Try again</button>
+          </div>
+        )}
         {directoryStatus === 'loading' && <p className="directory-status" role="status">Checking the latest directory…</p>}
         <div className="beach-grid">
           {visibleBeaches.map((beach) => <BeachCard beach={beach} key={beach.id} />)}
@@ -116,7 +141,12 @@ export function HomePage() {
             </div>
           </section>
         )}
-        {directoryStatus === 'ready' && beaches.length > 0 && visibleBeaches.length === 0 && <p className="empty-state">No beaches match those filters yet.</p>}
+        {directoryStatus === 'ready' && beaches.length > 0 && visibleBeaches.length === 0 && (
+          <div className="empty-state">
+            <p style={{ margin: 0 }}>No beaches match those filters yet.</p>
+            <button type="button" onClick={clearFilters}>Show all beaches</button>
+          </div>
+        )}
       </section>
     </>
   );

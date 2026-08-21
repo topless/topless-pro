@@ -78,7 +78,7 @@ describe('HomePage', () => {
     expect(screen.getByText('Unknown or disputed')).toBeInTheDocument();
   });
 
-  it('keeps an API failure distinct from an empty directory', async () => {
+  it('keeps an API failure distinct from an empty directory and offers a retry', async () => {
     vi.mocked(getBeaches).mockRejectedValueOnce(new Error('Unavailable'));
 
     render(
@@ -87,8 +87,38 @@ describe('HomePage', () => {
       </MemoryRouter>,
     );
 
-    expect(await screen.findByText('We could not load the directory. Please try again.')).toBeInTheDocument();
+    expect(await screen.findByRole('alert')).toHaveTextContent('We could not load the directory. Please try again.');
     expect(screen.getByText('Directory unavailable')).toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: 'The first beach guides are being checked.' })).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Try again' }));
+    expect(await screen.findByText('Mystery Beach')).toBeInTheDocument();
+  });
+
+  it('lets a visitor clear a filter that matches nothing', async () => {
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>,
+    );
+
+    await screen.findByText('Mystery Beach');
+    fireEvent.click(screen.getByRole('button', { name: 'Swimwear required' }));
+    expect(screen.getByText('No beaches match those filters yet.')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Show all beaches' }));
+    expect(screen.getByText('Mystery Beach')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'All beaches' })).toHaveAttribute('aria-pressed', 'true');
+  });
+
+  it('sets the document title', async () => {
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>,
+    );
+
+    await screen.findByText('Mystery Beach');
+    expect(document.title).toBe('topless.pro — Know before you go');
   });
 });
