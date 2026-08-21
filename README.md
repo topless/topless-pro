@@ -103,14 +103,10 @@ npm audit
 
 ## Cloudflare configuration
 
-Create the D1 database only when ready to configure Cloudflare:
-
-```bash
-npx wrangler login
-npx wrangler d1 create topless-pro-db
-```
-
-Copy the returned database ID into `wrangler.jsonc`. The committed `REPLACE_WITH_D1_DATABASE_ID` value intentionally prevents an accidental production deployment.
+`wrangler.jsonc` is wired to the production account: the committed D1 `database_id` is the
+live database and the custom-domain routes point at `topless.pro`. There is no placeholder
+guard any more — `npm run deploy` ships straight to production, so treat it as a production
+action and run it only from a clean, reviewed `main`.
 
 The correction rate limiter uses namespace ID `1001`, which is a project-defined positive integer. Change it before deployment if that identifier is already used for another rate limiter in the same Cloudflare account.
 

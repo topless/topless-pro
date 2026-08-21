@@ -3,7 +3,6 @@
   "name": "topless-pro",
   "main": "worker/index.ts",
   "compatibility_date": "2026-07-24",
-  "compatibility_flags": ["nodejs_compat"],
   "routes": [
     {
       "pattern": "topless.pro",
