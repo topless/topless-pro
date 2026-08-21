@@ -53,7 +53,7 @@ These shaped the sequence; each was a choice with a stated default, and the defa
   importable functions with a workerd test that executes its SQL twice; a plan/diff script;
   `data:status`; a JSON Schema for editor autocomplete; validator gains slug length and
   no-future-date checks; `data/README.md` corrected. *Gate: M1.*
-- [~] **M3 · Source and publish the Sithonia pilot.** (licence, PR template and style guide shipped with M5; sourcing in progress) Summary style guide and sourcing
+- [x] **M3 · Source and publish the Sithonia pilot.** Outcome: one of seven met the policy (Kavourotrypes); five became drafts with no claim, Sarti keeps one weak community report unpublished. Summary style guide and sourcing
   checklist first; `data/LICENSE` (CC BY 4.0) and a PR template with the evidence checklist;
   then a source for each candidate's dress-code claim, a summary and a date, publishing only
   where the policy holds. Research-bound; a partial result is expected. *Gate: decisions 5, 9.*
