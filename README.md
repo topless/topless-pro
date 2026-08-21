@@ -19,8 +19,13 @@ Each record also carries a recognition level (`official`, `tolerated`, `communit
 - Cloudflare D1 for beach records and correction submissions
 - Cloudflare Static Assets binding for SPA routing
 - Native Workers rate limiting and a form honeypot for correction submissions
+- Worker-injected page metadata: per-route titles, descriptions, canonical URLs,
+  OpenGraph tags, and schema.org `Beach` JSON-LD, plus honest 404s with `noindex`
+  for unknown paths and unpublished beaches
+- Security headers on every response (HSTS, nosniff, frame denial, no-referrer,
+  restrictive Permissions-Policy) and a strict CSP outside local development
 - Vitest UI tests plus Worker/D1 integration tests running in `workerd`
-- GitHub Actions validation
+- GitHub Actions validation, including `npm audit` at high severity
 
 The Worker exposes:
 
@@ -28,6 +33,7 @@ The Worker exposes:
 - `GET /api/beaches`
 - `GET /api/beaches/:slug`
 - `POST /api/corrections`
+- `GET /robots.txt` and `GET /sitemap.xml` (generated from published listings)
 
 ## Requirements
 
@@ -123,9 +129,22 @@ The remote migration command applies schema only. There is intentionally no remo
 
 After the first approved Worker deployment, open the Cloudflare dashboard, select the `topless-pro` Worker, then add `topless.pro` and optionally `www.topless.pro` as custom domains.
 
+## Post-deploy check
+
+Cloudflare can serve a zone-managed robots.txt (the "content signals" feature) in
+front of the Worker. After deploying, fetch `https://topless.pro/robots.txt` and
+confirm the `Sitemap:` line from the Worker survives; if the managed file replaces
+it, disable the managed robots.txt in the Cloudflare dashboard.
+
 ## Suggested next steps
 
-1. Research and import verified records with authoritative sources.
-2. Add protected moderation endpoints and an editorial audit trail.
-3. Add Turnstile if the rate limiter and honeypot do not sufficiently control spam.
-4. Add map browsing once the directory has enough reliable entries.
+1. Re-source the Sithonia pilot to the evidence policy in `data/README.md` and
+   publish the first verified listings.
+2. Treat `data/` as the editorial source of truth: pull requests are the
+   moderation queue and review history is the audit trail, with D1 as a
+   rebuildable projection. Correction submissions feed PRs.
+3. Add server-side filtering and pagination to `GET /api/beaches` before
+   importing a dataset larger than a few hundred rows; the client currently
+   filters the full list in memory.
+4. Add Turnstile if the rate limiter and honeypot stop controlling spam.
+5. Add map browsing once the directory has enough reliable entries.
