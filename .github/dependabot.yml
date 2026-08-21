@@ -5,13 +5,9 @@ updates:
     schedule:
       interval: weekly
     groups:
+      # Grouped so compatibility_date in wrangler.jsonc can advance with them.
       cloudflare:
         patterns:
-          - "wrangler"
-          - "@cloudflare/*"
-      dev-dependencies:
-        dependency-type: development
-        exclude-patterns:
           - "wrangler"
           - "@cloudflare/*"
   - package-ecosystem: github-actions

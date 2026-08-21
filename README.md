@@ -76,21 +76,9 @@ This cleanup command always targets local D1 state and is not a production migra
 
 ## Research beach candidates
 
-Editorial research is stored under `data/`, organized by country and locality. The first
-pilot is `data/gr/chalkidiki/sithonia/beaches.json`.
-
-The candidate format mirrors the existing D1 beach fields. Unknown required values stay
-`null`, unpublished candidates are never imported automatically, and the validator reports
-which values are still missing.
-
-See `data/README.md` for the format and run:
-
-```bash
-npm run data:validate
-```
-
-To validate, generate idempotent SQL, and import complete candidates into local
-D1 only:
+Editorial research lives under `data/`, organized by country and locality; the format,
+evidence policy, and workflow are documented in `data/README.md`. The one command to
+validate, generate SQL, and import complete candidates into local D1:
 
 ```bash
 npm run db:import:local
