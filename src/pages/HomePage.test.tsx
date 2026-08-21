@@ -61,6 +61,30 @@ describe('HomePage', () => {
     expect(screen.queryByText('Official Beach')).not.toBeInTheDocument();
   });
 
+  it('matches unaccented search queries against accented beach names', async () => {
+    vi.mocked(getBeaches).mockResolvedValueOnce([
+      { ...beaches[0], id: 'accented', slug: 'kallithea', name: 'Kallithéa' },
+    ]);
+
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>,
+    );
+
+    expect(await screen.findByText('Kallithéa')).toBeInTheDocument();
+
+    fireEvent.change(screen.getByLabelText('Search beaches, cities or countries'), {
+      target: { value: 'kallithea' },
+    });
+    expect(screen.getByText('Kallithéa')).toBeInTheDocument();
+
+    fireEvent.change(screen.getByLabelText('Search beaches, cities or countries'), {
+      target: { value: 'somewhere-else' },
+    });
+    expect(screen.queryByText('Kallithéa')).not.toBeInTheDocument();
+  });
+
   it('shows the verification launch state only after an empty directory loads', async () => {
     vi.mocked(getBeaches).mockResolvedValueOnce([]);
 
