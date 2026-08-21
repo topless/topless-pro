@@ -1,6 +1,16 @@
 import { Hono } from 'hono';
 import type { Context } from 'hono';
-import { confidenceLabels, dressCodeLabels, formatBeachLocation, recognitionLabels } from '../src/lib/labels';
+import {
+  ABOUT_DESCRIPTION,
+  ABOUT_TITLE,
+  SITE_DESCRIPTION,
+  SITE_TITLE,
+  confidenceLabels,
+  dressCodeLabels,
+  formatBeachLocation,
+  formatBeachTitle,
+  recognitionLabels,
+} from '../src/lib/labels';
 import type { Beach, Confidence, DressCode, Recognition } from '../src/types';
 
 type AppContext = Context<{ Bindings: Env }>;
@@ -19,8 +29,6 @@ const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const CANONICAL_HOST = 'topless.pro';
 const WWW_HOST = `www.${CANONICAL_HOST}`;
 const CANONICAL_ORIGIN = `https://${CANONICAL_HOST}`;
-const SITE_TITLE = 'topless.pro — Know before you go';
-const SITE_DESCRIPTION = 'Clear, community-maintained clothing guidance for beaches worldwide.';
 const META_DESCRIPTION_LIMIT = 160;
 const PUBLIC_CACHE_CONTROL = 'public, max-age=300, stale-while-revalidate=3600';
 const CONTENT_SECURITY_POLICY = [
@@ -129,26 +137,26 @@ function validateCorrection(value: Record<string, unknown>): CorrectionValidatio
   const message = typeof value.message === 'string' ? value.message.trim() : '';
 
   if (!beachSlug || beachSlug.length > 120 || !SLUG_PATTERN.test(beachSlug)) {
-    return { ok: false, error: 'Invalid beach' };
+    return { ok: false, error: 'We couldn’t tell which beach this report is about.' };
   }
 
   // SQLite's length() counts code points, so the CHECK constraint does too.
   const messageLength = [...message].length;
   if (messageLength < 10 || messageLength > 4_000) {
-    return { ok: false, error: 'Message must be between 10 and 4000 characters' };
+    return { ok: false, error: 'Please write between 10 and 4,000 characters.' };
   }
 
   if (value.website !== undefined && typeof value.website !== 'string') {
-    return { ok: false, error: 'Invalid correction' };
+    return { ok: false, error: 'That report couldn’t be read.' };
   }
 
   if (value.email !== undefined && value.email !== null && typeof value.email !== 'string') {
-    return { ok: false, error: 'Invalid email' };
+    return { ok: false, error: 'That email address doesn’t look right.' };
   }
 
   const email = typeof value.email === 'string' ? value.email.trim() : '';
   if (email && (email.length > 254 || !EMAIL_PATTERN.test(email))) {
-    return { ok: false, error: 'Invalid email' };
+    return { ok: false, error: 'That email address doesn’t look right.' };
   }
 
   return {
@@ -174,7 +182,7 @@ async function readBoundedJson(request: Request): Promise<unknown> {
       throw new RequestBodyError(400, 'Invalid Content-Length');
     }
     if (size > MAX_CORRECTION_BODY_BYTES) {
-      throw new RequestBodyError(413, 'Correction is too large');
+      throw new RequestBodyError(413, 'That report is too long. Please keep it under 4,000 characters.');
     }
   }
 
@@ -194,7 +202,7 @@ async function readBoundedJson(request: Request): Promise<unknown> {
       size += value.byteLength;
       if (size > MAX_CORRECTION_BODY_BYTES) {
         await reader.cancel();
-        throw new RequestBodyError(413, 'Correction is too large');
+        throw new RequestBodyError(413, 'That report is too long. Please keep it under 4,000 characters.');
       }
       chunks.push(value);
     }
@@ -424,7 +432,7 @@ app.post('/api/corrections', async (c) => {
   }
 
   if (!isRecord(body)) {
-    return c.json({ error: 'Invalid correction' }, 400);
+    return c.json({ error: 'That report couldn’t be read.' }, 400);
   }
 
   if (typeof body.website === 'string' && body.website.trim()) {
@@ -460,7 +468,7 @@ app.post('/api/corrections', async (c) => {
     .run();
 
   if (result.meta.changes === 0) {
-    return c.json({ error: 'Beach not found' }, 404);
+    return c.json({ error: 'We couldn’t find that listing. It may have been removed or not published yet.' }, 404);
   }
 
   return c.json({ ok: true }, 201);
@@ -475,8 +483,8 @@ app.get('/', (c) =>
 
 app.get('/about', (c) =>
   renderShell(c, {
-    title: 'About — topless.pro',
-    description: 'How topless.pro separates official beach rules from tolerated and community-reported customs.',
+    title: ABOUT_TITLE,
+    description: ABOUT_DESCRIPTION,
     canonicalPath: '/about',
   }));
 
@@ -487,7 +495,7 @@ app.get('/beaches/:slug', async (c) => {
   ]);
   if (beach === null) {
     return renderShell(c, {
-      title: 'Beach not found — topless.pro',
+      title: 'No listing here — topless.pro',
       description: SITE_DESCRIPTION,
       noindex: true,
     }, 404, shell);
@@ -495,7 +503,7 @@ app.get('/beaches/:slug', async (c) => {
 
   const description = describeBeach(beach);
   return renderShell(c, {
-    title: `${beach.name}, ${beach.countryName} — topless.pro`,
+    title: formatBeachTitle(beach),
     description,
     canonicalPath: `/beaches/${beach.slug}`,
     jsonLd: beachJsonLd(beach, description),
