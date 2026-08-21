@@ -17,6 +17,14 @@ const RECOGNITION_LEVELS = new Set([
   'disputed',
 ]);
 const CONFIDENCE_LEVELS = new Set(['low', 'medium', 'high']);
+// Hosts that identify a place but cannot support a dress-code claim.
+const LOCATION_PIN_HOSTS = [
+  'maps.app.goo.gl',
+  'goo.gl',
+  'maps.google.com',
+  'www.google.com',
+  'google.com',
+];
 
 const errors = [];
 const drafts = [];
@@ -44,6 +52,17 @@ function isHttpUrl(value) {
   try {
     const url = new URL(value);
     return url.protocol === 'http:' || url.protocol === 'https:';
+  } catch {
+    return false;
+  }
+}
+
+function isLocationPinUrl(value) {
+  try {
+    const url = new URL(value);
+    return LOCATION_PIN_HOSTS.includes(url.hostname)
+      && (url.hostname !== 'www.google.com' || url.pathname.startsWith('/maps'))
+      && (url.hostname !== 'google.com' || url.pathname.startsWith('/maps'));
   } catch {
     return false;
   }
@@ -111,6 +130,12 @@ function validateBeach(file, beach, index) {
   }
   if (beach.sourceUrl !== null && !isHttpUrl(beach.sourceUrl)) {
     addError(file, `${field}.sourceUrl`, 'must be null or an HTTP(S) URL');
+  } else if (beach.sourceUrl !== null && isLocationPinUrl(beach.sourceUrl)) {
+    addError(
+      file,
+      `${field}.sourceUrl`,
+      'is a map pin; it locates the beach but cannot support the dress-code claim',
+    );
   }
   if (beach.lastVerifiedAt !== null && !isIsoDate(beach.lastVerifiedAt)) {
     addError(file, `${field}.lastVerifiedAt`, 'must be null or an ISO date');
@@ -134,6 +159,31 @@ function validateBeach(file, beach, index) {
     drafts.push({ slug: beach.slug, missing });
     if (beach.published === true) {
       addError(file, `${field}.published`, 'cannot be true while required D1 fields are missing');
+    }
+  }
+
+  if (beach.confidence === 'high' && !isNonEmptyString(beach.sourceUrl)) {
+    addError(
+      file,
+      `${field}.confidence`,
+      'high confidence requires a sourceUrl that supports the dress-code claim',
+    );
+  }
+
+  if (beach.published === true) {
+    const requiredToPublish = [
+      ['sourceUrl', isNonEmptyString(beach.sourceUrl)],
+      ['summary', isNonEmptyString(beach.summary)],
+      ['lastVerifiedAt', isNonEmptyString(beach.lastVerifiedAt)],
+    ];
+    for (const [name, present] of requiredToPublish) {
+      if (!present) {
+        addError(
+          file,
+          `${field}.${name}`,
+          `is required before a beach can be published`,
+        );
+      }
     }
   }
 }

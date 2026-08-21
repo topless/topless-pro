@@ -14,10 +14,10 @@
       "longitude": 23.7755545,
       "dressCode": "topless-permitted",
       "recognition": "tolerated",
-      "confidence": "high",
+      "confidence": "medium",
       "summary": null,
       "facilities": [],
-      "sourceUrl": "https://www.blueflag.gr/el/beach/paradeisos",
+      "sourceUrl": null,
       "lastVerifiedAt": null,
       "published": false
     },
@@ -31,7 +31,7 @@
       "confidence": "medium",
       "summary": null,
       "facilities": [],
-      "sourceUrl": "https://maps.app.goo.gl/Zbmw3eaNVo6u4ag69",
+      "sourceUrl": null,
       "lastVerifiedAt": null,
       "published": false
     },
@@ -45,7 +45,7 @@
       "confidence": "medium",
       "summary": null,
       "facilities": [],
-      "sourceUrl": "https://maps.app.goo.gl/6JT1FpHEDrka2XdMA",
+      "sourceUrl": null,
       "lastVerifiedAt": null,
       "published": false
     },
@@ -59,7 +59,7 @@
       "confidence": "medium",
       "summary": null,
       "facilities": [],
-      "sourceUrl": "https://maps.app.goo.gl/Ds898woHWdWvwYTT8",
+      "sourceUrl": null,
       "lastVerifiedAt": null,
       "published": false
     },
@@ -70,10 +70,10 @@
       "longitude": 23.7921952,
       "dressCode": "topless-permitted",
       "recognition": "community-reported",
-      "confidence": "high",
+      "confidence": "medium",
       "summary": null,
       "facilities": [],
-      "sourceUrl": "https://maps.app.goo.gl/jq7Tmm6WrkgpawmSA",
+      "sourceUrl": null,
       "lastVerifiedAt": null,
       "published": false
     },
@@ -84,10 +84,10 @@
       "longitude": 23.9791046,
       "dressCode": "topless-permitted",
       "recognition": "tolerated",
-      "confidence": "high",
+      "confidence": "medium",
       "summary": null,
       "facilities": [],
-      "sourceUrl": "https://maps.app.goo.gl/Wbs5N95fKxeym7rY7",
+      "sourceUrl": null,
       "lastVerifiedAt": null,
       "published": false
     },
@@ -101,7 +101,7 @@
       "confidence": "medium",
       "summary": null,
       "facilities": [],
-      "sourceUrl": "https://maps.app.goo.gl/Hjt3bDFUAehaBT9T6",
+      "sourceUrl": null,
       "lastVerifiedAt": null,
       "published": false
     }

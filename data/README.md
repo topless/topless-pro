@@ -63,6 +63,31 @@ in the beach's identity:
 - `medium` — credible but limited, informal, or not recently reconfirmed.
 - `low` — tentative, old, vague, or based on a single weak report.
 
+## Evidence policy
+
+`sourceUrl` must point at evidence for the **dress-code claim**, not merely for the
+beach's existence. Acceptable sources include municipal or port-authority pages,
+posted signage (photographed and hosted somewhere linkable), operator websites that
+state a policy, or established naturist-organisation listings. Map pins
+(`maps.app.goo.gl`, Google Maps links) identify a place, not a norm — the validator
+rejects them in `sourceUrl`.
+
+Confidence is capped by evidence:
+
+- `high` requires a `sourceUrl` that supports the claim.
+- Personal observation or local knowledge without a citable source is at most
+  `medium` (credible but informal), and second-hand reports are `low`.
+
+Publishing has a stricter bar than D1-readiness. `published: true` additionally
+requires:
+
+- `sourceUrl` — the claim must be supported;
+- `summary` — visitors need context, not just a badge;
+- `lastVerifiedAt` — the date the claim was last checked.
+
+The validator enforces all of the above, and `npm run check` runs it, so CI fails
+on any candidate that breaks policy.
+
 ## Validation
 
 Run:
