@@ -2,7 +2,10 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "topless-pro",
   "main": "worker/index.ts",
-  "compatibility_date": "2026-07-24",
+  // Keep in step with the @cloudflare/* toolchain versions: workers-types
+  // describes the latest runtime, and a stale date here would let TypeScript
+  // accept APIs the deployed worker does not have.
+  "compatibility_date": "2026-08-14",
   "routes": [
     {
       "pattern": "topless.pro",

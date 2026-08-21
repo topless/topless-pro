@@ -18,7 +18,10 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
-      - run: npm audit --audit-level=high
+      # Blocking gate covers only shipped dependencies; a new advisory in the
+      # dev toolchain should not freeze unrelated PRs.
+      - run: npm audit --omit=dev --audit-level=high
+      - run: npm audit --audit-level=high || true
       - run: npm run check
       - run: npm test
       - run: npm run build
