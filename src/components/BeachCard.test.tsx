@@ -16,13 +16,15 @@ describe('BeachCard', () => {
     expect(screen.queryByText(/^,/)).not.toBeInTheDocument();
   });
 
-  it('gives each recognition level its own badge class', () => {
+  it('encodes dress code as a filled chip and recognition as a glyph label', () => {
     render(
       <MemoryRouter>
-        <BeachCard beach={makeBeach({ recognition: 'disputed' })} />
+        <BeachCard beach={makeBeach({ recognition: 'disputed', dressCode: 'nudity-permitted' })} />
       </MemoryRouter>,
     );
 
-    expect(screen.getByText('Disputed')).toHaveClass('badge-recognition-disputed');
+    expect(screen.getByText('Nudity permitted')).toHaveClass('chip-nudity-permitted');
+    expect(screen.getByText('Disputed')).toHaveClass('recog-disputed');
+    expect(screen.getByRole('link', { name: 'Example Beach' })).toHaveAttribute('href', '/beaches/example-beach');
   });
 });

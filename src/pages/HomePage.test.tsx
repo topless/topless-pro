@@ -75,7 +75,12 @@ describe('HomePage', () => {
     expect(await screen.findByRole('heading', { name: 'The first beach guides are being checked.' })).toBeInTheDocument();
     expect(screen.getByText('Directory in verification')).toBeInTheDocument();
     expect(screen.getByText('No beaches are published yet')).toBeInTheDocument();
-    expect(screen.getByText('Unknown or disputed')).toBeInTheDocument();
+    expect(screen.getByText('What to wear')).toBeInTheDocument();
+    expect(screen.getByText('How sure we are')).toBeInTheDocument();
+    expect(screen.getByText('Disputed')).toHaveClass('recog-disputed');
+    // No dead controls while nothing is published.
+    expect(screen.queryByRole('group', { name: 'Filter by clothing guidance' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('searchbox')).not.toBeInTheDocument();
   });
 
   it('keeps an API failure distinct from an empty directory and offers a retry', async () => {

@@ -51,6 +51,9 @@ describe('BeachPage', () => {
       'href',
       'https://www.google.com/maps/search/?api=1&query=35,25',
     );
+    expect(screen.getByRole('heading', { name: 'What this means' })).toBeInTheDocument();
+    // The label appears twice: as the chip and again in "What this means".
+    expect(screen.getAllByText('Topless permitted')[0]).toHaveClass('chip-topless-permitted');
 
     fireEvent.change(screen.getByLabelText('Email (optional)'), {
       target: { value: 'traveller@example.com' },

@@ -1,20 +1,23 @@
 import { Link } from 'react-router-dom';
-import { confidenceLabels, dressCodeLabels, formatBeachLocation, recognitionLabels } from '../lib/labels';
+import { confidenceLabels, dressCodeLabels, formatBeachLocation, formatMonthYear, recognitionLabels } from '../lib/labels';
 import type { Beach } from '../types';
 
 export function BeachCard({ beach }: { beach: Beach }) {
   return (
-    <article className="beach-card">
-      <div>
+    <article className="beach-row">
+      <div className="beach-row-verdict">
+        <span className={`chip chip-${beach.dressCode}`}>{dressCodeLabels[beach.dressCode]}</span>
+      </div>
+      <div className="beach-row-body">
         <p className="eyebrow">{formatBeachLocation(beach)}</p>
         <h2><Link to={`/beaches/${beach.slug}`}>{beach.name}</Link></h2>
+        <p className="beach-row-meta">
+          <span className={`recog recog-${beach.recognition}`}>{recognitionLabels[beach.recognition]}</span>
+          <span>{confidenceLabels[beach.confidence]}</span>
+          {beach.lastVerifiedAt && <span>checked {formatMonthYear(beach.lastVerifiedAt)}</span>}
+        </p>
+        {beach.summary && <p className="beach-row-summary">{beach.summary}</p>}
       </div>
-      <div className="badges">
-        <span className={`badge badge-${beach.dressCode}`}>{dressCodeLabels[beach.dressCode]}</span>
-        <span className={`badge badge-recognition-${beach.recognition}`}>{recognitionLabels[beach.recognition]}</span>
-      </div>
-      <p>{beach.summary}</p>
-      <span className="confidence">{confidenceLabels[beach.confidence]}</span>
     </article>
   );
 }

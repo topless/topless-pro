@@ -7,7 +7,7 @@ export function Layout({ children }: { children: ReactNode }) {
   const isFirstRender = useRef(true);
 
   // Client-side navigation keeps the previous scroll position and leaves
-  // focus on the removed element; reset both so a tap on a card opens the
+  // focus on the removed element; reset both so a tap on a row opens the
   // beach page at the top with focus at the start of the new content.
   useEffect(() => {
     if (isFirstRender.current) {
@@ -22,7 +22,8 @@ export function Layout({ children }: { children: ReactNode }) {
     <div className="app-shell">
       <header className="site-header">
         <Link className="brand" to="/" aria-label="topless.pro home">
-          topless<span>.pro</span>
+          <span aria-hidden="true">topless<span>.pro</span></span>
+          <small>Beach dress-code reference</small>
         </Link>
         <Link className="header-link" to="/about">About</Link>
       </header>

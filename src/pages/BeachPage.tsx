@@ -2,7 +2,18 @@ import { FormEvent, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ApiError, getBeach, submitCorrection } from '../lib/api';
 import { useDocumentTitle } from '../lib/document-title';
-import { confidenceLabels, dressCodeLabels, formatBeachLocation, formatBeachTitle, formatDate, recognitionLabels } from '../lib/labels';
+import {
+  confidenceDescriptions,
+  confidenceLabels,
+  dressCodeDescriptions,
+  dressCodeLabels,
+  formatBeachLocation,
+  formatBeachTitle,
+  formatDate,
+  recognitionDescriptions,
+  recognitionLabels,
+  sourceHostname,
+} from '../lib/labels';
 import type { Beach } from '../types';
 
 function mapsUrl(beach: Pick<Beach, 'latitude' | 'longitude'>): string {
@@ -66,12 +77,20 @@ export function BeachPage() {
     }
   }
 
-  if (beach === undefined) return <section className="content-page"><p>Loading beach…</p></section>;
+  if (beach === undefined) {
+    return (
+      <section className="content-page">
+        <p className="eyebrow">Loading</p>
+        <h1>Loading beach…</h1>
+      </section>
+    );
+  }
   if (beach === null) {
     return (
       <section className="content-page">
+        <p className="eyebrow">Not found</p>
         <h1>Beach not found</h1>
-        <Link className="back-link" to="/">Return to the directory</Link>
+        <Link className="back-link" to="/"><span aria-hidden="true">← </span>All beaches</Link>
       </section>
     );
   }
@@ -81,18 +100,32 @@ export function BeachPage() {
       <Link className="back-link" to="/"><span aria-hidden="true">← </span>All beaches</Link>
       <p className="eyebrow">{formatBeachLocation(beach)}</p>
       <h1>{beach.name}</h1>
-      <div className="badges large">
-        <span className={`badge badge-${beach.dressCode}`}>{dressCodeLabels[beach.dressCode]}</span>
-        <span className={`badge badge-recognition-${beach.recognition}`}>{recognitionLabels[beach.recognition]}</span>
+
+      <div className="answer">
+        <span className={`chip chip-lg chip-${beach.dressCode}`}>{dressCodeLabels[beach.dressCode]}</span>
+        <p className="provenance">
+          <span className={`recog recog-${beach.recognition}`}>{recognitionLabels[beach.recognition]}</span>
+          <span>{confidenceLabels[beach.confidence]}</span>
+          {beach.lastVerifiedAt && (
+            <span>checked <time dateTime={beach.lastVerifiedAt}>{formatDate(beach.lastVerifiedAt)}</time></span>
+          )}
+          {beach.sourceUrl && (
+            <a href={beach.sourceUrl} rel="noreferrer">{sourceHostname(beach.sourceUrl)}<span aria-hidden="true"> ↗</span></a>
+          )}
+        </p>
+        <div className="means">
+          <h2>What this means</h2>
+          <ul>
+            <li><strong>{dressCodeLabels[beach.dressCode]}</strong> — {dressCodeDescriptions[beach.dressCode]}</li>
+            <li><strong>{recognitionLabels[beach.recognition]}</strong> — {recognitionDescriptions[beach.recognition]}</li>
+            <li><strong>{confidenceLabels[beach.confidence]}</strong> — {confidenceDescriptions[beach.confidence]}</li>
+          </ul>
+        </div>
       </div>
-      <p className="lead">{beach.summary}</p>
+
+      {beach.summary && <p className="lead">{beach.summary}</p>}
 
       <dl className="facts">
-        <div><dt>Confidence</dt><dd>{confidenceLabels[beach.confidence]}</dd></div>
-        <div>
-          <dt>Last verified</dt>
-          <dd>{beach.lastVerifiedAt ? <time dateTime={beach.lastVerifiedAt}>{formatDate(beach.lastVerifiedAt)}</time> : 'Not recorded'}</dd>
-        </div>
         <div>
           <dt>Location</dt>
           <dd>
@@ -105,25 +138,24 @@ export function BeachPage() {
         )}
       </dl>
 
-      {beach.sourceUrl && (
-        <a className="source-link" href={beach.sourceUrl} rel="noreferrer">View supporting source<span aria-hidden="true"> ↗</span></a>
-      )}
-
       <div className="correction-panel">
         <h2>Something changed?</h2>
         <p>Send a correction. Reports are reviewed before publication.</p>
-        <form onSubmit={onSubmit}>
-          <label className="honeypot" aria-hidden="true">
-            Leave this field blank
-            <input type="text" name="website" tabIndex={-1} autoComplete="off" />
-          </label>
-          <label>Email (optional)<input type="email" name="email" autoComplete="email" /></label>
-          <label>What should we update?<textarea name="message" required minLength={10} maxLength={4000} rows={5} /></label>
-          <button type="submit">
-            {submitting ? 'Sending…' : 'Submit correction'}
-          </button>
-          <p className="form-status" role="status" aria-live="polite">{status}</p>
-        </form>
+        <details>
+          <summary>Report a change</summary>
+          <form onSubmit={onSubmit}>
+            <label className="honeypot" aria-hidden="true">
+              Leave this field blank
+              <input type="text" name="website" tabIndex={-1} autoComplete="off" />
+            </label>
+            <label>Email (optional)<input type="email" name="email" autoComplete="email" /></label>
+            <label>What should we update?<textarea name="message" required minLength={10} maxLength={4000} rows={5} /></label>
+            <button type="submit">
+              {submitting ? 'Sending…' : 'Submit correction'}
+            </button>
+            <p className="form-status" role="status" aria-live="polite">{status}</p>
+          </form>
+        </details>
       </div>
     </section>
   );
