@@ -22,17 +22,33 @@ if (!target) {
 }
 
 function query(sql) {
-  const output = execFileSync(
-    'npx',
-    ['wrangler', 'd1', 'execute', 'DB', ...TARGETS[target].flags, '--json', '--command', sql],
-    { encoding: 'utf8', stdio: ['ignore', 'pipe', 'inherit'] },
-  );
+  let output;
+  try {
+    output = execFileSync(
+      'npx',
+      ['wrangler', 'd1', 'execute', 'DB', ...TARGETS[target].flags, '--json', '--command', sql],
+      // wrangler --json is pretty-printed (about 1 KB per beach row); Node's default
+      // 1 MiB maxBuffer would kill the child at roughly a thousand rows.
+      { encoding: 'utf8', stdio: ['ignore', 'pipe', 'inherit'], maxBuffer: 64 * 1024 * 1024 },
+    );
+  } catch (error) {
+    // With --json wrangler reports failures as JSON on stdout and says nothing on stderr.
+    let reason = error.stdout?.trim() || error.message;
+    try {
+      reason = JSON.parse(reason).error?.text ?? reason;
+    } catch {
+      // Not JSON; show it as is.
+    }
+    console.error(`D1 query failed: ${reason}`);
+    console.error(`If a table is missing, apply the migrations first (npm run db:migrate:${TARGETS[target].label === 'local' ? 'local' : TARGETS[target].label === 'preview' ? 'preview' : 'remote'}).`);
+    process.exit(1);
+  }
   const [first] = JSON.parse(output);
   return first.results;
 }
 
 const files = await loadBeachFiles();
-const existing = query(`SELECT ${COLUMN_NAMES.join(', ')}, updated_at FROM beaches`);
+const existing = query(`SELECT ${COLUMN_NAMES.join(', ')} FROM beaches`);
 const pendingReports = new Map(
   query(
     "SELECT beach_slug, count(*) AS n FROM submissions WHERE status = 'pending' AND beach_slug IS NOT NULL GROUP BY beach_slug",

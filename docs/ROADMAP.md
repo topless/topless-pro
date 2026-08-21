@@ -59,7 +59,7 @@ These shaped the sequence; each was a choice with a stated default, and the defa
   where the policy holds. Research-bound; a partial result is expected. *Gate: decisions 5, 9.*
 - [x] **M4 · One deploy path.** `deploy.yml` on push to `main`: check → migrate → plan →
   import → deploy, token bound at step level, `concurrency: production`, branch protection on
-  `main`; one rehearsal against a `preview_database_id`; additive-only migration rule;
+  `main`; one rehearsal against a `preview_database_id` (done, including a value containing `;` and a line break); additive-only migration rule;
   `db:backup:remote` that excludes emails; import runbook. *Gate: decisions 1–3, M2.*
 - [x] **M5 · Privacy paragraph v1, smoke check, legal lines.** About discloses Workers Logs
   and traces, names the licence and a takedown contact; one disclaimer line under the answer

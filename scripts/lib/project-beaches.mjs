@@ -3,7 +3,7 @@
 //
 // Deliberately free of filesystem and process access: the workerd tests import this
 // module and execute exactly the SQL the importer ships, and the plan script uses the
-// same comparison that CI prints before an import.
+// same comparison the deploy job prints before an import.
 
 // Fields that must be filled before a candidate can be projected into D1.
 // slug and name are hard-validated separately: they may never be null.
@@ -17,31 +17,33 @@ export const REQUIRED_D1_FIELDS = [
 
 // Single source of truth for the projected columns: name in D1 paired with how its
 // value derives from a candidate record. The slug is the primary key.
-export const COLUMNS = [
+const COLUMNS = [
   ['slug', (scope, beach) => beach.slug],
   ['name', (scope, beach) => beach.name],
   ['country_code', (scope) => scope.countryCode],
   ['country_name', (scope) => scope.countryName],
-  ['region', (scope) => scope.region ?? null],
-  ['municipality', (scope) => scope.municipality ?? null],
+  ['region', (scope) => scope.region],
+  ['municipality', (scope) => scope.municipality],
   ['latitude', (scope, beach) => beach.latitude],
   ['longitude', (scope, beach) => beach.longitude],
   ['dress_code', (scope, beach) => beach.dressCode],
   ['recognition', (scope, beach) => beach.recognition],
   ['confidence', (scope, beach) => beach.confidence],
-  ['summary', (scope, beach) => beach.summary ?? null],
-  ['facilities_json', (scope, beach) => JSON.stringify(beach.facilities ?? [])],
-  ['source_url', (scope, beach) => beach.sourceUrl ?? null],
-  ['last_verified_at', (scope, beach) => beach.lastVerifiedAt ?? null],
+  ['summary', (scope, beach) => beach.summary],
+  ['facilities_json', (scope, beach) => JSON.stringify(beach.facilities)],
+  ['source_url', (scope, beach) => beach.sourceUrl],
+  ['last_verified_at', (scope, beach) => beach.lastVerifiedAt],
   ['published', (scope, beach) => (beach.published ? 1 : 0)],
 ];
 export const COLUMN_NAMES = COLUMNS.map(([name]) => name);
-export const UPDATE_COLUMNS = COLUMN_NAMES.filter((name) => name !== 'slug');
+const UPDATE_COLUMNS = COLUMN_NAMES.filter((name) => name !== 'slug');
 
-// D1 rejects any single statement over 100,000 bytes. Rows are grouped well under
-// that so Greek names and long summaries (multi-byte UTF-8) never push a chunk over.
+// D1 rejects any single statement over 100,000 bytes. Chunks are measured in exact UTF-8
+// bytes but capped at half that to leave headroom, since the import endpoint's own
+// accounting is not documented. A single row larger than the limit still has to become
+// its own chunk, which is what assertStatementSize catches.
 export const MAX_STATEMENT_BYTES = 100_000;
-export const DEFAULT_STATEMENT_BYTE_BUDGET = 50_000;
+const STATEMENT_BYTE_BUDGET = 50_000;
 
 const encoder = new TextEncoder();
 
@@ -49,11 +51,11 @@ function byteLength(text) {
   return encoder.encode(text).length;
 }
 
-export function isComplete(beach) {
+function isComplete(beach) {
   return REQUIRED_D1_FIELDS.every((field) => beach[field] !== null && beach[field] !== undefined);
 }
 
-export function projectRow(scope, beach) {
+function projectRow(scope, beach) {
   const row = {};
   for (const [name, value] of COLUMNS) {
     row[name] = value(scope, beach);
@@ -61,10 +63,9 @@ export function projectRow(scope, beach) {
   return row;
 }
 
-export function sqlValue(value) {
+function sqlValue(value) {
   if (value === null || value === undefined) return 'NULL';
   if (typeof value === 'number') return String(value);
-  if (typeof value === 'boolean') return value ? '1' : '0';
   return `'${String(value).replaceAll("'", "''")}'`;
 }
 
@@ -72,6 +73,8 @@ export function sqlValue(value) {
  * Walks every candidate file. Complete candidates become rows; incomplete ones are
  * listed as drafts. `slugs` holds every slug in data/, drafts included, because a
  * published row whose record is temporarily incomplete must not be unpublished.
+ * A record without a slug is refused outright: a NULL inside the unpublish list would
+ * silently turn that statement into a no-op.
  */
 export function collectCandidates(files) {
   const rows = [];
@@ -80,11 +83,14 @@ export function collectCandidates(files) {
 
   for (const { path, data } of files) {
     for (const beach of data.beaches) {
+      if (typeof beach.slug !== 'string' || beach.slug === '') {
+        throw new Error(`${path}: a candidate without a slug cannot be projected`);
+      }
       slugs.push(beach.slug);
       if (isComplete(beach)) {
         rows.push(projectRow(data.scope, beach));
       } else {
-        drafts.push(`${path}:${beach.slug ?? 'unknown'}`);
+        drafts.push(`${path}:${beach.slug}`);
       }
     }
   }
@@ -127,7 +133,7 @@ function renderInsert(renderedRows) {
  * Nothing is ever deleted by the importer; a listing that should disappear is
  * unpublished here and removed by hand once its reports are resolved.
  */
-export function renderImportStatements(files, { byteBudget = DEFAULT_STATEMENT_BYTE_BUDGET } = {}) {
+export function renderImportStatements(files) {
   const { rows, slugs } = collectCandidates(files);
   if (rows.length === 0) {
     throw new Error('No complete beach records found');
@@ -137,7 +143,7 @@ export function renderImportStatements(files, { byteBudget = DEFAULT_STATEMENT_B
   let chunk = [];
   for (const row of rows) {
     const rendered = renderRow(row);
-    if (chunk.length > 0 && byteLength(renderInsert([...chunk, rendered])) > byteBudget) {
+    if (chunk.length > 0 && byteLength(renderInsert([...chunk, rendered])) > STATEMENT_BYTE_BUDGET) {
       statements.push(renderInsert(chunk));
       chunk = [];
     }
@@ -168,20 +174,10 @@ export function composeImportSql(statements) {
   return `-- Generated from data/**/beaches.json. Do not edit by hand.\n\n${statements.join('\n\n')}\n`;
 }
 
-export function renderImportSql(files, options) {
-  return composeImportSql(renderImportStatements(files, options));
-}
-
-function normalise(column, value) {
-  if (value === undefined) return null;
-  if (column === 'published') return value ? 1 : 0;
-  return value;
-}
-
 /**
  * Compares the projection of data/ with the rows a database holds. `existing` rows
- * carry the D1 column names (as returned by `SELECT *`). Drafts are reported but
- * never counted as orphans.
+ * carry the D1 column names and D1's values (NULL as null, published as 0/1). Drafts
+ * are reported but never counted as orphans.
  */
 export function diffProjection(files, existing) {
   const { rows, drafts, slugs } = collectCandidates(files);
@@ -199,8 +195,8 @@ export function diffProjection(files, existing) {
       continue;
     }
     const fields = UPDATE_COLUMNS
-      .filter((column) => normalise(column, before[column]) !== normalise(column, row[column]))
-      .map((column) => ({ column, before: normalise(column, before[column]), after: normalise(column, row[column]) }));
+      .filter((column) => before[column] !== row[column])
+      .map((column) => ({ column, before: before[column], after: row[column] }));
     if (fields.length === 0) {
       unchanged.push(row.slug);
     } else {
@@ -209,7 +205,7 @@ export function diffProjection(files, existing) {
   }
 
   const orphaned = existing
-    .filter((row) => normalise('published', row.published) === 1 && !known.has(row.slug))
+    .filter((row) => row.published === 1 && !known.has(row.slug))
     .map((row) => row.slug)
     .sort();
 

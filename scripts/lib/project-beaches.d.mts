@@ -1,11 +1,11 @@
-// Types for project-beaches.mjs, so the workerd tests and any TypeScript caller see the
-// same shapes the Node scripts work with.
+// Just enough of project-beaches.mjs for its one TypeScript consumer, test/import.test.ts.
+// The Node scripts import the .mjs directly.
 
 export interface BeachScope {
   countryCode: string;
   countryName: string;
-  region?: string | null;
-  municipality?: string | null;
+  region: string;
+  municipality: string;
 }
 
 export interface BeachCandidate {
@@ -32,28 +32,5 @@ export interface BeachFile {
   };
 }
 
-export type ProjectedRow = Record<string, string | number | null>;
-
-export interface ProjectionDiff {
-  added: Array<{ slug: string; published: boolean }>;
-  changed: Array<{ slug: string; fields: Array<{ column: string; before: unknown; after: unknown }> }>;
-  unchanged: string[];
-  orphaned: string[];
-  drafts: string[];
-}
-
-export const REQUIRED_D1_FIELDS: readonly string[];
-export const COLUMN_NAMES: readonly string[];
-export const UPDATE_COLUMNS: readonly string[];
 export const MAX_STATEMENT_BYTES: number;
-export const DEFAULT_STATEMENT_BYTE_BUDGET: number;
-
-export function isComplete(beach: BeachCandidate): boolean;
-export function projectRow(scope: BeachScope, beach: BeachCandidate): ProjectedRow;
-export function sqlValue(value: unknown): string;
-export function collectCandidates(files: BeachFile[]): { rows: ProjectedRow[]; drafts: string[]; slugs: string[] };
-export function renderImportStatements(files: BeachFile[], options?: { byteBudget?: number }): string[];
-export function composeImportSql(statements: string[]): string;
-export function renderImportSql(files: BeachFile[], options?: { byteBudget?: number }): string;
-export function diffProjection(files: BeachFile[], existing: Array<Record<string, unknown>>): ProjectionDiff;
-export function renderPlan(diff: ProjectionDiff, options?: { pendingReports?: Map<string, number>; target?: string }): string;
+export function renderImportStatements(files: BeachFile[]): string[];

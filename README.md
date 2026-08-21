@@ -27,7 +27,7 @@ level. Display labels and their one-line definitions live in `src/lib/labels.ts`
   for unknown paths and unpublished beaches
 - Security headers on every response (HSTS, nosniff, frame denial, no-referrer,
   restrictive Permissions-Policy) and a strict CSP outside local development
-- Vitest UI tests plus Worker/D1 integration tests running in `workerd`
+- Vitest tests for the editorial scripts (Node) and the UI (jsdom), plus Worker/D1 integration tests running in `workerd`
 - GitHub Actions validation, including `npm audit` at high severity
 
 The Worker exposes:
@@ -67,9 +67,9 @@ Local migrations, optional fixtures, and development use Wrangler's local Minifl
 They do not modify a remote D1 database. Deployable migrations in `migrations/` contain schema
 only; local/test fixtures are deliberately kept outside that directory.
 
-If you ran the original demonstration migration before the fixtures were separated, its rows
-remain in that existing local state. Remove only those exact demo records (and their local
-corrections) with:
+Seeded demo records stay in local state (migrations apply once, and the importer unpublishes
+rows missing from `data/` but never deletes them). Remove the five fixture records, and any
+local submissions filed against them, with:
 
 ```bash
 npm run db:clear-demo:local
@@ -89,7 +89,8 @@ npm run db:import:local
 ```
 
 `npm run db:plan:remote` shows what the same import would change in production without
-touching it; `npm run db:import:remote` applies it after a confirmation prompt.
+touching it; `npm run db:import:remote` applies it — Wrangler asks for confirmation only when
+stdout is a terminal; from CI or with output piped it applies immediately after the plan.
 
 ## Validate
 
@@ -100,7 +101,7 @@ npm run build
 npm audit
 ```
 
-`npm test` runs both React/jsdom tests and Worker/D1 integration tests in the Cloudflare Workers runtime.
+`npm test` runs the Node tests for the editorial scripts, the React/jsdom tests, and the Worker/D1 integration tests in the Cloudflare Workers runtime.
 
 ## Deploying
 
@@ -129,6 +130,12 @@ pipeline only ever sees reviewed, green commits.
 Rehearsal: `npm run db:rehearse:preview` applies the migrations and runs the *real* remote
 import path against the preview database (`preview_database_id`), which is the one thing
 local Miniflare cannot reproduce. Use it after changing the importer or a migration.
+
+One-off for the first pipeline run: migration 0002 recreates the tables and is not compatible
+with the Worker deployed before it, so between the migration step and the deploy step (about
+a minute, on a site with no listings) `/api/beaches` and beach pages answer 500; once 0002 is
+applied there is no rolling back to an earlier Worker — roll forward. From 0003 on, migrations
+are additive and the normal order holds.
 
 Rollback: a bad Worker release → `npx wrangler rollback`; bad data → revert the pull request
 (the importer projects the previous state back on the next deploy); a disaster →

@@ -2,8 +2,12 @@
 -- recreated rather than altered: SQLite cannot drop a PRIMARY KEY column, and the
 -- corrections table becomes submissions with the fields a review needs. Local and
 -- test databases are rebuilt the same way; re-run the fixtures or the import after
--- applying it. Later schema changes must be additive (ALTER TABLE ... ADD COLUMN) so
--- that a previous Worker version can still be rolled back to.
+-- applying it.
+--
+-- This migration is NOT compatible with the Worker deployed before it (which selects
+-- the id column and writes to corrections): once applied, that Worker cannot be
+-- rolled back to — roll forward instead. From 0003 on, schema changes are additive
+-- (ALTER TABLE ... ADD COLUMN) so a previous Worker version can always be restored.
 
 DROP TABLE IF EXISTS corrections;
 DROP TABLE IF EXISTS beaches;
@@ -31,16 +35,18 @@ CREATE TABLE beaches (
   updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
--- Every public query starts with published = 1; country and region pages filter next.
+-- Every public query starts with published = 1; country_code and region are included
+-- ahead of the planned country and region pages.
 CREATE INDEX idx_beaches_published_place ON beaches(published, country_code, region);
 
--- Public input. kind 'report' is a correction to a listed beach; 'suggest' (a new
--- beach) arrives with the structured form later and will add its columns additively.
--- No foreign key to beaches: a report must outlive a listing that is unpublished.
+-- Public input. kind 'report' is a correction to a listed beach; other kinds arrive
+-- with the structured form later, which validates the value (no CHECK, so the set can
+-- grow without a rebuild). No foreign key to beaches: a listing is unpublished by the
+-- importer and later removed by hand, and its submissions stay behind as history.
 -- The email is the only personal field and never leaves this database.
 CREATE TABLE submissions (
   id TEXT PRIMARY KEY,
-  kind TEXT NOT NULL DEFAULT 'report' CHECK (kind IN ('report','suggest')),
+  kind TEXT NOT NULL DEFAULT 'report',
   beach_slug TEXT CHECK (beach_slug IS NULL OR length(beach_slug) <= 120),
   email TEXT CHECK (email IS NULL OR length(email) <= 254),
   message TEXT NOT NULL CHECK (length(message) BETWEEN 10 AND 4000),
