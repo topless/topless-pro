@@ -15,11 +15,13 @@ const NON_DECOMPOSING: Record<string, string> = {
   "\u00fe": 'th',
 };
 
+const NON_DECOMPOSING_RE = new RegExp(`[${Object.keys(NON_DECOMPOSING).join('')}]`, 'g');
+
 export function foldSearchText(value: string): string {
   return value
     .toLowerCase()
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[\u00f8\u00e6\u0153\u00df\u0111\u0142\u00f0\u00fe]/g, (ch) => NON_DECOMPOSING[ch])
+    .replace(NON_DECOMPOSING_RE, (ch) => NON_DECOMPOSING[ch])
     .replace(/[\u2018\u2019\u02bc]/g, "'");
 }

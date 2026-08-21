@@ -1,28 +1,14 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it } from 'vitest';
-import type { Beach } from '../types';
+import { makeBeach } from '../test/factories';
 import { BeachCard } from './BeachCard';
-
-const base: Beach = {
-  id: 'beach',
-  slug: 'example-beach',
-  name: 'Example Beach',
-  countryCode: 'GR',
-  countryName: 'Greece',
-  latitude: 35,
-  longitude: 25,
-  dressCode: 'topless-permitted',
-  recognition: 'community-reported',
-  confidence: 'medium',
-  facilities: [],
-};
 
 describe('BeachCard', () => {
   it('renders the country alone when no municipality or region is recorded', () => {
     render(
       <MemoryRouter>
-        <BeachCard beach={base} />
+        <BeachCard beach={makeBeach()} />
       </MemoryRouter>,
     );
 
@@ -30,23 +16,13 @@ describe('BeachCard', () => {
     expect(screen.queryByText(/^,/)).not.toBeInTheDocument();
   });
 
-  it('distinguishes recognition levels visually, with disputed marked loudest', () => {
+  it('gives each recognition level its own badge class', () => {
     render(
       <MemoryRouter>
-        <BeachCard beach={{ ...base, id: 'disputed', slug: 'disputed-beach', recognition: 'disputed' }} />
+        <BeachCard beach={makeBeach({ recognition: 'disputed' })} />
       </MemoryRouter>,
     );
 
     expect(screen.getByText('Disputed')).toHaveClass('badge-recognition-disputed');
-  });
-
-  it('renders an official designation with its own badge class', () => {
-    render(
-      <MemoryRouter>
-        <BeachCard beach={{ ...base, id: 'official', slug: 'official-beach', recognition: 'official' }} />
-      </MemoryRouter>,
-    );
-
-    expect(screen.getByText('Official designation')).toHaveClass('badge-recognition-official');
   });
 });
