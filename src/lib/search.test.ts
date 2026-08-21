@@ -11,6 +11,13 @@ describe('foldSearchText', () => {
     expect(foldSearchText('Cap d’Agde')).toBe("cap d'agde");
   });
 
+  it('folds letters that have no canonical decomposition', () => {
+    expect(foldSearchText('Malmø Strand')).toBe('malmo strand');
+    expect(foldSearchText('Ærø')).toBe('aero');
+    expect(foldSearchText('Großer Strand')).toBe('grosser strand');
+    expect(foldSearchText('Łeba')).toBe('leba');
+  });
+
   it('leaves plain ascii untouched apart from case', () => {
     expect(foldSearchText('Sithonia')).toBe('sithonia');
   });
