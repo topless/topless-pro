@@ -71,6 +71,76 @@ describe('topless.pro Worker', () => {
     });
   });
 
+  it('injects per-beach metadata and structured data into the HTML shell', async () => {
+    const response = await exports.default.fetch(
+      'https://topless.pro/beaches/paradise-beach-mykonos',
+    );
+    expect(response.status).toBe(200);
+    expect(response.headers.get('content-type')).toContain('text/html');
+
+    const html = await response.text();
+    expect(html).toContain('<title>Paradise Beach, Greece — topless.pro</title>');
+    expect(html).toContain('Topless permitted (community reported, low confidence)');
+    expect(html).toContain('<link rel="canonical" href="https://topless.pro/beaches/paradise-beach-mykonos">');
+    expect(html).toContain('"@type":"Beach"');
+    expect(html).toContain('<meta property="og:title"');
+    expect(html).not.toContain('noindex');
+  });
+
+  it('injects canonical metadata on the home and about pages', async () => {
+    const home = await exports.default.fetch('https://topless.pro/');
+    expect(home.status).toBe(200);
+    const homeHtml = await home.text();
+    expect(homeHtml).toContain('<link rel="canonical" href="https://topless.pro/">');
+    expect(homeHtml).toContain('<title>topless.pro — Know before you go</title>');
+
+    const about = await exports.default.fetch('https://topless.pro/about');
+    expect(about.status).toBe(200);
+    await expect(about.text()).resolves.toContain(
+      '<link rel="canonical" href="https://topless.pro/about">',
+    );
+  });
+
+  it('returns real 404s with noindex for unknown pages and beaches', async () => {
+    const junk = await exports.default.fetch('https://topless.pro/this-path-does-not-exist');
+    expect(junk.status).toBe(404);
+    const junkHtml = await junk.text();
+    expect(junkHtml).toContain('<meta name="robots" content="noindex">');
+    expect(junkHtml).toContain('<div id="root">');
+
+    const unknownBeach = await exports.default.fetch('https://topless.pro/beaches/not-a-real-beach');
+    expect(unknownBeach.status).toBe(404);
+    await expect(unknownBeach.text()).resolves.toContain('<meta name="robots" content="noindex">');
+  });
+
+  it('passes non-HTML assets through untouched', async () => {
+    const asset = await exports.default.fetch('https://topless.pro/favicon.svg');
+    expect(asset.status).toBe(200);
+    expect(asset.headers.get('content-type')).toContain('image/svg+xml');
+  });
+
+  it('serves robots.txt pointing at the sitemap', async () => {
+    const robots = await exports.default.fetch('https://topless.pro/robots.txt');
+    expect(robots.status).toBe(200);
+    expect(robots.headers.get('content-type')).toContain('text/plain');
+    const body = await robots.text();
+    expect(body).toContain('User-agent: *');
+    expect(body).toContain('Sitemap: https://topless.pro/sitemap.xml');
+  });
+
+  it('serves a sitemap of the static pages and published beaches', async () => {
+    const sitemap = await exports.default.fetch('https://topless.pro/sitemap.xml');
+    expect(sitemap.status).toBe(200);
+    expect(sitemap.headers.get('content-type')).toContain('application/xml');
+
+    const body = await sitemap.text();
+    expect(body).toContain('<loc>https://topless.pro/</loc>');
+    expect(body).toContain('<loc>https://topless.pro/about</loc>');
+    expect(body).toContain('<loc>https://topless.pro/beaches/paradise-beach-mykonos</loc>');
+    expect(body).toContain('<loc>https://topless.pro/beaches/red-beach-matala</loc>');
+    expect((body.match(/<url>/g) ?? []).length).toBe(6);
+  });
+
   it('returns JSON 404 responses for missing API resources', async () => {
     const missingBeach = await exports.default.fetch(
       'https://example.com/api/beaches/not-a-real-beach',
