@@ -1,4 +1,4 @@
-import type { Confidence, DressCode, Recognition } from '../types';
+import type { Beach, Confidence, DressCode, Recognition } from '../types';
 
 export const dressCodeLabels: Record<DressCode, string> = {
   'swimwear-required': 'Swimwear required',
@@ -20,3 +20,7 @@ export const confidenceLabels: Record<Confidence, string> = {
   medium: 'Medium confidence',
   low: 'Low confidence',
 };
+
+export function formatBeachLocation(beach: Pick<Beach, 'municipality' | 'region' | 'countryName'>): string {
+  return [beach.municipality ?? beach.region, beach.countryName].filter(Boolean).join(', ');
+}
