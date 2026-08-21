@@ -102,24 +102,53 @@ npm audit
 
 `npm test` runs both React/jsdom tests and Worker/D1 integration tests in the Cloudflare Workers runtime.
 
-## Cloudflare configuration
+## Deploying
 
-`wrangler.jsonc` is wired to the production account: the committed D1 `database_id` is the
-live database and the custom-domain routes point at `topless.pro`. There is no placeholder
-guard any more — `npm run deploy` ships straight to production, so treat it as a production
-action and run it only from a clean, reviewed `main`.
+Merging to `main` deploys. `.github/workflows/deploy.yml` runs check, tests and build, then —
+with the Cloudflare token bound only on the wrangler steps — applies schema migrations, prints
+the data-import plan to the job summary together with the D1 Time Travel bookmark to restore
+to, imports the data only when the plan shows changes, deploys the Worker and smoke-checks
+the live site. One deploy runs at a time. `wrangler.jsonc` is wired to the production
+account: the committed D1 `database_id` is the live database and the custom-domain routes
+point at `topless.pro`.
 
-The correction rate limiter uses namespace ID `1001`, which is a project-defined positive integer. Change it before deployment if that identifier is already used for another rate limiter in the same Cloudflare account.
+One-time setup:
 
-After reviewing the configuration, remote migrations and deployment are explicit operations:
+1. Create a Cloudflare API token (My Profile → API Tokens → Create Token): start from the
+   **Edit Cloudflare Workers** template, add **Account → D1 → Edit**, restrict it to this
+   account and the `topless.pro` zone, set an expiry and note it. If the first run fails on
+   the custom-domain routes, add **Zone → DNS → Edit** for the zone.
+2. In the GitHub repository, Settings → Environments → `production`: add the secrets
+   `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` (the account ID is on the Workers
+   overview page).
+3. Run the workflow once by hand (Actions → Deploy → Run workflow) and read the job summary.
+
+Branch protection on `main` requires a pull request and the `validate` check, so the
+pipeline only ever sees reviewed, green commits.
+
+Rehearsal: `npm run db:rehearse:preview` applies the migrations and runs the *real* remote
+import path against the preview database (`preview_database_id`), which is the one thing
+local Miniflare cannot reproduce. Use it after changing the importer or a migration.
+
+Rollback: a bad Worker release → `npx wrangler rollback`; bad data → revert the pull request
+(the importer projects the previous state back on the next deploy); a disaster →
+`npx wrangler d1 time-travel restore DB --bookmark=…` with the bookmark from the job summary
+(whole database; 7 days back on the Free plan). Because old Worker versions may be rolled back
+to, schema migrations are **additive only** from 0003 on.
+
+Backup: `npm run db:backup:remote` writes both tables as JSON to the gitignored `backups/`
+directory on this machine, without the report email column. Beaches are rebuildable from
+`data/`; reports are the state that exists nowhere else.
+
+Break-glass, from a clean reviewed `main` only:
 
 ```bash
 npm run db:migrate:remote
+npm run db:import:remote
 npm run deploy
 ```
 
-The remote migration command applies schema only. There is intentionally no remote seed command;
-production data arrives only through the import described in `data/README.md`.
+The correction rate limiter uses namespace ID `1001`, a project-defined positive integer; change it before deployment if that identifier is already used for another rate limiter in the same Cloudflare account.
 
 ## Custom domains
 

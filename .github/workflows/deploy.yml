@@ -1,0 +1,84 @@
+name: Deploy
+
+# Merging to main is the deploy button. The pull request is the review and CI has
+# already passed; this job then applies schema, data and Worker in that order so the
+# three can never disagree, and records what it did in the job summary.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One production at a time; a second merge waits for the first to finish.
+concurrency:
+  group: production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://topless.pro
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - run: npm test
+      - run: npm run build
+
+      # The token is bound per step below, so nothing above — including dependency
+      # install scripts — ever sees it.
+
+      # Schema first: a Worker that reads a new column must never meet a database
+      # without it. Migrations are additive-only, so rolling the Worker back is safe.
+      - name: Apply schema migrations
+        run: npx wrangler d1 migrations apply DB --remote
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      # The plan is the review surface: new, changed (by field), unchanged, rows to be
+      # unpublished with their pending-report counts, drafts skipped. It reads beach
+      # rows and report counts only. The bookmark is what a disaster restore targets.
+      - name: Plan the data import
+        id: plan
+        run: |
+          npm run -s data:sql
+          {
+            echo '### Time Travel bookmark before this deploy'
+            echo '```'
+            npx wrangler d1 time-travel info DB
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          node scripts/plan-beach-import.mjs --remote
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      # Skipped when the plan shows nothing to change, so code-only merges never
+      # pause the database for an import.
+      - name: Import beach data
+        if: steps.plan.outputs.changes != '0'
+        run: npx wrangler d1 execute DB --remote --yes --file=.wrangler/imports/beaches.sql
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Deploy the Worker
+        run: npx wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Smoke-check the live site
+        run: |
+          curl -sSf -o /dev/null https://topless.pro/api/health
+          curl -sSf -o /dev/null https://topless.pro/
+          curl -sS https://topless.pro/robots.txt | grep -q 'Sitemap: https://topless.pro/sitemap.xml'
