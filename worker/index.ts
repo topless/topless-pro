@@ -22,7 +22,7 @@ const CANONICAL_ORIGIN = `https://${CANONICAL_HOST}`;
 const SITE_TITLE = 'topless.pro — Know before you go';
 const SITE_DESCRIPTION = 'Clear, community-maintained clothing guidance for beaches worldwide.';
 const META_DESCRIPTION_LIMIT = 160;
-const API_CACHE_CONTROL = 'public, max-age=300, stale-while-revalidate=3600';
+const PUBLIC_CACHE_CONTROL = 'public, max-age=300, stale-while-revalidate=3600';
 const CONTENT_SECURITY_POLICY = [
   "default-src 'self'",
   "script-src 'self'",
@@ -220,16 +220,16 @@ function requestPath(request: Request): string {
   return new URL(request.url).pathname;
 }
 
+function isApiPath(path: string): boolean {
+  return path === '/api' || path.startsWith('/api/');
+}
+
 function escapeHtml(value: string): string {
   return value
     .replaceAll('&', '&amp;')
     .replaceAll('<', '&lt;')
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;');
-}
-
-function escapeXml(value: string): string {
-  return escapeHtml(value).replaceAll("'", '&apos;');
 }
 
 function describeBeach(beach: Beach): string {
@@ -243,13 +243,13 @@ function describeBeach(beach: Beach): string {
     : `${codePoints.slice(0, META_DESCRIPTION_LIMIT - 1).join('').trimEnd()}…`;
 }
 
-function beachJsonLd(beach: Beach): Record<string, unknown> {
+function beachJsonLd(beach: Beach, description: string): Record<string, unknown> {
   return {
     '@context': 'https://schema.org',
     '@type': 'Beach',
     name: beach.name,
     url: `${CANONICAL_ORIGIN}/beaches/${beach.slug}`,
-    description: describeBeach(beach),
+    description,
     geo: {
       '@type': 'GeoCoordinates',
       latitude: beach.latitude,
@@ -272,8 +272,12 @@ interface PageMeta {
   jsonLd?: Record<string, unknown>;
 }
 
-async function renderShell(c: AppContext, meta: PageMeta, status = 200): Promise<Response> {
-  const shell = await c.env.ASSETS.fetch(new Request(new URL('/', c.req.url)));
+function fetchShell(c: AppContext): Promise<Response> {
+  return c.env.ASSETS.fetch(new Request(new URL('/', c.req.url)));
+}
+
+async function renderShell(c: AppContext, meta: PageMeta, status = 200, prefetchedShell?: Response): Promise<Response> {
+  const shell = prefetchedShell ?? await fetchShell(c);
 
   const headExtras: string[] = [
     '<meta property="og:site_name" content="topless.pro">',
@@ -322,7 +326,7 @@ async function renderShell(c: AppContext, meta: PageMeta, status = 200): Promise
     'content-type': transformed.headers.get('content-type') ?? 'text/html; charset=utf-8',
   });
   if (status === 200) {
-    headers.set('Cache-Control', API_CACHE_CONTROL);
+    headers.set('Cache-Control', PUBLIC_CACHE_CONTROL);
   }
   return new Response(transformed.body, { status, headers });
 }
@@ -389,7 +393,7 @@ app.get('/api/beaches', async (c) => {
     ORDER BY country_name, name`,
   ).all<BeachRow>();
 
-  c.header('Cache-Control', API_CACHE_CONTROL);
+  c.header('Cache-Control', PUBLIC_CACHE_CONTROL);
   return c.json(result.results.map(mapBeach));
 });
 
@@ -399,7 +403,7 @@ app.get('/api/beaches/:slug', async (c) => {
     return c.json({ error: 'Beach not found' }, 404);
   }
 
-  c.header('Cache-Control', API_CACHE_CONTROL);
+  c.header('Cache-Control', PUBLIC_CACHE_CONTROL);
   return c.json(beach);
 });
 
@@ -477,21 +481,25 @@ app.get('/about', (c) =>
   }));
 
 app.get('/beaches/:slug', async (c) => {
-  const beach = await getPublishedBeach(c.env.DB, c.req.param('slug'));
+  const [beach, shell] = await Promise.all([
+    getPublishedBeach(c.env.DB, c.req.param('slug')),
+    fetchShell(c),
+  ]);
   if (beach === null) {
     return renderShell(c, {
       title: 'Beach not found — topless.pro',
       description: SITE_DESCRIPTION,
       noindex: true,
-    }, 404);
+    }, 404, shell);
   }
 
+  const description = describeBeach(beach);
   return renderShell(c, {
     title: `${beach.name}, ${beach.countryName} — topless.pro`,
-    description: describeBeach(beach),
+    description,
     canonicalPath: `/beaches/${beach.slug}`,
-    jsonLd: beachJsonLd(beach),
-  });
+    jsonLd: beachJsonLd(beach, description),
+  }, 200, shell);
 });
 
 app.get('/robots.txt', (c) => {
@@ -521,7 +529,7 @@ app.get('/sitemap.xml', async (c) => {
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
     ...entries.map((entry) => {
       const lastmod = 'lastmod' in entry && entry.lastmod ? `<lastmod>${entry.lastmod}</lastmod>` : '';
-      return `  <url><loc>${escapeXml(`${CANONICAL_ORIGIN}${entry.path}`)}</loc>${lastmod}</url>`;
+      return `  <url><loc>${escapeHtml(`${CANONICAL_ORIGIN}${entry.path}`)}</loc>${lastmod}</url>`;
     }),
     '</urlset>',
     '',
@@ -533,19 +541,18 @@ app.get('/sitemap.xml', async (c) => {
 
 app.notFound(async (c) => {
   const path = requestPath(c.req.raw);
-  if (path === '/api' || path.startsWith('/api/')) {
+  if (isApiPath(path)) {
     return c.json({ error: 'Not found' }, 404);
   }
 
   const asset = await c.env.ASSETS.fetch(c.req.raw);
-  const contentType = asset.headers.get('content-type') ?? '';
-  if (!contentType.includes('text/html')) {
+  if (asset.status !== 404) {
     return asset;
   }
 
-  // The assets binding fell back to the SPA shell, so this path matches no
-  // real asset and no known route: keep the shell for the client-side
-  // not-found page, but answer crawlers with an honest 404.
+  // No such asset and no known route: serve the shell so the client-side
+  // not-found page renders, but answer crawlers with an honest 404.
+  await asset.body?.cancel();
   return renderShell(c, {
     title: 'Page not found — topless.pro',
     description: SITE_DESCRIPTION,
@@ -562,7 +569,7 @@ app.onError((error, c) => {
     path,
   }));
 
-  return path === '/api' || path.startsWith('/api/')
+  return isApiPath(path)
     ? c.json({ error: 'Internal server error' }, 500)
     : new Response('Internal Server Error', { status: 500 });
 });

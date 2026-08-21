@@ -18,24 +18,29 @@ export default defineConfig({
           // page paths and a small SVG for asset-like paths, mirroring
           // production single-page-application fallback behaviour.
           ASSETS(request: Request) {
-            // Mirror the production asset-worker: non-GET/HEAD is rejected
-            // before any fallback handling applies.
-            if (request.method !== 'GET' && request.method !== 'HEAD') {
-              return new Response('Method Not Allowed', {
-                status: 405,
+            // Mirror the production asset-worker with not_found_handling
+            // "none" (verified against vite preview): missing paths are 404
+            // for any method; existing assets reject non-GET/HEAD with 405.
+            const url = new URL(request.url);
+            const isShell = url.pathname === '/' || url.pathname === '/index.html';
+            if (!isShell && !url.pathname.endsWith('.svg')) {
+              return new Response('Not Found', {
+                status: 404,
                 headers: { 'content-type': 'text/plain; charset=utf-8' },
               });
             }
-            const url = new URL(request.url);
-            if (url.pathname.endsWith('.svg')) {
-              return new Response('<svg xmlns="http://www.w3.org/2000/svg"/>', {
-                headers: { 'content-type': 'image/svg+xml', etag: '"test-asset-etag"' },
+            if (request.method !== 'GET' && request.method !== 'HEAD') {
+              return new Response('Method Not Allowed', { status: 405 });
+            }
+            if (isShell) {
+              // Production emits a strong ETag for the shell; include one so
+              // tests can assert the Worker strips it from transformed pages.
+              return new Response(shellHtml, {
+                headers: { 'content-type': 'text/html; charset=utf-8', etag: '"test-shell-etag"' },
               });
             }
-            // Production emits a strong ETag for the shell; include one so
-            // tests can assert the Worker strips it from transformed pages.
-            return new Response(shellHtml, {
-              headers: { 'content-type': 'text/html; charset=utf-8', etag: '"test-shell-etag"' },
+            return new Response('<svg xmlns="http://www.w3.org/2000/svg"/>', {
+              headers: { 'content-type': 'image/svg+xml', etag: '"test-asset-etag"' },
             });
           },
         },

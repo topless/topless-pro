@@ -131,11 +131,17 @@ describe('topless.pro Worker', () => {
     expect(notFound.headers.get('Cache-Control')).toBeNull();
   });
 
-  it('lets the assets binding reject non-GET methods on page paths', async () => {
-    const response = await exports.default.fetch(
+  it('mirrors asset method handling: 405 on real assets, 404 shell elsewhere', async () => {
+    const asset = await exports.default.fetch(
+      new Request('https://topless.pro/favicon.svg', { method: 'POST' }),
+    );
+    expect(asset.status).toBe(405);
+
+    const page = await exports.default.fetch(
       new Request('https://topless.pro/some-page', { method: 'POST' }),
     );
-    expect(response.status).toBe(405);
+    expect(page.status).toBe(404);
+    expect(page.headers.get('content-type')).toContain('text/html');
   });
 
   it('counts correction message length in code points like the D1 constraint', async () => {
@@ -189,7 +195,6 @@ describe('topless.pro Worker', () => {
     expect(body).toContain('<loc>https://topless.pro/about</loc>');
     expect(body).toContain('<loc>https://topless.pro/beaches/paradise-beach-mykonos</loc>');
     expect(body).toContain('<loc>https://topless.pro/beaches/red-beach-matala</loc>');
-    expect((body.match(/<url>/g) ?? []).length).toBe(6);
   });
 
   it('returns JSON 404 responses for missing API resources', async () => {

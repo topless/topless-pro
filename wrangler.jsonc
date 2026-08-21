@@ -18,7 +18,9 @@
   ],
   "assets": {
     "binding": "ASSETS",
-    "not_found_handling": "single-page-application",
+    // The Worker owns the SPA fallback (renderShell serves the shell with an
+    // honest status); the binding must report misses as real 404s.
+    "not_found_handling": "none",
     "run_worker_first": true
   },
   "d1_databases": [
