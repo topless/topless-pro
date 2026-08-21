@@ -1,8 +1,7 @@
-import { readdir, readFile } from 'node:fs/promises';
+import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
-
-const DATA_ROOT = path.join(process.cwd(), 'data');
+import { DATA_ROOT, REQUIRED_D1_FIELDS, findBeachFiles } from './lib/beach-data.mjs';
 const DRESS_CODES = new Set([
   'swimwear-required',
   'topless-permitted',
@@ -17,22 +16,19 @@ const RECOGNITION_LEVELS = new Set([
   'disputed',
 ]);
 const CONFIDENCE_LEVELS = new Set(['low', 'medium', 'high']);
-// Map services identify a place but cannot support a dress-code claim, and
-// shorteners hide whatever they point at.
-const LOCATION_PIN_HOSTS = new Set([
-  'maps.app.goo.gl',
-  'goo.gl',
-  'maps.apple.com',
-  'osm.org',
-]);
-const LOCATION_PIN_HOST_PATTERNS = [
-  /(^|\.)maps\.google\.[a-z.]+$/,
-  /(^|\.)openstreetmap\.org$/,
-];
-// Hosts that are pins only when the path is their maps product.
-const LOCATION_PIN_PATH_PREFIXES = [
-  [/(^|\.)google\.[a-z.]+$/, '/maps'],
-  [/(^|\.)bing\.com$/, '/maps'],
+// sourceUrl must support the dress-code claim. These services locate a place
+// or hide the destination, so they never can. host is an exact hostname or a
+// pattern; pathPrefix limits the rule to that product's URL space.
+const MAP_PIN = 'is a map pin; it locates the beach but cannot support the dress-code claim';
+const REJECTED_SOURCE_RULES = [
+  { host: 'maps.app.goo.gl', reason: MAP_PIN },
+  { host: 'maps.apple.com', reason: MAP_PIN },
+  { host: 'osm.org', reason: MAP_PIN },
+  { host: /(^|\.)maps\.google\.[a-z.]+$/, reason: MAP_PIN },
+  { host: /(^|\.)openstreetmap\.org$/, reason: MAP_PIN },
+  { host: /(^|\.)google\.[a-z.]+$/, pathPrefix: '/maps', reason: MAP_PIN },
+  { host: /(^|\.)bing\.com$/, pathPrefix: '/maps', reason: MAP_PIN },
+  { host: 'goo.gl', reason: 'is a link shortener; cite the destination it points at instead' },
 ];
 
 const errors = [];
@@ -66,33 +62,17 @@ function isHttpUrl(value) {
   }
 }
 
-function isLocationPinUrl(value) {
+function rejectedSourceReason(value) {
   try {
     const url = new URL(value);
-    if (LOCATION_PIN_HOSTS.has(url.hostname)) return true;
-    if (LOCATION_PIN_HOST_PATTERNS.some((pattern) => pattern.test(url.hostname))) return true;
-    return LOCATION_PIN_PATH_PREFIXES.some(
-      ([pattern, prefix]) => pattern.test(url.hostname) && url.pathname.startsWith(prefix),
-    );
+    const rule = REJECTED_SOURCE_RULES.find(({ host, pathPrefix }) => {
+      const hostMatches = typeof host === 'string' ? url.hostname === host : host.test(url.hostname);
+      return hostMatches && (pathPrefix === undefined || url.pathname.startsWith(pathPrefix));
+    });
+    return rule ? rule.reason : null;
   } catch {
-    return false;
+    return null;
   }
-}
-
-async function findBeachFiles(directory) {
-  const entries = await readdir(directory, { withFileTypes: true });
-  const files = [];
-
-  for (const entry of entries) {
-    const entryPath = path.join(directory, entry.name);
-    if (entry.isDirectory()) {
-      files.push(...await findBeachFiles(entryPath));
-    } else if (entry.isFile() && entry.name === 'beaches.json') {
-      files.push(entryPath);
-    }
-  }
-
-  return files.sort();
 }
 
 function validateNullableEnum(file, field, value, allowedValues) {
@@ -141,12 +121,11 @@ function validateBeach(file, beach, index) {
   }
   if (beach.sourceUrl !== null && !isHttpUrl(beach.sourceUrl)) {
     addError(file, `${field}.sourceUrl`, 'must be null or an HTTP(S) URL');
-  } else if (beach.sourceUrl !== null && isLocationPinUrl(beach.sourceUrl)) {
-    addError(
-      file,
-      `${field}.sourceUrl`,
-      'is a map pin; it locates the beach but cannot support the dress-code claim',
-    );
+  } else if (beach.sourceUrl !== null) {
+    const reason = rejectedSourceReason(beach.sourceUrl);
+    if (reason !== null) {
+      addError(file, `${field}.sourceUrl`, reason);
+    }
   }
   if (beach.lastVerifiedAt !== null && !isIsoDate(beach.lastVerifiedAt)) {
     addError(file, `${field}.lastVerifiedAt`, 'must be null or an ISO date');
@@ -155,16 +134,8 @@ function validateBeach(file, beach, index) {
     addError(file, `${field}.published`, 'must be a boolean');
   }
 
-  const requiredForD1 = [
-    ['latitude', beach.latitude],
-    ['longitude', beach.longitude],
-    ['dressCode', beach.dressCode],
-    ['recognition', beach.recognition],
-    ['confidence', beach.confidence],
-  ];
-  const missing = requiredForD1
-    .filter(([, value]) => value === null || value === undefined)
-    .map(([name]) => name);
+  const missing = REQUIRED_D1_FIELDS
+    .filter((name) => beach[name] === null || beach[name] === undefined);
 
   if (missing.length > 0) {
     drafts.push({ slug: beach.slug, missing });

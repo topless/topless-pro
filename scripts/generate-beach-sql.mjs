@@ -1,72 +1,47 @@
-import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
+import { REQUIRED_D1_FIELDS, findBeachFiles } from './lib/beach-data.mjs';
 
-const DATA_ROOT = path.join(process.cwd(), 'data');
 const OUTPUT_FILE = path.join(process.cwd(), '.wrangler', 'imports', 'beaches.sql');
-const REQUIRED_FIELDS = [
-  'slug',
-  'name',
-  'latitude',
-  'longitude',
-  'dressCode',
-  'recognition',
-  'confidence',
+
+// Single source of truth for the projected columns: name in D1 paired with
+// how its value derives from a candidate record. Meant to run via data:sql,
+// which validates first.
+const COLUMNS = [
+  ['id', (scope, beach) => beach.slug],
+  ['slug', (scope, beach) => beach.slug],
+  ['name', (scope, beach) => beach.name],
+  ['country_code', (scope) => scope.countryCode],
+  ['country_name', (scope) => scope.countryName],
+  ['region', (scope) => scope.region ?? null],
+  ['municipality', (scope) => scope.municipality ?? null],
+  ['latitude', (scope, beach) => beach.latitude],
+  ['longitude', (scope, beach) => beach.longitude],
+  ['dress_code', (scope, beach) => beach.dressCode],
+  ['recognition', (scope, beach) => beach.recognition],
+  ['confidence', (scope, beach) => beach.confidence],
+  ['summary', (scope, beach) => beach.summary ?? null],
+  ['facilities_json', (scope, beach) => JSON.stringify(beach.facilities ?? [])],
+  ['source_url', (scope, beach) => beach.sourceUrl ?? null],
+  ['last_verified_at', (scope, beach) => beach.lastVerifiedAt ?? null],
+  ['published', (scope, beach) => beach.published ?? false],
 ];
-
-async function findBeachFiles(directory) {
-  const entries = await readdir(directory, { withFileTypes: true });
-  const files = [];
-
-  for (const entry of entries) {
-    const entryPath = path.join(directory, entry.name);
-    if (entry.isDirectory()) {
-      files.push(...await findBeachFiles(entryPath));
-    } else if (entry.isFile() && entry.name === 'beaches.json') {
-      files.push(entryPath);
-    }
-  }
-
-  return files.sort();
-}
+const COLUMN_NAMES = COLUMNS.map(([name]) => name);
+const UPDATE_COLUMNS = COLUMN_NAMES.filter((name) => name !== 'id' && name !== 'slug');
 
 function sqlValue(value) {
   if (value === null || value === undefined) return 'NULL';
-  if (typeof value === 'number') {
-    if (!Number.isFinite(value)) throw new Error('Cannot write a non-finite number to SQL');
-    return String(value);
-  }
+  if (typeof value === 'number') return String(value);
   if (typeof value === 'boolean') return value ? '1' : '0';
   return `'${String(value).replaceAll("'", "''")}'`;
 }
 
 function isComplete(beach) {
-  return REQUIRED_FIELDS.every((field) => beach[field] !== null && beach[field] !== undefined);
+  return REQUIRED_D1_FIELDS.every((field) => beach[field] !== null && beach[field] !== undefined);
 }
 
-function beachRow(scope, beach) {
-  return [
-    beach.slug,
-    beach.slug,
-    beach.name,
-    scope.countryCode,
-    scope.countryName,
-    scope.region ?? null,
-    scope.municipality ?? null,
-    beach.latitude,
-    beach.longitude,
-    beach.dressCode,
-    beach.recognition,
-    beach.confidence,
-    beach.summary ?? null,
-    JSON.stringify(beach.facilities ?? []),
-    beach.sourceUrl ?? null,
-    beach.lastVerifiedAt ?? null,
-    beach.published ?? false,
-  ].map(sqlValue);
-}
-
-const files = await findBeachFiles(DATA_ROOT);
+const files = await findBeachFiles();
 const rows = [];
 const skipped = [];
 
@@ -74,7 +49,7 @@ for (const file of files) {
   const data = JSON.parse(await readFile(file, 'utf8'));
   for (const beach of data.beaches) {
     if (isComplete(beach)) {
-      rows.push(beachRow(data.scope, beach));
+      rows.push(COLUMNS.map(([, value]) => sqlValue(value(data.scope, beach))));
     } else {
       skipped.push(`${path.relative(process.cwd(), file)}:${beach.slug ?? 'unknown'}`);
     }
@@ -94,41 +69,11 @@ const sql = `-- Generated from data/**/beaches.json. Do not edit by hand.
 BEGIN TRANSACTION;
 
 INSERT INTO beaches (
-  id,
-  slug,
-  name,
-  country_code,
-  country_name,
-  region,
-  municipality,
-  latitude,
-  longitude,
-  dress_code,
-  recognition,
-  confidence,
-  summary,
-  facilities_json,
-  source_url,
-  last_verified_at,
-  published
+  ${COLUMN_NAMES.join(',\n  ')}
 ) VALUES
 ${values}
 ON CONFLICT(slug) DO UPDATE SET
-  name = excluded.name,
-  country_code = excluded.country_code,
-  country_name = excluded.country_name,
-  region = excluded.region,
-  municipality = excluded.municipality,
-  latitude = excluded.latitude,
-  longitude = excluded.longitude,
-  dress_code = excluded.dress_code,
-  recognition = excluded.recognition,
-  confidence = excluded.confidence,
-  summary = excluded.summary,
-  facilities_json = excluded.facilities_json,
-  source_url = excluded.source_url,
-  last_verified_at = excluded.last_verified_at,
-  published = excluded.published,
+${UPDATE_COLUMNS.map((name) => `  ${name} = excluded.${name}`).join(',\n')},
   updated_at = CURRENT_TIMESTAMP;
 
 COMMIT;
