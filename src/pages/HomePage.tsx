@@ -133,7 +133,7 @@ export function HomePage() {
         {directoryStatus === 'loading' && <p className="directory-status" role="status">Checking the latest directory…</p>}
         {visibleBeaches.length > 0 && (
           <div className="beach-list">
-            {visibleBeaches.map((beach) => <BeachCard beach={beach} key={beach.id} />)}
+            {visibleBeaches.map((beach) => <BeachCard beach={beach} key={beach.slug} />)}
           </div>
         )}
         {launchState && (

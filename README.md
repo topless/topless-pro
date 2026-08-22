@@ -59,16 +59,16 @@ npm run db:seed:local
 npm run dev
 ```
 
-`db:seed:local` is optional. It loads four clearly labelled demonstration records from
-`fixtures/0001_demo_beaches.sql` so the directory can be exercised before verified data is
-available.
+`db:seed:local` is optional. It loads five clearly labelled demonstration records from
+`fixtures/0001_demo_beaches.sql` (one of them unpublished) so the directory can be exercised
+before verified data is available.
 
 Local migrations, optional fixtures, and development use Wrangler's local Miniflare state.
 They do not modify a remote D1 database. Deployable migrations in `migrations/` contain schema
 only; local/test fixtures are deliberately kept outside that directory.
 
 If you ran the original demonstration migration before the fixtures were separated, its rows
-remain in that existing local state. Remove only those four exact demo records (and their local
+remain in that existing local state. Remove only those exact demo records (and their local
 corrections) with:
 
 ```bash
@@ -80,12 +80,16 @@ This cleanup command always targets local D1 state and is not a production migra
 ## Research beach candidates
 
 Editorial research lives under `data/`, organized by country and locality; the format,
-evidence policy, and workflow are documented in `data/README.md`. The one command to
+evidence policy, and workflow are documented in `data/README.md`. `npm run data:status`
+lists what each candidate still needs before it can be published. The one command to
 validate, generate SQL, and import complete candidates into local D1:
 
 ```bash
 npm run db:import:local
 ```
+
+`npm run db:plan:remote` shows what the same import would change in production without
+touching it; `npm run db:import:remote` applies it after a confirmation prompt.
 
 ## Validate
 
@@ -114,7 +118,8 @@ npm run db:migrate:remote
 npm run deploy
 ```
 
-The remote migration command applies schema only. There is intentionally no remote seed command.
+The remote migration command applies schema only. There is intentionally no remote seed command;
+production data arrives only through the import described in `data/README.md`.
 
 ## Custom domains
 

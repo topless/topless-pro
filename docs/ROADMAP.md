@@ -41,12 +41,12 @@ These shaped the sequence; each was a choice with a stated default, and the defa
 - [x] **M0 · Ship what exists.** Deploy `main`; pin `@types/node` to the Node line in `.nvmrc`
   and move `.nvmrc` to a release the toolchain supports; group Dependabot's dev bumps; state
   `workers_dev`/`preview_urls` intent in `wrangler.jsonc`; fix README drift; this file.
-- [ ] **M1 · Schema 0002 as the union.** Recreate `beaches` keyed on `slug` with a
+- [x] **M1 · Schema 0002 as the union.** Recreate `beaches` keyed on `slug` with a
   `(published, country_code, region)` index; replace `corrections` with `submissions`
   (`kind`, `status`, `reviewed_at`, `resolution`, `github_issue`, nullable `email`); the
   existing free-text form writes into it unchanged. Fixtures gain a `published = 0` row so the
   Worker's published filters are finally tested. *Gate: decision 4; before any production import.*
-- [ ] **M2 · Make the importer production-safe.** No `BEGIN`/`COMMIT` wrapper (the remote
+- [x] **M2 · Make the importer production-safe.** No `BEGIN`/`COMMIT` wrapper (the remote
   import path rejects it); INSERTs chunked by byte budget under D1's 100 KB statement cap;
   changed-only upsert so `updated_at` and the sitemap `lastmod` move only on real change;
   beaches that leave `data/` are unpublished, never deleted; generator refactored into

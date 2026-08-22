@@ -10,8 +10,8 @@ vi.mock('../lib/api', () => ({
 }));
 
 const beaches = [
-  makeBeach({ id: 'unknown', slug: 'mystery-beach', name: 'Mystery Beach', dressCode: 'unknown', recognition: 'disputed', confidence: 'low' }),
-  makeBeach({ id: 'official', slug: 'official-beach', name: 'Official Beach', countryCode: 'FR', countryName: 'France', dressCode: 'nudity-permitted', recognition: 'official', confidence: 'high', facilities: ['Toilets'] }),
+  makeBeach({ slug: 'mystery-beach', name: 'Mystery Beach', dressCode: 'unknown', recognition: 'disputed', confidence: 'low' }),
+  makeBeach({ slug: 'official-beach', name: 'Official Beach', countryCode: 'FR', countryName: 'France', dressCode: 'nudity-permitted', recognition: 'official', confidence: 'high', facilities: ['Toilets'] }),
 ];
 
 describe('HomePage', () => {
@@ -39,7 +39,7 @@ describe('HomePage', () => {
 
   it('matches unaccented search queries against accented beach names', async () => {
     vi.mocked(getBeaches).mockResolvedValueOnce([
-      makeBeach({ id: 'accented', slug: 'kallithea', name: 'Kallithéa' }),
+      makeBeach({ slug: 'kallithea', name: 'Kallithéa' }),
     ]);
 
     render(

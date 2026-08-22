@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
-import { DATA_ROOT, REQUIRED_D1_FIELDS, findBeachFiles } from './lib/beach-data.mjs';
+import { DATA_ROOT, REQUIRED_D1_FIELDS, SCHEMA_FILE, findBeachFiles } from './lib/beach-data.mjs';
 const DRESS_CODES = new Set([
   'swimwear-required',
   'topless-permitted',
@@ -16,6 +16,7 @@ const RECOGNITION_LEVELS = new Set([
   'disputed',
 ]);
 const CONFIDENCE_LEVELS = new Set(['low', 'medium', 'high']);
+const MAX_SLUG_LENGTH = 120;
 // sourceUrl must support the dress-code claim. These services locate a place
 // or hide the destination, so they never can. host is an exact hostname or a
 // pattern; pathPrefix limits the rule to that product's URL space.
@@ -96,6 +97,9 @@ function validateBeach(file, beach, index) {
 
   if (!isNonEmptyString(beach.slug) || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(beach.slug)) {
     addError(file, `${field}.slug`, 'must be a lowercase URL slug');
+  } else if (beach.slug.length > MAX_SLUG_LENGTH) {
+    // The Worker refuses longer slugs, so a listing with one would be a silent 404.
+    addError(file, `${field}.slug`, `must be at most ${MAX_SLUG_LENGTH} characters`);
   } else if (seenSlugs.has(beach.slug)) {
     addError(file, `${field}.slug`, `duplicates ${seenSlugs.get(beach.slug)}`);
   } else {
@@ -129,6 +133,8 @@ function validateBeach(file, beach, index) {
   }
   if (beach.lastVerifiedAt !== null && !isIsoDate(beach.lastVerifiedAt)) {
     addError(file, `${field}.lastVerifiedAt`, 'must be null or an ISO date');
+  } else if (beach.lastVerifiedAt !== null && Date.parse(`${beach.lastVerifiedAt}T00:00:00Z`) > Date.now()) {
+    addError(file, `${field}.lastVerifiedAt`, 'cannot be in the future');
   }
   if (typeof beach.published !== 'boolean') {
     addError(file, `${field}.published`, 'must be a boolean');
@@ -177,6 +183,14 @@ function validateFile(file, data) {
   }
   if (data.schemaVersion !== 1) {
     addError(file, 'schemaVersion', 'must be 1');
+  }
+  // Optional, but when present it must point at the repo's schema so editors get the
+  // autocomplete the file promises.
+  if (data.$schema !== undefined) {
+    const expected = path.relative(path.dirname(file), SCHEMA_FILE).split(path.sep).join('/');
+    if (data.$schema !== expected) {
+      addError(file, '$schema', `must be "${expected}"`);
+    }
   }
   if (!isRecord(data.scope)) {
     addError(file, 'scope', 'must be an object');

@@ -9,7 +9,6 @@ export type Recognition = 'official' | 'tolerated' | 'community-reported' | 'dis
 export type Confidence = 'low' | 'medium' | 'high';
 
 export interface Beach {
-  id: string;
   slug: string;
   name: string;
   countryCode: string;
