@@ -84,6 +84,8 @@ describe('topless.pro Worker', () => {
     expect(html).toContain('<link rel="canonical" href="https://topless.pro/beaches/paradise-beach-mykonos">');
     expect(html).toContain('"@type":"Beach"');
     expect(html).toContain('<meta property="og:title"');
+    expect(html).toContain('<meta property="og:image" content="https://topless.pro/og/topless-permitted.png">');
+    expect(html).toContain('<meta name="twitter:card" content="summary_large_image">');
     expect(html).not.toContain('noindex');
   });
 
@@ -93,6 +95,7 @@ describe('topless.pro Worker', () => {
     const homeHtml = await home.text();
     expect(homeHtml).toContain('<link rel="canonical" href="https://topless.pro/">');
     expect(homeHtml).toContain('<title>topless.pro — Beach dress codes: official, tolerated or disputed</title>');
+    expect(homeHtml).toContain('<meta property="og:image" content="https://topless.pro/og/default.png">');
 
     const about = await exports.default.fetch('https://topless.pro/about');
     expect(about.status).toBe(200);

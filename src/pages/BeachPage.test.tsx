@@ -11,7 +11,7 @@ vi.mock('../lib/api', async (importOriginal) => ({
   submitCorrection: vi.fn(),
 }));
 
-const beach = makeBeach({ region: 'Crete', recognition: 'tolerated', facilities: ['Showers'], lastVerifiedAt: '2026-07-21' });
+const beach = makeBeach({ region: 'Crete', municipality: 'Heraklion', recognition: 'tolerated', facilities: ['Showers'], lastVerifiedAt: '2026-07-21' });
 
 async function renderAndSubmit(message = 'The posted guidance changed this week.') {
   render(
@@ -45,11 +45,16 @@ describe('BeachPage', () => {
 
     expect(await screen.findByRole('heading', { name: 'Example Beach' })).toBeInTheDocument();
     expect(getBeach).toHaveBeenCalledWith('example-beach');
-    await waitFor(() => expect(document.title).toBe('Example Beach, Crete: Topless accepted — topless.pro'));
+    await waitFor(() => expect(document.title).toBe('Example Beach, Heraklion: Topless accepted — topless.pro'));
     expect(screen.getByText('21 July 2026').closest('time')).toHaveAttribute('dateTime', '2026-07-21');
-    expect(screen.getByRole('link', { name: /Open in maps/ })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: /Google Maps/ })).toHaveAttribute(
       'href',
       'https://www.google.com/maps/search/?api=1&query=35,25',
+    );
+    expect(screen.getByRole('link', { name: /Apple Maps/ })).toHaveAttribute('href', 'https://maps.apple.com/?ll=35,25&q=Example%20Beach');
+    expect(screen.getByRole('link', { name: /Every change, on GitHub/ })).toHaveAttribute(
+      'href',
+      'https://github.com/topless/topless-pro/commits/main/data/gr/crete/heraklion/beaches.json',
     );
     expect(screen.getByRole('heading', { name: 'What this means' })).toBeInTheDocument();
     // The label appears twice: as the chip and again in "What this means".

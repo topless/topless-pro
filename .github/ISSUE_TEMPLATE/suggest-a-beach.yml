@@ -1,0 +1,61 @@
+name: Suggest a beach or a source
+description: Tell us about a beach, or about a source that shows what the rule there is.
+title: "Beach: "
+labels: ["suggestion"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you. One editor checks every suggestion before anything is published, and a listing needs a source that shows the **rule** — a sign, an official page, the beach operator's page or a naturist organisation's listing. A map link shows where a beach is, not what the rule is.
+  - type: input
+    id: beach
+    attributes:
+      label: Which beach?
+      description: Name, nearest town, country.
+      placeholder: Kavourotrypes, Sithonia, Greece
+    validations:
+      required: true
+  - type: dropdown
+    id: practice
+    attributes:
+      label: What did you see people doing?
+      options:
+        - Everyone in swimwear
+        - Some women topless, nobody nude
+        - Nude and clothed bathers across the whole beach
+        - Nude bathing in one part (an end, a cove, past a sign)
+        - Not sure
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Link to the sign, notice or page that shows the rule
+      description: Not a map link — paste any map link in the notes instead.
+      placeholder: https://
+    validations:
+      required: true
+  - type: checkboxes
+    id: source-kind
+    attributes:
+      label: About that link
+      options:
+        - label: It shows the rule, not just where the beach is.
+          required: true
+  - type: input
+    id: when
+    attributes:
+      label: When was this?
+      placeholder: July 2026
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything else we should know?
+      description: In your own words, please — don't paste text from other sites.
+  - type: checkboxes
+    id: licence
+    attributes:
+      label: Licence
+      options:
+        - label: I agree that what I write here may be published under CC BY 4.0 (data/LICENSE.md), edited, without naming me.
+          required: true

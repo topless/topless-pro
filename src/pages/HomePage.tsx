@@ -5,9 +5,9 @@ import { useDocumentTitle } from '../lib/document-title';
 import {
   DRESS_CODES,
   RECOGNITIONS,
-  REPO_URL,
   SITE_DESCRIPTION,
   SITE_TITLE,
+  SUGGEST_URL,
   dressCodeLabels,
   recognitionDescriptions,
   recognitionLabels,
@@ -26,12 +26,12 @@ export function HomePage() {
   const [error, setError] = useState('');
   const [directoryStatus, setDirectoryStatus] = useState<'loading' | 'ready' | 'error'>('loading');
 
-  const load = useCallback(() => {
+  const load = useCallback((fresh = false) => {
     let active = true;
     setDirectoryStatus('loading');
     setError('');
 
-    getBeaches()
+    getBeaches({ fresh })
       .then((result) => {
         if (!active) return;
         setBeaches(result);
@@ -98,7 +98,7 @@ export function HomePage() {
             <p className="eyebrow">Directory</p>
             <h2 id="directory-title">Explore beaches</h2>
           </div>
-          <span aria-live="polite">
+          <span>
             {directoryStatus === 'loading'
               ? 'Loading directory'
               : directoryStatus === 'error'
@@ -127,7 +127,7 @@ export function HomePage() {
         {directoryStatus === 'error' && (
           <div className="error" role="alert">
             <p>{error}</p>
-            <button type="button" onClick={() => load()}>Try again</button>
+            <button type="button" onClick={() => load(true)}>Try again</button>
           </div>
         )}
         {directoryStatus === 'loading' && <p className="directory-status" role="status">Checking the latest directory…</p>}
@@ -144,7 +144,7 @@ export function HomePage() {
               <p>Every listing needs a source for its dress-code claim, a short summary and a last-checked date. The first listings — Sithonia, Chalkidiki, Greece — are being sourced now.</p>
               <p className="launch-status"><span aria-hidden="true" />No beaches are published yet</p>
               <p className="launch-next">
-                Know a source for a beach? <a href={REPO_URL} rel="noreferrer">Suggest it on GitHub<span aria-hidden="true"> ↗</span></a>
+                Know a beach, or a source that shows its rule? <a href={SUGGEST_URL} rel="noreferrer">Suggest it<span aria-hidden="true"> ↗</span></a>
               </p>
             </div>
             <div className="guidance-key">

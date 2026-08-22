@@ -109,6 +109,8 @@ footer p { margin: .25rem 0 0; color: rgba(255, 255, 255, .7); }
 .facts dd { margin: .3rem 0 0; }
 .facts dd a { font-weight: 600; }
 .facts dd small { display: block; color: var(--ink-muted); font-size: var(--fs-1); }
+.location-links { display: flex; flex-wrap: wrap; gap: .25rem .9rem; margin: 0 0 .25rem; padding: 0; list-style: none; }
+.location-links a { font-weight: 600; }
 
 /* Corrections */
 .correction-panel { max-width: 65ch; margin-top: 2.5rem; padding: 1.25rem 1.35rem; border-radius: var(--radius-s); background: var(--sand-2); }

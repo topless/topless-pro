@@ -6,6 +6,11 @@ Candidate data is organized by country and locality:
 data/<country-code>/<region>/<municipality>/beaches.json
 ```
 
+The folder names are derived from `scope` — the country code in lower case, then the
+region and municipality as lower-case ASCII slugs (`Neos Marmaras` → `neos-marmaras`) —
+and the validator checks that they match, because the site links each listing to this
+file's change history on GitHub.
+
 Each file starts with `"$schema": "../../../beaches.schema.json"` so an editor can
 autocomplete field names and enum values and flag typos as you type. The schema is a
 convenience; the rules below are enforced by `scripts/validate-beach-data.mjs`.

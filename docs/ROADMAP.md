@@ -65,7 +65,7 @@ These shaped the sequence; each was a choice with a stated default, and the defa
   and traces, names the licence and a takedown contact; one disclaimer line under the answer
   block; a daily smoke workflow (health, home, sitemap, the `Sitemap:` line in robots.txt, and a
   POST to a smoke slug); decide whether `/api/` is crawlable. *Gate: decision 8.*
-- [ ] **M6 · Quick wins.** Provider-neutral location links (Apple, Google, OpenStreetMap,
+- [x] **M6 · Quick wins.** Provider-neutral location links (Apple, Google, OpenStreetMap,
   `geo:`); a per-listing GitHub history link; static OpenGraph images per dress code; a GitHub
   issue form for suggesting a beach or a source, replacing the bare repository link in the
   launch state; tidy the duplicated live region on Home and cache the beach list in the client.
