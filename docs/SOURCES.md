@@ -5,12 +5,11 @@ country can be published at `official`. Compiled from a research sweep on 2026-0
 source below was opened and quoted; the verified records are in `data/`, and the evidence for each
 is in the pull request that added it.
 
-What counts: a `sourceUrl` must support the **dress-code claim** — a municipal, park or government
-page, a published decree or bylaw, posted signage hosted somewhere linkable, an operator's stated
-policy, or an established naturist-organisation listing. Map pins, blogs, forums and aggregators
-locate a beach or repeat hearsay; they are supporting material at most. `official` needs an
-authority, a decree, signage or the operator; a federation or directory listing alone carries
-`tolerated` unless it cites the decree.
+What counts: a `sourceUrl` is the rule or the report itself, and the labels say which. An
+authority, a decree, signage or the operator's own policy carries `official`; a municipal tourism
+page or several consistent independent reports carry `tolerated`; a directory entry, forum, review
+or listicle carries `community-reported`. Map pins are never evidence. Hearsay is published as
+hearsay, never promoted.
 
 Reliability, per region: **strong** — a statutory designation with a published list; **medium** —
 designations exist but must be found one authority at a time; **weak** — no designation mechanism,

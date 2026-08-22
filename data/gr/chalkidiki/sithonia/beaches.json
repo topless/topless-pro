@@ -108,7 +108,7 @@
     },
     {
       "facilities": [],
-      "published": false,
+      "published": true,
       "lastVerifiedAt": "2026-08-22",
       "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:halkidiki",
       "slug": "kalamitsi-nudist-cove",
@@ -122,7 +122,7 @@
     },
     {
       "facilities": [],
-      "published": false,
+      "published": true,
       "lastVerifiedAt": "2026-08-22",
       "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:halkidiki",
       "slug": "north-platanitsi",
@@ -136,7 +136,7 @@
     },
     {
       "facilities": [],
-      "published": false,
+      "published": true,
       "lastVerifiedAt": "2026-08-22",
       "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:halkidiki",
       "slug": "paradise-beach-destenika",
@@ -150,7 +150,7 @@
     },
     {
       "facilities": [],
-      "published": false,
+      "published": true,
       "lastVerifiedAt": "2026-08-22",
       "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:halkidiki",
       "slug": "kriaritsi",

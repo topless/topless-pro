@@ -20,7 +20,7 @@
       "facilities": [],
       "sourceUrl": "https://visit.corfu.gr/el/paralies/myrtiotissa/",
       "lastVerifiedAt": "2026-08-22",
-      "published": false
+      "published": true
     },
     {
       "slug": "halikounas",
@@ -34,7 +34,7 @@
       "facilities": [],
       "sourceUrl": "http://capnbarefoot.wikidot.com/ionian:corfu",
       "lastVerifiedAt": "2026-08-22",
-      "published": false
+      "published": true
     }
   ]
 }
