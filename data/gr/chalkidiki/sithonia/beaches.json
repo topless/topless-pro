@@ -105,6 +105,62 @@
       "sourceUrl": null,
       "lastVerifiedAt": null,
       "published": false
+    },
+    {
+      "facilities": [],
+      "published": false,
+      "lastVerifiedAt": "2026-08-22",
+      "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:halkidiki",
+      "slug": "kalamitsi-nudist-cove",
+      "name": "Kalamitsi nudist cove",
+      "latitude": 39.9916,
+      "longitude": 23.9962,
+      "dressCode": "clothing-optional",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude bathing is the norm on the small third cove east of Kalamitsi’s main beach. Naturist directories report it as mostly or fully nude since 2007, with long-stay tents; the main beach is swimwear use. No designation or signage is recorded."
+    },
+    {
+      "facilities": [],
+      "published": false,
+      "lastVerifiedAt": "2026-08-22",
+      "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:halkidiki",
+      "slug": "north-platanitsi",
+      "name": "North Platanitsi",
+      "latitude": 40.122,
+      "longitude": 23.981,
+      "dressCode": "clothing-optional",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude and clothed use mix on the undeveloped coves north of Platanitsi camping. Directory reports (2006–2022) describe the northern beach as clothing-optional and the smaller coves south of it as fully nude; the camping beach itself is swimwear use. The source states it is not an official nude beach."
+    },
+    {
+      "facilities": [],
+      "published": false,
+      "lastVerifiedAt": "2026-08-22",
+      "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:halkidiki",
+      "slug": "paradise-beach-destenika",
+      "name": "Paradise Beach (Destenika–Aretes)",
+      "latitude": 39.9996,
+      "longitude": 23.8693,
+      "dressCode": "clothing-optional",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude and clothed bathers share this unsigned cove north of Toroni. A naturist directory reports a 30–70% naturist share (2014) and a mostly Greek naturist camp (2021); a 2023 visit notes nudity is not required. Unauthorised camping structures at nearby Aretes were cleared by the municipality in August 2026."
+    },
+    {
+      "facilities": [],
+      "published": false,
+      "lastVerifiedAt": "2026-08-22",
+      "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:halkidiki",
+      "slug": "kriaritsi",
+      "name": "Kriaritsi",
+      "latitude": 40.026,
+      "longitude": 24.0172,
+      "dressCode": "nudity-permitted",
+      "recognition": "disputed",
+      "confidence": "medium",
+      "summary": "Nude bathing is reported on the small coves south-east of the main beach. Directory reports from 2015–2022 conflict: some describe the coves as fully nude with free campers, one says a beach bar on the cliffs ended nude use there; the main beach is swimwear use. The municipality cleared unauthorised camping structures here in August 2026."
     }
   ]
 }
