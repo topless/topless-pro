@@ -124,6 +124,7 @@ export function BeachPage() {
             <li><strong>{confidenceLabels[beach.confidence]}</strong> — {confidenceDescriptions[beach.confidence]}</li>
           </ul>
         </div>
+        <p className="answer-note">Not legal advice. Check current signage before you rely on this.</p>
       </div>
 
       {beach.summary && <p className="lead">{beach.summary}</p>}

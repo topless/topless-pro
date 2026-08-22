@@ -182,6 +182,7 @@ describe('topless.pro Worker', () => {
     expect(robots.headers.get('content-type')).toContain('text/plain');
     const body = await robots.text();
     expect(body).toContain('User-agent: *');
+    expect(body).toContain('Disallow: /api/');
     expect(body).toContain('Sitemap: https://topless.pro/sitemap.xml');
   });
 

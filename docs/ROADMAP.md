@@ -53,7 +53,7 @@ These shaped the sequence; each was a choice with a stated default, and the defa
   importable functions with a workerd test that executes its SQL twice; a plan/diff script;
   `data:status`; a JSON Schema for editor autocomplete; validator gains slug length and
   no-future-date checks; `data/README.md` corrected. *Gate: M1.*
-- [ ] **M3 · Source and publish the Sithonia pilot.** Summary style guide and sourcing
+- [~] **M3 · Source and publish the Sithonia pilot.** (licence, PR template and style guide shipped with M5; sourcing in progress) Summary style guide and sourcing
   checklist first; `data/LICENSE` (CC BY 4.0) and a PR template with the evidence checklist;
   then a source for each candidate's dress-code claim, a summary and a date, publishing only
   where the policy holds. Research-bound; a partial result is expected. *Gate: decisions 5, 9.*
@@ -61,7 +61,7 @@ These shaped the sequence; each was a choice with a stated default, and the defa
   import → deploy, token bound at step level, `concurrency: production`, branch protection on
   `main`; one rehearsal against a `preview_database_id`; additive-only migration rule;
   `db:backup:remote` that excludes emails; import runbook. *Gate: decisions 1–3, M2.*
-- [ ] **M5 · Privacy paragraph v1, smoke check, legal lines.** About discloses Workers Logs
+- [x] **M5 · Privacy paragraph v1, smoke check, legal lines.** About discloses Workers Logs
   and traces, names the licence and a takedown contact; one disclaimer line under the answer
   block; a daily smoke workflow (health, home, sitemap, the `Sitemap:` line in robots.txt, and a
   POST to a smoke slug); decide whether `/api/` is crawlable. *Gate: decision 8.*
