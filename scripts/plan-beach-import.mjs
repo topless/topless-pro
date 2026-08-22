@@ -10,16 +10,21 @@ import { COLUMN_NAMES, diffProjection, renderPlan } from './lib/project-beaches.
 // Reads only beach rows and report counts — never a report's text or email.
 
 const args = new Set(process.argv.slice(2));
-const remote = args.has('--remote');
-if (!remote && !args.has('--local')) {
-  console.error('Usage: node scripts/plan-beach-import.mjs --local | --remote');
+const TARGETS = {
+  '--local': { flags: ['--local'], label: 'local' },
+  '--preview': { flags: ['--remote', '--preview'], label: 'preview' },
+  '--remote': { flags: ['--remote'], label: 'production' },
+};
+const target = Object.keys(TARGETS).find((flag) => args.has(flag));
+if (!target) {
+  console.error('Usage: node scripts/plan-beach-import.mjs --local | --preview | --remote');
   process.exit(2);
 }
 
 function query(sql) {
   const output = execFileSync(
     'npx',
-    ['wrangler', 'd1', 'execute', 'DB', remote ? '--remote' : '--local', '--json', '--command', sql],
+    ['wrangler', 'd1', 'execute', 'DB', ...TARGETS[target].flags, '--json', '--command', sql],
     { encoding: 'utf8', stdio: ['ignore', 'pipe', 'inherit'] },
   );
   const [first] = JSON.parse(output);
@@ -34,11 +39,14 @@ const pendingReports = new Map(
   ).map((row) => [row.beach_slug, row.n]),
 );
 
-const plan = renderPlan(diffProjection(files, existing), {
-  pendingReports,
-  target: remote ? 'production' : 'local',
-});
+const diff = diffProjection(files, existing);
+const plan = renderPlan(diff, { pendingReports, target: TARGETS[target].label });
 process.stdout.write(plan);
 if (process.env.GITHUB_STEP_SUMMARY) {
   await appendFile(process.env.GITHUB_STEP_SUMMARY, plan);
+}
+// Lets the deploy job skip the import when there is nothing to change.
+if (process.env.GITHUB_OUTPUT) {
+  const changes = diff.added.length + diff.changed.length + diff.orphaned.length;
+  await appendFile(process.env.GITHUB_OUTPUT, `changes=${changes}\n`);
 }

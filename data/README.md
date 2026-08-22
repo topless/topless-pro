@@ -156,6 +156,11 @@ npm run db:import:remote
 
 runs the same plan and then applies the generated SQL after Wrangler's confirmation
 prompt. The remote import is atomic: if it fails part-way, the database returns to
-its previous state and the command can be retried. Once the deploy pipeline lands
-(roadmap milestone M4) merging to `main` runs these steps from CI, and the manual
-command remains as the break-glass path.
+its previous state and the command can be retried.
+
+Normally neither command is needed: **merging to `main` runs the plan and the import
+from CI** (`.github/workflows/deploy.yml`), prints the plan in the job summary, and
+skips the import when the plan shows no change. The pull request is the review of
+the data; the job summary is the record of what reached production. The manual
+commands remain as the break-glass path. To undo a data change, revert the pull
+request: the next deploy projects the previous state back.

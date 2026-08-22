@@ -33,6 +33,9 @@
       "binding": "DB",
       "database_name": "topless-pro-db",
       "database_id": "dcb94578-9182-45e6-b2fa-9d946614f149",
+      // A second, otherwise unused database for rehearsing the real remote import path
+      // (npm run db:rehearse:preview); Miniflare cannot reproduce that path.
+      "preview_database_id": "baef803f-b944-44b4-aa0d-e62d0d3aa550",
       "migrations_dir": "migrations"
     }
   ],

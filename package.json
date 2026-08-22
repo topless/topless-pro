@@ -27,6 +27,10 @@
     "db:plan:local": "npm run data:sql && node scripts/plan-beach-import.mjs --local",
     "db:plan:remote": "npm run data:sql && node scripts/plan-beach-import.mjs --remote",
     "db:import:remote": "npm run db:plan:remote && wrangler d1 execute DB --remote --file=.wrangler/imports/beaches.sql",
+    "db:backup:remote": "node scripts/backup-remote.mjs",
+    "db:migrate:preview": "wrangler d1 migrations apply DB --remote --preview",
+    "db:plan:preview": "npm run data:sql && node scripts/plan-beach-import.mjs --preview",
+    "db:rehearse:preview": "npm run db:migrate:preview && npm run db:plan:preview && wrangler d1 execute DB --remote --preview --yes --file=.wrangler/imports/beaches.sql",
     "db:migrate:remote": "wrangler d1 migrations apply DB --remote"
   },
   "dependencies": {

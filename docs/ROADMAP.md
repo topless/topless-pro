@@ -57,7 +57,7 @@ These shaped the sequence; each was a choice with a stated default, and the defa
   checklist first; `data/LICENSE` (CC BY 4.0) and a PR template with the evidence checklist;
   then a source for each candidate's dress-code claim, a summary and a date, publishing only
   where the policy holds. Research-bound; a partial result is expected. *Gate: decisions 5, 9.*
-- [ ] **M4 · One deploy path.** `deploy.yml` on push to `main`: check → migrate → plan →
+- [x] **M4 · One deploy path.** `deploy.yml` on push to `main`: check → migrate → plan →
   import → deploy, token bound at step level, `concurrency: production`, branch protection on
   `main`; one rehearsal against a `preview_database_id`; additive-only migration rule;
   `db:backup:remote` that excludes emails; import runbook. *Gate: decisions 1–3, M2.*
