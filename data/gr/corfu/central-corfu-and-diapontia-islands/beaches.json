@@ -1,0 +1,40 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Corfu",
+    "municipality": "Central Corfu and Diapontia Islands"
+  },
+  "beaches": [
+    {
+      "slug": "myrtiotissa",
+      "name": "Myrtiotissa (Μυρτιώτισσα)",
+      "latitude": 39.6126,
+      "longitude": 19.8274,
+      "dressCode": "clothing-optional",
+      "recognition": "tolerated",
+      "confidence": "high",
+      "summary": "Nude and clothed bathers mix across the whole beach without formal designation. The Municipality of Central Corfu's visitor site calls it an unofficial nudist beach; naturist reports from 2014 to 2018 describe the southern part as mostly nude with many clothed visitors in high season. Sunbeds and a canteen operate; the word NUDIST is set into the road surface at the top of the steps.",
+      "facilities": [],
+      "sourceUrl": "https://visit.corfu.gr/el/paralies/myrtiotissa/",
+      "lastVerifiedAt": "2026-08-22",
+      "published": false
+    },
+    {
+      "slug": "halikounas",
+      "name": "Halikounas (Χαλικούνας)",
+      "latitude": 39.447,
+      "longitude": 19.884,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude bathing is practised at the far south-eastern end, past the kitesurf club. Naturist-directory reports from 2012 to 2025 count between none and around twenty nudists between the snack bars and toward the Lake Korission canal, while the north-western stretch is mostly clothed and clothed walkers pass through. No source mentions signage, and the municipal tourism page for the beach does not mention nudism.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/ionian:corfu",
+      "lastVerifiedAt": "2026-08-22",
+      "published": false
+    }
+  ]
+}

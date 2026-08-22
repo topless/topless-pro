@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "CA",
+    "countryName": "Canada",
+    "region": "Ontario",
+    "municipality": "Toronto"
+  },
+  "beaches": [
+    {
+      "slug": "hanlans-point-beach",
+      "name": "Hanlan's Point Beach",
+      "latitude": 43.6183,
+      "longitude": -79.3905,
+      "dressCode": "clothing-optional",
+      "recognition": "official",
+      "confidence": "high",
+      "summary": "The whole of Hanlan's Point Beach is clothing-optional. The City of Toronto beaches page states \"This beach is clothing-optional\"; council made a roughly 1,000 m section on the western shore permanent in 2002 and in 2023 voted to make all of the beach clothing-optional. Lifeguards supervise daily in season from 10:30 to 19:00.",
+      "facilities": [],
+      "sourceUrl": "https://www.toronto.ca/explore-enjoy/parks-recreation/places-spaces/beaches/",
+      "lastVerifiedAt": "2026-08-22",
+      "published": true
+    }
+  ]
+}

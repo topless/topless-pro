@@ -122,6 +122,10 @@ Not good: "A stunning hidden gem where free spirits can enjoy the sun as nature 
 
 ## Sourcing checklist
 
+`docs/SOURCES.md` is the atlas: for each country, where the designations are published, which
+authority issues them, the national federation, and how far the country can be published at
+`official`. Start there before searching.
+
 - Search in the local language as well as English; official pages rarely use the word
   "topless".
 - What kind of source is it? Authority or signage → can carry `official`. Operator policy

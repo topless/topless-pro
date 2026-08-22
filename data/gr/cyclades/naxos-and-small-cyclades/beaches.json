@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Cyclades",
+    "municipality": "Naxos and Small Cyclades"
+  },
+  "beaches": [
+    {
+      "slug": "naxos-plaka",
+      "name": "Plaka (Naxos)",
+      "latitude": 37.0165,
+      "longitude": 25.383,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude use is customary on the stretch of Plaka south of the Three Brothers taverna. Naturist-directory reports from 2016 to 2023 place the zone between the Three Brothers taverna and the Dolphin restaurant or the entrance of Plaka Camping, with a sunbed concession used by naturists; the kilometre north of it from the Paradiso taverna and the organised sections are swimwear use. Reports from July and August 2016, 2017 and 2023 describe naturists as a small minority there.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/cyclades:naxos#toc5",
+      "lastVerifiedAt": "2026-08-22",
+      "published": false
+    }
+  ]
+}

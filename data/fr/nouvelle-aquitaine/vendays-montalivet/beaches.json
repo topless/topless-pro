@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "FR",
+    "countryName": "France",
+    "region": "Nouvelle-Aquitaine",
+    "municipality": "Vendays-Montalivet"
+  },
+  "beaches": [
+    {
+      "slug": "montalivet-chm",
+      "name": "Plage naturiste du CHM Montalivet",
+      "latitude": 45.3545,
+      "longitude": -1.1595,
+      "dressCode": "clothing-optional",
+      "recognition": "official",
+      "confidence": "high",
+      "summary": "The commune designates the whole CHM beach as a naturist beach. Bathing arrêté D-2026-235 of 30 June 2026 heads Article 5 'Plage naturiste du Centre Hélio Marin (C.H.M)' and sets lifeguard cover there daily 6 June–13 September 2026 plus May weekends, but does not itself state nudity rules; the FFN Aquitaine council dates the authorising arrêté to 21 July 1967. Article 12 bans, throughout the regulated zone, dress 'portant atteinte à la pudeur et aux bonnes mœurs'.",
+      "facilities": [],
+      "sourceUrl": "https://www.vendays-montalivet.fr/wp-content/uploads/2026/07/D-2026-235.pdf",
+      "lastVerifiedAt": "2026-08-22",
+      "published": true
+    }
+  ]
+}

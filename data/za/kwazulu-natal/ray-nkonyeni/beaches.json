@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "ZA",
+    "countryName": "South Africa",
+    "region": "KwaZulu-Natal",
+    "municipality": "Ray Nkonyeni"
+  },
+  "beaches": [
+    {
+      "slug": "mpenjati-beach",
+      "name": "Mpenjati Beach (naturist section north of the lagoon mouth)",
+      "latitude": -30.969,
+      "longitude": 30.286,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude use is tolerated on about 300 m of shore north of the Mpenjati lagoon mouth. The KwaZulu-Natal Naturist Association describes the section as unmarked and not officially designated; the council's 2014 approval of a nudist-friendly stretch was found improperly made by the Public Protector in November 2017. The rest of the reserve beach is ordinary swimwear use.",
+      "facilities": [],
+      "sourceUrl": "https://www.kznna.org.za/our-naturist-places.html",
+      "lastVerifiedAt": "2026-08-22",
+      "published": false
+    }
+  ]
+}

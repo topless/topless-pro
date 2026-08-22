@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GB",
+    "countryName": "United Kingdom",
+    "region": "East Sussex",
+    "municipality": "Brighton and Hove"
+  },
+  "beaches": [
+    {
+      "slug": "brighton-naturist-beach",
+      "name": "Brighton Naturist Beach (Cliff Bathing Beach)",
+      "latitude": 50.813,
+      "longitude": -0.117,
+      "dressCode": "clothing-optional",
+      "recognition": "official",
+      "confidence": "medium",
+      "summary": "Nude and clothed use mix across the signed naturist beach east of Brighton Pier. Visit Brighton, the city's council-backed tourism guide, states Brighton opened it on 1 April 1980, that it is officially known as Cliff Bathing Beach, that signs mark where it commences and that pebble banks provide screening. No enforcement note is given.",
+      "facilities": [],
+      "sourceUrl": "https://www.visitbrighton.com/things-to-do/brighton-naturist-beach-p628201",
+      "lastVerifiedAt": "2026-08-22",
+      "published": true
+    }
+  ]
+}

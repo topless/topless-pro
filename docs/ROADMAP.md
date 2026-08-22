@@ -53,7 +53,7 @@ These shaped the sequence; each was a choice with a stated default, and the defa
   importable functions with a workerd test that executes its SQL twice; a plan/diff script;
   `data:status`; a JSON Schema for editor autocomplete; validator gains slug length and
   no-future-date checks; `data/README.md` corrected. *Gate: M1.*
-- [x] **M3 · Source and publish the Sithonia pilot.** Outcome: one of seven met the policy (Kavourotrypes); five became drafts with no claim, Sarti keeps one weak community report unpublished. Summary style guide and sourcing
+- [x] **M3 · Source and publish the Sithonia pilot.** Outcome: one of seven met the policy (Kavourotrypes); five became drafts with no claim, Sarti keeps one weak community report unpublished. A follow-up sweep of Greece, Europe and other continents (`docs/SOURCES.md`) added 52 verified records in 20 countries, 40 of them `official`; the gate for M8 (two or three areas) is met. Summary style guide and sourcing
   checklist first; `data/LICENSE` (CC BY 4.0) and a PR template with the evidence checklist;
   then a source for each candidate's dress-code claim, a summary and a date, publishing only
   where the policy holds. Research-bound; a partial result is expected. *Gate: decisions 5, 9.*
@@ -79,7 +79,7 @@ These shaped the sequence; each was a choice with a stated default, and the defa
 - [ ] **M8 · Country and region landing pages.** `/greece`, `/greece/chalkidiki` with name
   slugs frozen in each file's `scope` and enforced by the validator; `?country=&region=` on
   the API; injected meta, `ItemList` JSON-LD, sitemap entries; Cache API on the list and
-  sitemap responses. *Gate: pilot published and indexed.*
+  sitemap responses. *Gate: pilot published and indexed — met after the 2026-08-22 sweep.*
 - [ ] **M9 · Structured submissions and the GitHub inbox.** One `POST /api/submissions` for
   "suggest a beach" (`/suggest`) and "report a change" (beach page), phrased as questions;
   the evidence field reuses the validator's map-pin rule from one shared module; cheap abuse

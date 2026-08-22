@@ -3,7 +3,7 @@ import type { Beach, Confidence, DressCode, Recognition } from '../types';
 // Site-wide copy shared by the SPA, the Worker's injected metadata and the
 // static shell, so the product is described the same way everywhere.
 export const SITE_TITLE = 'topless.pro — Beach dress codes: official, tolerated or disputed';
-export const SITE_DESCRIPTION = 'Beach-by-beach guidance on topless and nude bathing — the official rule, the local custom and the source, kept separate. Starting in Greece.';
+export const SITE_DESCRIPTION = 'Beach-by-beach guidance on topless and nude bathing — the official rule, the local custom and the source, kept separate.';
 export const ABOUT_TITLE = 'How we classify beaches — topless.pro';
 export const ABOUT_DESCRIPTION = 'How topless.pro labels beaches: official rules, local custom and unconfirmed reports kept apart, with a confidence level for each.';
 export const REPO_URL = 'https://github.com/topless/topless-pro';
