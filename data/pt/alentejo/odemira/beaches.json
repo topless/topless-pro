@@ -1,0 +1,40 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "PT",
+    "countryName": "Portugal",
+    "region": "Alentejo",
+    "municipality": "Odemira"
+  },
+  "beaches": [
+    {
+      "slug": "praia-do-malhao-norte",
+      "name": "Praia do Malhão Norte",
+      "latitude": 37.7839,
+      "longitude": -8.8013,
+      "dressCode": "nudity-permitted",
+      "recognition": "official",
+      "confidence": "high",
+      "summary": "The northern zone of Praia do Malhão is an official naturist area since 2019. Odemira's municipal tourism page states the north zone is official for naturist practice since 2019, and the FPN records the Odemira Municipal Assembly deliberation of 30 April 2019. The municipality's Malhão Sul page states that nudism is tolerated in the northern zone of the beach.",
+      "facilities": [],
+      "sourceUrl": "https://turismo.cm-odemira.pt/o-que-fazer/pontos-de-interesse-a-visitar/praias/poi/praia-do-malhao-norte",
+      "lastVerifiedAt": "2026-08-22",
+      "published": true
+    },
+    {
+      "slug": "praia-dos-alteirinhos",
+      "name": "Praia dos Alteirinhos",
+      "latitude": 37.5187,
+      "longitude": -8.7882,
+      "dressCode": "clothing-optional",
+      "recognition": "official",
+      "confidence": "high",
+      "summary": "Praia dos Alteirinhos is classified for naturism by Odemira. The municipal tourism portal lists it as one of the municipality's beaches classified for naturist practice, and the FPN records the Odemira Municipal Assembly deliberation of 21 April 2008. The FPN notes that rocks form the boundary between this beach's naturist use and the swimwear beach of Zambujeira do Mar.",
+      "facilities": [],
+      "sourceUrl": "https://turismo.cm-odemira.pt/o-que-fazer/pontos-de-interesse-a-visitar/praias/poi/praia-dos-alteirinhos",
+      "lastVerifiedAt": "2026-08-22",
+      "published": true
+    }
+  ]
+}

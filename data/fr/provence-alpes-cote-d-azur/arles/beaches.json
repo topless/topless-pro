@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "FR",
+    "countryName": "France",
+    "region": "Provence-Alpes-Côte d'Azur",
+    "municipality": "Arles"
+  },
+  "beaches": [
+    {
+      "slug": "piemanson-zone-naturiste",
+      "name": "Plage de Piémanson (zone naturiste)",
+      "latitude": 43.35,
+      "longitude": 4.81,
+      "dressCode": "nudity-permitted",
+      "recognition": "official",
+      "confidence": "high",
+      "summary": "A marked area beyond the ordinary beach is reserved for naturists. The Ville d'Arles page states this; the Arles tourist office says the beach becomes naturist about 1 km to the left of the access, as far as the Rhône mouth, and the Union régionale naturiste cites a municipal arrêté of 23 June 1982 whose text is not online. The tourist office states that bivouac, camping, caravanning, barbecues and fires are prohibited.",
+      "facilities": [],
+      "sourceUrl": "https://arles.fr/vivre-a-arles/faire-du-sport/les-equipements-de-loisirs/plage/piemanson-la-plage-darles-100-nature/",
+      "lastVerifiedAt": "2026-08-22",
+      "published": true
+    }
+  ]
+}

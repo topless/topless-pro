@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Corfu",
+    "municipality": "South Corfu"
+  },
+  "beaches": [
+    {
+      "slug": "arkoudilas",
+      "name": "Arkoudilas (Αρκουδίλας)",
+      "latitude": 39.3671,
+      "longitude": 20.0981,
+      "dressCode": "nudity-permitted",
+      "recognition": "community-reported",
+      "confidence": "low",
+      "summary": "A 2018 naturist report describes a couple of nude bathers at the right-hand side. The directory entry says the beach is mostly clothed; two beach guides tag it naturist without any reports. No signage or designation found, and the source itself warns that past naturist use may not continue.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/ionian:corfu",
+      "lastVerifiedAt": "2026-08-22",
+      "published": false
+    }
+  ]
+}

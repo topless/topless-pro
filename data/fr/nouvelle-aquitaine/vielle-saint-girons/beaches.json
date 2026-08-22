@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "FR",
+    "countryName": "France",
+    "region": "Nouvelle-Aquitaine",
+    "municipality": "Vielle-Saint-Girons"
+  },
+  "beaches": [
+    {
+      "slug": "arnaoutchot",
+      "name": "Plage d'Arnaoutchot",
+      "latitude": 43.9285,
+      "longitude": -1.3625,
+      "dressCode": "clothing-optional",
+      "recognition": "official",
+      "confidence": "high",
+      "summary": "Naturism is authorised across Arnaoutchot beach by municipal arrêté of 4 July 1974. The FFN Aquitaine council lists it among the region's ten officially authorised naturist beaches; Landes Attractivité lists it as a supervised naturist beach with lifeguards in July, August and early September.",
+      "facilities": [],
+      "sourceUrl": "https://naturisme-aquitaine.fr/plages-naturistes-aquitaine/",
+      "lastVerifiedAt": "2026-08-22",
+      "published": true
+    }
+  ]
+}

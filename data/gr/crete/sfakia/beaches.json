@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Crete",
+    "municipality": "Sfakia"
+  },
+  "beaches": [
+    {
+      "slug": "filaki",
+      "name": "Filaki (Φυλακή) — Vritomartis naturist beach",
+      "latitude": 35.1965,
+      "longitude": 24.16,
+      "dressCode": "clothing-optional",
+      "recognition": "official",
+      "confidence": "medium",
+      "summary": "The whole beach is naturist; the operator calls it a compulsory naturist area. Vritomartis, which describes itself as a licensed naturist resort, runs the beach 700 m from the hotel and states that the other beaches it lists nearby are not official naturist beaches. Law 1399/1983 makes nudity lawful on the beach in front of a licensed naturist centre; the licence itself is not published online.",
+      "facilities": [],
+      "sourceUrl": "https://www.vritomartis.com/swim/naturist-beaches-nearby/",
+      "lastVerifiedAt": "2026-08-22",
+      "published": true
+    }
+  ]
+}

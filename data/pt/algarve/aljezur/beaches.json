@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "PT",
+    "countryName": "Portugal",
+    "region": "Algarve",
+    "municipality": "Aljezur"
+  },
+  "beaches": [
+    {
+      "slug": "praia-das-adegas",
+      "name": "Praia das Adegas",
+      "latitude": 37.4389,
+      "longitude": -8.8006,
+      "dressCode": "clothing-optional",
+      "recognition": "official",
+      "confidence": "high",
+      "summary": "Praia das Adegas is an official naturist beach. Aljezur's municipal page describes the cove south of Praia de Odeceixe as 'praia de naturismo oficial', and the FPN records the Aljezur Municipal Assembly deliberation of 19 November 2004. The beach is lifeguarded during the bathing season.",
+      "facilities": [],
+      "sourceUrl": "https://cm-aljezur.pt/pt/860/praia-das-adegas.aspx",
+      "lastVerifiedAt": "2026-08-22",
+      "published": true
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "BE",
+    "countryName": "Belgium",
+    "region": "West Flanders",
+    "municipality": "Bredene"
+  },
+  "beaches": [
+    {
+      "slug": "bredene-naaktstrand",
+      "name": "Naaktstrand Bredene",
+      "latitude": 51.2545,
+      "longitude": 2.981,
+      "dressCode": "nudity-permitted",
+      "recognition": "official",
+      "confidence": "high",
+      "summary": "Nudity is permitted only inside the sign-marked zone of the beach. The gemeente Bredene page gives the zone as a 350 m strip reached via the tunnel at tram stop Hippodroom (strandpost 6), open yearly from the Saturday before the Easter holidays to the second Sunday of October, and says clothed walkers may pass along the tide line. Lifeguards are present in July and August and on fine-weather weekends in September.",
+      "facilities": [],
+      "sourceUrl": "https://www.bredene.be/naaktstrand",
+      "lastVerifiedAt": "2026-08-22",
+      "published": true
+    }
+  ]
+}

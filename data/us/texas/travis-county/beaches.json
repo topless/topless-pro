@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "US",
+    "countryName": "United States",
+    "region": "Texas",
+    "municipality": "Travis County"
+  },
+  "beaches": [
+    {
+      "slug": "hippie-hollow",
+      "name": "Hippie Hollow Park (Lake Travis)",
+      "latitude": 30.4272,
+      "longitude": -97.9042,
+      "dressCode": "clothing-optional",
+      "recognition": "official",
+      "confidence": "high",
+      "summary": "Nude use is accepted throughout the park; entry is restricted to adults 18 and over. Travis County's park page calls it the only clothing-optional public park in Texas and states that nudity is acceptable and lewd behaviour is not. The shoreline is rocky lake shore, not a sand beach.",
+      "facilities": [],
+      "sourceUrl": "https://parks.traviscountytx.gov/parks/hippie-hollow",
+      "lastVerifiedAt": "2026-08-22",
+      "published": true
+    }
+  ]
+}

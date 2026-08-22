@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "IE",
+    "countryName": "Ireland",
+    "region": "County Dublin",
+    "municipality": "Dún Laoghaire-Rathdown"
+  },
+  "beaches": [
+    {
+      "slug": "hawk-cliff-dalkey",
+      "name": "Hawk Cliff (Vico / White Rock)",
+      "latitude": 53.2702,
+      "longitude": -6.0975,
+      "dressCode": "clothing-optional",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude and clothed bathers share the Vico bathing place at Hawk Cliff. The Irish Naturist Association lists the changing-hut and diving-board area as shared by naturists and textile bathers, and a small cove to the south as also used by naturists. It records that in 2017 Dún Laoghaire-Rathdown County Council agreed to erect signs about nude bathers but later withdrew from the agreement; there is no official designation or signage.",
+      "facilities": [],
+      "sourceUrl": "https://irishnaturism.org/leinster/",
+      "lastVerifiedAt": "2026-08-22",
+      "published": false
+    }
+  ]
+}
