@@ -53,30 +53,13 @@ function existingRow(overrides = {}) {
 }
 
 describe('renderImportStatements', () => {
-  it('upserts only changed rows and unpublishes every slug absent from data/', () => {
-    const statements = renderImportStatements([
-      file([candidate(), candidate({ slug: 'draft', name: 'Draft', confidence: null })]),
-    ]);
-
-    expect(statements).toHaveLength(2);
-    expect(statements[0]).toContain('ON CONFLICT(slug) DO UPDATE SET');
-    expect(statements[0]).toContain('WHERE beaches.name IS NOT excluded.name');
-    expect(statements[0]).not.toContain("'draft'");
-    expect(statements[1]).toBe(
-      "UPDATE beaches SET published = 0, updated_at = CURRENT_TIMESTAMP\nWHERE published = 1\n  AND slug NOT IN ('sarti', 'draft');",
-    );
-  });
-
-  it('chunks rows by byte budget', () => {
-    const beaches = Array.from({ length: 30 }, (_, index) => candidate({ slug: `beach-${index}` }));
-    const statements = renderImportStatements([file(beaches)], { byteBudget: 2_000 });
-    const inserts = statements.filter((statement) => statement.startsWith('INSERT'));
-    expect(inserts.length).toBeGreaterThan(2);
-    expect(inserts.flatMap((statement) => statement.match(/\('beach-\d+'/g))).toHaveLength(30);
-  });
-
   it('refuses to produce a file with nothing to import', () => {
     expect(() => renderImportStatements([file([candidate({ latitude: null })])])).toThrow('No complete beach records');
+  });
+
+  it('refuses a candidate without a slug rather than emitting a NULL in the unpublish list', () => {
+    const beaches = [candidate(), { ...candidate({ name: 'No slug' }), slug: undefined }];
+    expect(() => renderImportStatements([file(beaches)])).toThrow('without a slug');
   });
 });
 

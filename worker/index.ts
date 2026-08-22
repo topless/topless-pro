@@ -26,6 +26,8 @@ const BEACH_COLUMNS = `
 const MAX_CORRECTION_BODY_BYTES = 8_192;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+// Mirrored by data/beaches.schema.json (slug.maxLength) and the validator.
+const MAX_SLUG_LENGTH = 120;
 const CANONICAL_HOST = 'topless.pro';
 const WWW_HOST = `www.${CANONICAL_HOST}`;
 const CANONICAL_ORIGIN = `https://${CANONICAL_HOST}`;
@@ -134,7 +136,7 @@ function validateCorrection(value: Record<string, unknown>): CorrectionValidatio
   const beachSlug = typeof value.beachSlug === 'string' ? value.beachSlug.trim() : '';
   const message = typeof value.message === 'string' ? value.message.trim() : '';
 
-  if (!beachSlug || beachSlug.length > 120 || !SLUG_PATTERN.test(beachSlug)) {
+  if (!beachSlug || beachSlug.length > MAX_SLUG_LENGTH || !SLUG_PATTERN.test(beachSlug)) {
     return { ok: false, error: 'We couldn’t tell which beach this report is about.' };
   }
 
@@ -346,7 +348,7 @@ async function renderShell(c: AppContext, meta: PageMeta, status = 200, prefetch
 }
 
 async function getPublishedBeach(db: D1Database, slug: string): Promise<Beach | null> {
-  if (!SLUG_PATTERN.test(slug) || slug.length > 120) return null;
+  if (!SLUG_PATTERN.test(slug) || slug.length > MAX_SLUG_LENGTH) return null;
 
   const row = await db.prepare(
     `SELECT ${BEACH_COLUMNS}

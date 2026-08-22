@@ -1,23 +1,27 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
+import schema from '../data/beaches.schema.json' with { type: 'json' };
 import { dataFilePath } from '../shared/place.mjs';
 import { DATA_ROOT, REQUIRED_D1_FIELDS, SCHEMA_FILE, findBeachFiles } from './lib/beach-data.mjs';
-const DRESS_CODES = new Set([
-  'swimwear-required',
-  'topless-permitted',
-  'clothing-optional',
-  'nudity-permitted',
-  'unknown',
-]);
-const RECOGNITION_LEVELS = new Set([
-  'official',
-  'tolerated',
-  'community-reported',
-  'disputed',
-]);
-const CONFIDENCE_LEVELS = new Set(['low', 'medium', 'high']);
-const MAX_SLUG_LENGTH = 120;
+
+// The JSON Schema is the one place the enums, the slug rule and the field lists are
+// written down; editors get them as autocomplete, this script enforces them in CI,
+// together with the cross-field policy rules a schema cannot express.
+const BEACH_PROPERTIES = schema.definitions.beach.properties;
+const enumValues = (name) => new Set(BEACH_PROPERTIES[name].enum.filter((value) => value !== null));
+const DRESS_CODES = enumValues('dressCode');
+const RECOGNITION_LEVELS = enumValues('recognition');
+const CONFIDENCE_LEVELS = enumValues('confidence');
+const SLUG_PATTERN = new RegExp(BEACH_PROPERTIES.slug.pattern);
+// Mirrors MAX_SLUG_LENGTH in worker/index.ts: a longer slug would be a silent 404.
+const MAX_SLUG_LENGTH = BEACH_PROPERTIES.slug.maxLength;
+const COUNTRY_CODE_PATTERN = new RegExp(schema.properties.scope.properties.countryCode.pattern);
+const KNOWN_FILE_KEYS = new Set(Object.keys(schema.properties));
+const KNOWN_SCOPE_KEYS = new Set(Object.keys(schema.properties.scope.properties));
+const KNOWN_BEACH_KEYS = new Set(Object.keys(BEACH_PROPERTIES));
+// One day of slack: "today" east of UTC is still yesterday in UTC.
+const DAY_MS = 24 * 60 * 60 * 1000;
 // sourceUrl must support the dress-code claim. These services locate a place
 // or hide the destination, so they never can. host is an exact hostname or a
 // pattern; pathPrefix limits the rule to that product's URL space.
@@ -77,6 +81,14 @@ function rejectedSourceReason(value) {
   }
 }
 
+function validateKnownKeys(file, field, value, known) {
+  for (const key of Object.keys(value)) {
+    if (!known.has(key)) {
+      addError(file, `${field}.${key}`, 'is not a known field');
+    }
+  }
+}
+
 function validateNullableEnum(file, field, value, allowedValues) {
   if (value !== null && !allowedValues.has(value)) {
     addError(file, field, 'must be null or a supported value');
@@ -95,11 +107,11 @@ function validateBeach(file, beach, index) {
     addError(file, field, 'must be an object');
     return;
   }
+  validateKnownKeys(file, field, beach, KNOWN_BEACH_KEYS);
 
-  if (!isNonEmptyString(beach.slug) || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(beach.slug)) {
+  if (!isNonEmptyString(beach.slug) || !SLUG_PATTERN.test(beach.slug)) {
     addError(file, `${field}.slug`, 'must be a lowercase URL slug');
   } else if (beach.slug.length > MAX_SLUG_LENGTH) {
-    // The Worker refuses longer slugs, so a listing with one would be a silent 404.
     addError(file, `${field}.slug`, `must be at most ${MAX_SLUG_LENGTH} characters`);
   } else if (seenSlugs.has(beach.slug)) {
     addError(file, `${field}.slug`, `duplicates ${seenSlugs.get(beach.slug)}`);
@@ -134,7 +146,7 @@ function validateBeach(file, beach, index) {
   }
   if (beach.lastVerifiedAt !== null && !isIsoDate(beach.lastVerifiedAt)) {
     addError(file, `${field}.lastVerifiedAt`, 'must be null or an ISO date');
-  } else if (beach.lastVerifiedAt !== null && Date.parse(`${beach.lastVerifiedAt}T00:00:00Z`) > Date.now()) {
+  } else if (beach.lastVerifiedAt !== null && Date.parse(`${beach.lastVerifiedAt}T00:00:00Z`) > Date.now() + DAY_MS) {
     addError(file, `${field}.lastVerifiedAt`, 'cannot be in the future');
   }
   if (typeof beach.published !== 'boolean') {
@@ -182,6 +194,7 @@ function validateFile(file, data) {
     addError(file, '$', 'must contain a JSON object');
     return;
   }
+  validateKnownKeys(file, '$', data, KNOWN_FILE_KEYS);
   if (data.schemaVersion !== 1) {
     addError(file, 'schemaVersion', 'must be 1');
   }
@@ -196,10 +209,14 @@ function validateFile(file, data) {
   if (!isRecord(data.scope)) {
     addError(file, 'scope', 'must be an object');
   } else {
+    validateKnownKeys(file, 'scope', data.scope, KNOWN_SCOPE_KEYS);
     for (const property of ['countryCode', 'countryName', 'region', 'municipality']) {
       if (!isNonEmptyString(data.scope[property])) {
         addError(file, `scope.${property}`, 'must be a non-empty string');
       }
+    }
+    if (isNonEmptyString(data.scope.countryCode) && !COUNTRY_CODE_PATTERN.test(data.scope.countryCode)) {
+      addError(file, 'scope.countryCode', 'must be an upper-case ISO 3166-1 alpha-2 code');
     }
 
     // The folder is derived from the scope (shared/place.mjs), which is how the site links

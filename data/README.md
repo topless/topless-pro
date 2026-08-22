@@ -20,8 +20,9 @@ live once under `scope`; the importer copies them to each D1 row.
 
 ## Fields
 
-`scope` needs all four of `countryCode` (ISO 3166-1 alpha-2, matching the country
-folder), `countryName`, `region` and `municipality` — they are the folder names.
+`scope` needs all four of `countryCode` (upper-case ISO 3166-1 alpha-2, matching the
+country folder), `countryName`, `region` and `municipality` — they are the folder names.
+Unknown keys anywhere in the file are rejected, so a typo cannot silently drop a field.
 
 The D1 schema requires these values for every imported beach:
 
@@ -100,8 +101,10 @@ requires:
 - `summary` — visitors need context, not just a badge;
 - `lastVerifiedAt` — the date the claim was last checked (never in the future).
 
-The validator enforces all of the above, and `npm run check` runs it, so CI fails
-on any candidate that breaks policy.
+The validator enforces the mechanical rules above — the `high` → `sourceUrl` cap, the
+map-pin rejection and the publishing requirements — and `npm run check` runs it, so CI
+fails on those. Whether a claim rests on observation or hearsay is not recorded in the
+data; that distinction is checked by the reviewer in the pull request.
 
 ## Writing a summary
 
@@ -192,8 +195,9 @@ and report counts only — never a report's text or email.
 npm run db:import:remote
 ```
 
-runs the same plan and then applies the generated SQL after Wrangler's confirmation
-prompt. The remote import is atomic: if it fails part-way, the database returns to
+runs the same plan and then applies the generated SQL; Wrangler asks for confirmation
+only when stdout is a terminal, so from CI or with output piped it applies immediately
+after the plan. The remote import is atomic: if it fails part-way, the database returns to
 its previous state and the command can be retried.
 
 Normally neither command is needed: **merging to `main` runs the plan and the import
