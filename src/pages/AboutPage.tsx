@@ -53,7 +53,7 @@ export function AboutPage() {
       <p>Confidence describes how sure we are about the clothing guidance, not about the beach’s location.</p>
 
       <h2>How we verify</h2>
-      <p>Every published listing has a source that supports the clothing guidance itself, not just the beach’s existence, plus a short summary and the date we last checked it. A map pin is not evidence. High confidence always has a supporting source; local knowledge without a citable source is at most medium.</p>
+      <p>Every published listing links to the evidence for its clothing guidance — the rule, or the report — and the labels say which it is: an official rule, established local custom, or an unconfirmed report. A map pin is not evidence. High confidence always rests on an authority or the beach operator; a single visitor report is published as an unconfirmed report with low confidence, never as more, and the summary says what the evidence is and how old.</p>
 
       <h2>Your reports and privacy</h2>
       <p>This site sets no cookies and runs no tracking script. Cloudflare, which hosts it, keeps a log of each request’s method and path for a few days so that errors can be found; we don’t use it to identify visitors. When you send a report we store what you typed, and your email address if you give one, only to review the report and reply. Your IP address is used to limit repeat submissions and isn’t stored with your report. To have a report or a listing removed, send a report from the same beach page saying so, or open an issue on GitHub; we act on every such request.</p>

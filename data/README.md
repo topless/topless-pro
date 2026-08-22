@@ -81,35 +81,51 @@ in the beach's identity:
 
 ## Evidence policy
 
-`sourceUrl` must point at evidence for the **dress-code claim**, not merely for the
-beach's existence. Acceptable sources include municipal or port-authority pages,
-posted signage (photographed and hosted somewhere linkable), operator websites that
-state a policy, or established naturist-organisation listings. Map pins — Google, Apple, Bing, and
-OpenStreetMap map links, and `goo.gl` shorteners — identify a place, not a norm;
-the validator rejects them in `sourceUrl`.
+Every published listing links to the evidence for its dress-code claim, and the labels say what
+kind of evidence it is. Hearsay is published — labelled as hearsay — not excluded.
 
-Confidence is capped by evidence:
+`sourceUrl` is the rule or the report itself:
 
-- `high` requires a `sourceUrl` that supports the claim.
-- Personal observation or local knowledge without a citable source is at most
-  `medium` (credible but informal), and second-hand reports are `low`.
+- an authority's page, a published decree or bylaw, posted signage hosted somewhere linkable,
+  or the beach operator's stated policy — can carry `official`;
+- a municipal tourism page that calls the beach a nudist beach, or several independent reports
+  that agree over several years — `tolerated`;
+- a naturist directory entry with dated visitor reports, a forum thread, a review, a press
+  article or a listicle — `community-reported`;
+- conflicting reports, or a reported ban or clearance — `disputed`.
 
-Publishing has a stricter bar than D1-readiness. `published: true` additionally
-requires:
+Map pins — Google, Apple, Bing and OpenStreetMap map links — and `goo.gl` shorteners identify a
+place, not a norm; the validator rejects them in `sourceUrl`. A page that merely embeds a map
+is no better.
 
-- `sourceUrl` — the claim must be supported;
-- `summary` — visitors need context, not just a badge;
-- `lastVerifiedAt` — the date the claim was last checked (never in the future).
+Confidence follows the evidence:
+
+- `high` — an authority or operator source, recent and specific (so `high` always has a
+  `sourceUrl`);
+- `medium` — a municipal tourism page, or several consistent reports with at least one from
+  the last three years; personal observation without a citable source is at most `medium`;
+- `low` — a single or old report, a vague location, or second-hand information.
+
+`published: true` requires:
+
+- `sourceUrl` — the rule or the report;
+- `summary` — which must say in plain words what the evidence is and how old it is, so a
+  visitor can weigh it ("A naturist directory carries visitor reports from 2016 and 2021; no
+  signage is documented");
+- `lastVerifiedAt` — the date the source was last opened (never in the future).
+
+Never copy text from a source into a summary; cite and describe.
 
 The validator enforces the mechanical rules above — the `high` → `sourceUrl` cap, the
 map-pin rejection and the publishing requirements — and `npm run check` runs it, so CI
-fails on those. Whether a claim rests on observation or hearsay is not recorded in the
-data; that distinction is checked by the reviewer in the pull request.
+fails on those. Whether the recognition and confidence match the kind and age of the source
+is checked by the reviewer in the pull request.
 
 ## Writing a summary
 
 One to three sentences in the present tense. Say what the practice is, where on the beach
-it applies, what the source says, and any enforcement note you have a source for. No
+it applies, what the evidence is and how old it is, and any enforcement note you have a
+source for. No
 adjectives, no advice, no marketing; the disclaimer is shown beside every listing already.
 The first sentence must stand on its own in under about 85 characters: it is appended to the
 search-result description after the name, place and classification. Write in English; quote
@@ -128,10 +144,10 @@ authority issues them, the national federation, and how far the country can be p
 
 - Search in the local language as well as English; official pages rarely use the word
   "topless".
-- What kind of source is it? Authority or signage → can carry `official`. Operator policy
-  or a long-standing naturist-organisation listing → can carry `tolerated`. Blogs, forums
-  and reviews → `community-reported` at most, `low` confidence unless several independent
-  and consistent accounts exist.
+- What kind of source is it? Authority, signage or the operator's own policy → `official`.
+  A municipal tourism page, or several independent consistent accounts → `tolerated`. A
+  directory entry, blog, forum or review → `community-reported`, `low` unless several
+  recent accounts agree.
 - Does the page say something about **what people wear**, or only that the beach exists?
   Only the former is a `sourceUrl`.
 - Is it a map pin, a shortener, or a page that merely embeds a map? Then it is not evidence.
