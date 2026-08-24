@@ -1,0 +1,54 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Amorgos",
+    "municipality": "Amorgos"
+  },
+  "beaches": [
+    {
+      "slug": "amorgos-psili-ammos",
+      "name": "Psili Ammos (Aigiali)",
+      "latitude": 36.913,
+      "longitude": 25.97,
+      "dressCode": "clothing-optional",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude and clothed bathers mix across this small pebble beach near Aigiali. A naturist directory carries visitor reports from 2017 to 2023, ranging from 10% to 100% nude; a tourism directory says nudism is unofficially practised here. It sits on a hiking trail, so clothed walkers pass regularly.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/cyclades:amorgos",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "amorgos-kambi",
+      "name": "Kambi",
+      "latitude": 36.827,
+      "longitude": 25.899,
+      "dressCode": "clothing-optional",
+      "recognition": "community-reported",
+      "confidence": "low",
+      "summary": "Nude bathing is usual at this rocky cove south of Agia Anna. A naturist directory carries visitor reports from 2003 to 2022, ranging from 60% to 100% naturist; a tourism directory names Kambi for nudism. Access is a scramble along the rocks from Agia Anna beach, which itself is reported mostly textile.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/cyclades:amorgos",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "amorgos-mouros",
+      "name": "Mouros",
+      "latitude": 36.79,
+      "longitude": 25.845,
+      "dressCode": "nudity-permitted",
+      "recognition": "community-reported",
+      "confidence": "low",
+      "summary": "Nude bathing is reported at the small coves beyond the rocks east of the main beach. A naturist directory carries visitor reports from 2006 to 2021; the side coves were fully nude in 2013 and 2021, while the main beach below the taverna is swimwear. The directory calls it a historical nudist beach that changed after road access arrived in 2006.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/cyclades:amorgos",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

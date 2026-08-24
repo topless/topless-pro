@@ -1,0 +1,68 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Crete",
+    "municipality": "Kantanos-Selino"
+  },
+  "beaches": [
+    {
+      "slug": "sougia-east-end",
+      "name": "Sougia (east end)",
+      "latitude": 35.248,
+      "longitude": 23.822,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude bathing is practised on the eastern part of the beach. A naturist directory carries visitor reports from 1998 to September 2023; a 2021 directory entry, a Crete beach guide and Greek listicles (2017-2024) name the same eastern section. A 2001 report mentions an old no-nudism sign that was ignored, and a 2018 note reports a village vote against beach camping; no designation is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/crete:south-westcrete",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "kedrodasos",
+      "name": "Kedrodasos",
+      "latitude": 35.264,
+      "longitude": 23.557,
+      "dressCode": "clothing-optional",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude and clothed bathers mix along the whole beach, more nude at the eastern end. A naturist directory carries visitor reports from 2005 to 2018 ranging from 20% to 100% nude; a 2021 directory entry says about half; a Crete beach guide and a 2024 Greek listicle call it a naturist favourite. No designation is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/crete:south-westcrete",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "paleochora-pachia-ammos",
+      "name": "Paleochora, Pachia Ammos (north end)",
+      "latitude": 35.233,
+      "longitude": 23.674,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude bathing is practised at the northern end of the long western town beach. A naturist directory carries visitor reports from 1999 to October 2023 and describes signs near the taverna separating the nude and clothed sections; a Crete beach guide and Greek listicles (2017-2024) name the same end. Who placed the signs is not documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/crete:south-westcrete",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "gialiskari-anidri",
+      "name": "Gialiskari (Anidri beaches)",
+      "latitude": 35.243,
+      "longitude": 23.726,
+      "dressCode": "nudity-permitted",
+      "recognition": "community-reported",
+      "confidence": "medium",
+      "summary": "Nude bathing is practised on the eastern half of the easternmost Anidri beach. A naturist directory carries visitor reports from 1997 to September 2023, placing the nude section beyond the first block of sunbeds; a 2016 note claims a tourist-office brochure mentions it, which is unverified. No signage is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/crete:south-westcrete",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

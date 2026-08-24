@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Preveza",
+    "municipality": "Preveza"
+  },
+  "beaches": [
+    {
+      "slug": "kanali-preveza",
+      "name": "Kanali (Preveza)",
+      "latitude": 39.097,
+      "longitude": 20.678,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "low",
+      "summary": "Nude bathing is reported on the stretch between the Mango and Burano beach bars. A naturist directory carries visitor reports from 2012 to 2021 calling this stretch long-established and fully nudist; the central village beach stays swimwear. No official designation is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:epirus",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

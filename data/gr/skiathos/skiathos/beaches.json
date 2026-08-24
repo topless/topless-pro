@@ -1,0 +1,54 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Skiathos",
+    "municipality": "Skiathos"
+  },
+  "beaches": [
+    {
+      "slug": "little-banana",
+      "name": "Little Banana (Mikri Banana / Spartacus)",
+      "latitude": 39.1437,
+      "longitude": 23.3846,
+      "dressCode": "clothing-optional",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude and clothed bathers mix across the whole beach, most bathers nude. A naturist directory carries near-annual visitor reports from 1998 to June 2024; a September 2022 report says police briefly ordered bathers to dress after a water-sports operator complained, with nude use resuming the next day.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/sporades:skiathos",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "megas-aselinos",
+      "name": "Megas Aselinos",
+      "latitude": 39.1836,
+      "longitude": 23.4104,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude bathing is reported at the far end, away from the taverna and sunbeds. A naturist directory carries visitor reports from 2013 to June 2024; reports note the near end is used by local families and ask nude bathers to keep clear of it.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/sporades:skiathos",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "mandraki-skiathos",
+      "name": "Mandraki",
+      "latitude": 39.168,
+      "longitude": 23.391,
+      "dressCode": "nudity-permitted",
+      "recognition": "community-reported",
+      "confidence": "low",
+      "summary": "Nude bathing is reported at the ends of the beach; the middle is swimwear. A naturist directory carries visitor reports from 2000 to July 2021; numbers vary by season and several visits found no nude bathers.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/sporades:skiathos",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

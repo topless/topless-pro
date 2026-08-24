@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Symi",
+    "municipality": "Symi"
+  },
+  "beaches": [
+    {
+      "slug": "nanou",
+      "name": "Nanou",
+      "latitude": 36.583,
+      "longitude": 27.858,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude bathing is reported at the far end, away from the taxi-boat landing. A naturist directory carries reports from 2001 to 2025; a 2021 visit found no naturists, but a June 2025 report describes several relaxed nude days on the far side. No designation or signage is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/dodecanese:symi",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

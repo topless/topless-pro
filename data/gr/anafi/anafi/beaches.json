@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Anafi",
+    "municipality": "Anafi"
+  },
+  "beaches": [
+    {
+      "slug": "anafi-roukounas",
+      "name": "Roukounas",
+      "latitude": 36.352,
+      "longitude": 25.796,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "low",
+      "summary": "Nude bathing is usual on the western part, used by free campers. A naturist directory carries reports from 2010 to 2017; a 2017 report found the beach covered in tents with few naturists left. The small eastern end is used in swimwear; no newer report was found.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/cyclades:anafi",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

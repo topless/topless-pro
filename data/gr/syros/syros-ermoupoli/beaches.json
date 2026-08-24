@@ -1,0 +1,40 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Syros",
+    "municipality": "Syros-Ermoupoli"
+  },
+  "beaches": [
+    {
+      "slug": "armeos-syros",
+      "name": "Armeos (Agia Pakou)",
+      "latitude": 37.4135,
+      "longitude": 24.88,
+      "dressCode": "clothing-optional",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude bathing is the norm across this small beach behind Galissas. A naturist directory carries visitor reports from 1997 to 2017 and says the beach is marked as nudist on local tourist maps; a 2017 review and the Cyclades chamber tourism portal agree. No authority designation is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/cyclades:syros",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "delfini-syros",
+      "name": "Delfini",
+      "latitude": 37.46,
+      "longitude": 24.886,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude bathing is reported at the southern (left) end of the beach. A naturist directory carries visitor reports from 2003 to 2024 and a 2018 review agrees; the northern end has a taverna and sunbeds. Reports from 2016 and 2017 describe a neighbouring house owner calling the police; later reports say nude use continues.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/cyclades:syros",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

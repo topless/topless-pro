@@ -21,6 +21,20 @@
       "sourceUrl": "https://www.rhodes.gr/kallithea/",
       "lastVerifiedAt": "2026-08-22",
       "published": true
+    },
+    {
+      "slug": "tsambika-south",
+      "name": "Tsambika (southern end)",
+      "latitude": 36.222,
+      "longitude": 28.149,
+      "dressCode": "nudity-permitted",
+      "recognition": "official",
+      "confidence": "medium",
+      "summary": "Nude bathing occupies a signed, fenced section at the southern end. A naturist directory carries visitor reports from 2015 to 2025 describing 'Nudist Beach' signs, a separating fence and a cantina run for the nude section; Rhodes travel guides also list the section. No municipal decree is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/dodecanese:rhodes",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
     }
   ]
 }

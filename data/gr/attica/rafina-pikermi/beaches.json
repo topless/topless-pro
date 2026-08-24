@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Attica",
+    "municipality": "Rafina-Pikermi"
+  },
+  "beaches": [
+    {
+      "slug": "marikes-rafina",
+      "name": "Marikes, Rafina",
+      "latitude": 38.035,
+      "longitude": 24.012,
+      "dressCode": "nudity-permitted",
+      "recognition": "community-reported",
+      "confidence": "medium",
+      "summary": "Nude bathing is reported in a rocky cove beyond the right-hand end of the beach. A naturist directory carries one undated visitor report of about 80% nude use; Greek press listicles from 2024 and 2025 also name Marikes. Houses overlook the cliff top; no designation is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:athens",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

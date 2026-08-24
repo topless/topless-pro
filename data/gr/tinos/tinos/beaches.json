@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Tinos",
+    "municipality": "Tinos"
+  },
+  "beaches": [
+    {
+      "slug": "gastria-tinos",
+      "name": "Cape Gastria (Gastritsa chapel beach)",
+      "latitude": 37.5395,
+      "longitude": 25.113,
+      "dressCode": "clothing-optional",
+      "recognition": "community-reported",
+      "confidence": "low",
+      "summary": "Nude bathing is reported at the small chapel beach past Platia Ammos. A naturist directory carries visitor reports from 2016, 2018 and 2024; the 2024 report found one nude bather and a clothed family. No designation or signage is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/cyclades:tinos",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

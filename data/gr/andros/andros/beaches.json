@@ -1,0 +1,40 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Andros",
+    "municipality": "Andros"
+  },
+  "beaches": [
+    {
+      "slug": "delavoyas-andros",
+      "name": "Delavoyas",
+      "latitude": 37.844,
+      "longitude": 24.776,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude bathing is reported to the right of a rocky outcrop, south of Batsi. A naturist directory carries visitor reports from 2006 to 2023 and calls it the locally known nudist beach; an August 2024 report found only clothed bathers. No designation or signage is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/cyclades:andros",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "lydi-andros",
+      "name": "Lydi",
+      "latitude": 37.828,
+      "longitude": 24.933,
+      "dressCode": "clothing-optional",
+      "recognition": "community-reported",
+      "confidence": "medium",
+      "summary": "Nude bathing is reported across this small beach south of Andros Town. A naturist directory carries visitor reports from 2018 and 2024, both describing everyone present as nude. No designation or signage is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/cyclades:andros",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

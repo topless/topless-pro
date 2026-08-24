@@ -1,0 +1,54 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Kefalonia",
+    "municipality": "Argostoli"
+  },
+  "beaches": [
+    {
+      "slug": "mouda",
+      "name": "Mouda (Mounda)",
+      "latitude": 38.063,
+      "longitude": 20.77,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "low",
+      "summary": "Nude bathing is established on the southern section past the hotel sunbeds. A naturist directory carries consistent visitor reports from 2015 to 2022; a nudist directory entry rates it with 18 ratings and 41 comments. The beach is a loggerhead turtle nesting site and a local conservation group patrols it; no nudity designation is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/ionian:kefalonia",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "kanali-lourdas",
+      "name": "Kanali (east, at Lourdas)",
+      "latitude": 38.116,
+      "longitude": 20.62,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "low",
+      "summary": "Nude bathing is established beyond the rocks west of Lourdas beach. A naturist directory carries visitor reports from 2017 to 2022 describing the east Kanali section as 80-100% nude; the west part is mostly textile. The beach is a Caretta caretta nesting site; no designation or signage is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/ionian:kefalonia",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "spithi-skala",
+      "name": "Spithi / Loutraki (Skala)",
+      "latitude": 38.0627,
+      "longitude": 20.7915,
+      "dressCode": "clothing-optional",
+      "recognition": "disputed",
+      "confidence": "low",
+      "summary": "Nude bathing continues on this beach south of Skala despite a posted sign. A naturist directory carries visitor reports from 2015 to 2022; a 2019 report describes a multilingual sign forbidding nudism while Greek visitors confirm naturist use. Erosion has cut the old walk from Skala and 2022 reports found the beach near-deserted.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/ionian:kefalonia",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

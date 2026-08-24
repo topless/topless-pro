@@ -1,0 +1,82 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Milos",
+    "municipality": "Milos"
+  },
+  "beaches": [
+    {
+      "slug": "milos-psarovolada",
+      "name": "Psarovolada",
+      "latitude": 36.662,
+      "longitude": 24.493,
+      "dressCode": "clothing-optional",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude bathing is usual on the twin coves east of Agia Kyriaki. A naturist directory describes the coves as usually totally nude, with dated visitor reports from 2013 and 2017; a Greek travel listicle from August 2025 names it for naturists. Access is a 10-15 minute walk over steep rocks; adjacent Agia Kyriaki itself stays in swimwear.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/cyclades:milos",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "milos-achivadolimni",
+      "name": "Achivadolimni & Mavra Gremna",
+      "latitude": 36.6916,
+      "longitude": 24.4552,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "low",
+      "summary": "Nude bathing is usual on Mavra Gremna, the eastern part of the beach. A naturist directory carries reports from 2004 to 2022; the nude share grows eastward from the Achivadolimni bus stop, which stays in swimwear. An August 2015 report found the area windy and not nudist.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/cyclades:milos",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "milos-fyriplaka",
+      "name": "Fyriplaka",
+      "latitude": 36.657,
+      "longitude": 24.462,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "low",
+      "summary": "Nude bathing is reported west of the big mid-beach rock. A naturist directory carries reports from 2000 to September 2022; the organised eastern part with the beach bar is in swimwear, and an August 2013 report found no nudity.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/cyclades:milos",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "milos-paliochori",
+      "name": "Paliochori",
+      "latitude": 36.67,
+      "longitude": 24.515,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "low",
+      "summary": "Nude bathing is reported at the east end and on the east beach past the rocks. A naturist directory carries reports from 2007 to September 2022; the central section by the tavernas is in swimwear and high-season reports vary day to day.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/cyclades:milos",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "milos-triades",
+      "name": "Triades & Ammoudaraki",
+      "latitude": 36.679,
+      "longitude": 24.323,
+      "dressCode": "clothing-optional",
+      "recognition": "tolerated",
+      "confidence": "low",
+      "summary": "Nude bathing is usual on these seven far-western coves. A naturist directory carries reports from 2010 to 2018; nude use increases with distance from the parking areas. Access is by rough unpaved road and no report newer than 2018 was found.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/cyclades:milos",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

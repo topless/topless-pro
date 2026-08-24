@@ -1,0 +1,40 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Attica",
+    "municipality": "Marathon"
+  },
+  "beaches": [
+    {
+      "slug": "ramnous-marathon",
+      "name": "Ramnous (Ramnounta) coves",
+      "latitude": 38.215,
+      "longitude": 24.032,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude bathing is reported in the pebble coves below the Ramnous archaeological site. A naturist directory carries consistent visitor reports from 2012 to 2020; Greek press listicles from 2024 and 2025 repeat the claim. The coves lie past two swimwear beaches, a 10-minute walk from the Agia Marina church parking.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:athens",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "schinias-marathon",
+      "name": "Schinias",
+      "latitude": 38.152,
+      "longitude": 24.062,
+      "dressCode": "nudity-permitted",
+      "recognition": "community-reported",
+      "confidence": "medium",
+      "summary": "Nude bathing is reported off-season on the forest-backed middle and northeast rocks. A naturist directory carries reports that naturist use faded by 2014-2015 and resumed from 2019, with a 2023 report of many nude couples on off-peak weekends. The sandy stretch is swimwear in season.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:athens",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

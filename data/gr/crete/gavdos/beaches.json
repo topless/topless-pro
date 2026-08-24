@@ -1,0 +1,40 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Crete",
+    "municipality": "Gavdos"
+  },
+  "beaches": [
+    {
+      "slug": "gavdos-sarakiniko",
+      "name": "Sarakiniko (Gavdos)",
+      "latitude": 34.851,
+      "longitude": 24.098,
+      "dressCode": "swimwear-required",
+      "recognition": "disputed",
+      "confidence": "high",
+      "summary": "The municipality banned nudism on Sarakiniko with signs in July 2023. The mayor told the press (1 July 2023) that the ban follows complaints and applies to no other beach; the signs were torn down and re-erected repeatedly that summer, and a June 2024 press piece quotes the municipality that the ban still stands. A naturist directory carries visitor reports of widespread nudity here from 2011 to 2020, all pre-dating the ban.",
+      "facilities": [],
+      "sourceUrl": "https://www.protothema.gr/greece/article/1388012/gaudos-adidraseis-gia-tin-pinakida-apagoreuetai-o-gumnismos-sto-sarakiniko-ti-leei-i-dimarhos/",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "gavdos-agios-ioannis",
+      "name": "Agios Ioannis (Gavdos)",
+      "latitude": 34.857,
+      "longitude": 24.072,
+      "dressCode": "clothing-optional",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude and clothed bathers mix across the whole beach. A naturist directory carries visitor reports from 2005 to 2020 putting nudity at 70-100%; in July 2023 the mayor said the Sarakiniko ban applies to no other beach, and a June 2024 press report quotes the municipality that nudism is permitted on ten other beaches. No signage is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/crete:gavdos",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Attica",
+    "municipality": "Saronikos"
+  },
+  "beaches": [
+    {
+      "slug": "agios-nikolaos-anavyssos",
+      "name": "Agios Nikolaos, Anavyssos",
+      "latitude": 37.722,
+      "longitude": 23.94,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude bathing is reported across a small pebble cove 4.5 km southeast of Saronida. A naturist directory carries visitor reports from 2017 to 2023 describing the beach as fully nudist; Greek press listicles from 2024 and 2025 call it a cove exclusively for nudists. No designation or signage is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:athens",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "althea-mavro-lithari",
+      "name": "Althea hotel beach (Mavro Lithari)",
+      "latitude": 37.741,
+      "longitude": 23.922,
+      "dressCode": "unknown",
+      "recognition": "disputed",
+      "confidence": "low",
+      "summary": "Reports of nude bathing at this beach below an abandoned hotel conflict. A naturist directory carries visitor reports from 2017 to 2023: nudist-friendly through 2022, but a June 2023 report finds almost no nudists among textile bathers; hotel building works restarted in 2020 and stopped by 2022. A Greek press article names the adjacent Mavro Lithari area as a nudist alternative.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:athens",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

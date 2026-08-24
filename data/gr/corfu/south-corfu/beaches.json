@@ -21,6 +21,20 @@
       "sourceUrl": "http://capnbarefoot.wikidot.com/ionian:corfu",
       "lastVerifiedAt": "2026-08-22",
       "published": true
+    },
+    {
+      "slug": "issos",
+      "name": "Issos",
+      "latitude": 39.424,
+      "longitude": 19.906,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "low",
+      "summary": "Nude bathing is reported beyond the windsurf station, towards the Korission dunes. A naturist directory carries consistent visitor reports from 2010 to 2019 describing the far stretch as predominantly nude, with no signs marking the area. The dunes are part of the protected Lake Korission area; no designation is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/ionian:corfu",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
     }
   ]
 }

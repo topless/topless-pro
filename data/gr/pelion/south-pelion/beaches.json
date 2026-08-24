@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Pelion",
+    "municipality": "South Pelion"
+  },
+  "beaches": [
+    {
+      "slug": "melani",
+      "name": "Melani",
+      "latitude": 39.238,
+      "longitude": 23.298,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "low",
+      "summary": "Nude bathing is reported on the northern part, beyond the rocks. A naturist directory carries visitor reports from 2007 to June 2019 describing that part as almost fully nude with free campers; no report newer than 2019 is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:thessaly",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

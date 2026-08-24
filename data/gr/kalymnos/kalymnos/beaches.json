@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Kalymnos",
+    "municipality": "Kalymnos"
+  },
+  "beaches": [
+    {
+      "slug": "paradise-telendos",
+      "name": "Paradise Beach (Telendos)",
+      "latitude": 36.997,
+      "longitude": 26.927,
+      "dressCode": "clothing-optional",
+      "recognition": "official",
+      "confidence": "low",
+      "summary": "The small cove north of Telendos village operates as a nudist beach with sunbeds. A naturist directory carries reports from 2000 to 2021 and describes a 'Paradise beach nudist beach' sign and a family running the sunbeds; TripAdvisor lists it as Paradise Nudist Beach. In 2021 sunbeds cost 5 euros.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/dodecanese:kalymnos",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}
