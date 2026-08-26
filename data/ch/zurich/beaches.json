@@ -1,0 +1,26 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "CH",
+    "countryName": "Switzerland",
+    "region": "Zürich"
+  },
+  "beaches": [
+    {
+      "slug": "werdinsel-zuerich",
+      "name": "Werdinsel (Inselspitz FKK zone)",
+      "municipality": "Zürich",
+      "latitude": 47.404,
+      "longitude": 8.487,
+      "dressCode": "nudity-permitted",
+      "recognition": "official",
+      "confidence": "high",
+      "summary": "Nude bathing is permitted at the Inselspitz, the tip of the Werdinsel in Zürich. The City of Zürich's Werdinsel page states this for the tip only and does not address the rest of the island. The page recommends swimming in the Limmat only for practised swimmers.",
+      "facilities": [],
+      "sourceUrl": "https://www.stadt-zuerich.ch/de/stadtleben/sport-und-erholung/park-und-gruenanlagen/werdinsel.html",
+      "lastVerifiedAt": "2026-08-22",
+      "published": true
+    }
+  ]
+}

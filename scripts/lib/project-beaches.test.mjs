@@ -5,12 +5,13 @@ import {
   renderPlan,
 } from './project-beaches.mjs';
 
-const scope = { countryCode: 'GR', countryName: 'Greece', region: 'Chalkidiki', municipality: 'Sithonia' };
+const scope = { countryCode: 'GR', countryName: 'Greece', region: 'Chalkidiki' };
 
 function candidate(overrides = {}) {
   return {
     slug: 'sarti',
     name: 'Sarti',
+    municipality: 'Sithonia',
     latitude: 40.0894624,
     longitude: 23.9791046,
     dressCode: 'topless-permitted',
@@ -26,7 +27,7 @@ function candidate(overrides = {}) {
 }
 
 function file(beaches) {
-  return { path: 'data/gr/chalkidiki/sithonia/beaches.json', data: { schemaVersion: 1, scope, beaches } };
+  return { path: 'data/gr/chalkidiki/beaches.json', data: { schemaVersion: 1, scope, beaches } };
 }
 
 function existingRow(overrides = {}) {
@@ -89,7 +90,7 @@ describe('diffProjection', () => {
       ['last_verified_at', 'published', 'source_url', 'summary'],
     );
     expect(diff.orphaned).toEqual(['gone']);
-    expect(diff.drafts).toEqual(['data/gr/chalkidiki/sithonia/beaches.json:draft']);
+    expect(diff.drafts).toEqual(['data/gr/chalkidiki/beaches.json:draft']);
   });
 });
 

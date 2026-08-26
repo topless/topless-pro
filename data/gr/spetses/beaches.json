@@ -1,0 +1,26 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Spetses"
+  },
+  "beaches": [
+    {
+      "slug": "lovers-cove-spetses",
+      "name": "Lovers' Cove, Spetses",
+      "municipality": "Spetses",
+      "latitude": 37.278,
+      "longitude": 23.135,
+      "dressCode": "nudity-permitted",
+      "recognition": "community-reported",
+      "confidence": "low",
+      "summary": "Nude bathing is reported at a quiet cove east of the island's northernmost point. A single forum report, posted to a naturist directory in 2023 about a July 2022 visit by a couple, is the only evidence; no designation is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/saronic:spetses",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

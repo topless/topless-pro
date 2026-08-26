@@ -1,0 +1,41 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "HR",
+    "countryName": "Croatia",
+    "region": "Primorje-Gorski Kotar"
+  },
+  "beaches": [
+    {
+      "slug": "bunculuka-baska",
+      "name": "Bunculuka",
+      "municipality": "Baška",
+      "latitude": 44.96858,
+      "longitude": 14.77203,
+      "dressCode": "clothing-optional",
+      "recognition": "official",
+      "confidence": "high",
+      "summary": "Bunculuka is a naturist-only beach within Camping Bunculuka at Baška. The Baška municipal tourist board lists the roughly 500 m pebble beach as enclosed and exclusively for naturism users; entry is open to people not registered at the camp provided they observe naturism principles. The beach is lifeguarded and has a separate dog section.",
+      "facilities": [],
+      "sourceUrl": "https://www.visitbaska.hr/hr/istrazite/plaze",
+      "lastVerifiedAt": "2026-08-22",
+      "published": true
+    },
+    {
+      "slug": "baldarin-punta-kriza",
+      "name": "Camp Baldarin beaches (Punta Križa)",
+      "municipality": "Mali Lošinj",
+      "latitude": 44.5358,
+      "longitude": 14.4497,
+      "dressCode": "nudity-permitted",
+      "recognition": "official",
+      "confidence": "high",
+      "summary": "Nude bathing is required on the naturist-section beaches of Camp Baldarin. The operator's house rules state that no clothing is permitted on the beach there and that minors may be clothed only where marked on the camp map; Bokinić beach at the camp entrance serves the textile quarter. Day visitors check in at reception and pay an entrance fee.",
+      "facilities": [],
+      "sourceUrl": "https://www.camp-baldarin.com/house-rules.aspx",
+      "lastVerifiedAt": "2026-08-22",
+      "published": true
+    }
+  ]
+}

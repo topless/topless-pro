@@ -1,0 +1,26 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "UY",
+    "countryName": "Uruguay",
+    "region": "Maldonado"
+  },
+  "beaches": [
+    {
+      "slug": "playa-chihuahua",
+      "name": "Playa Chihuahua",
+      "municipality": "Maldonado",
+      "latitude": -34.903,
+      "longitude": -55.028,
+      "dressCode": "nudity-permitted",
+      "recognition": "official",
+      "confidence": "high",
+      "summary": "Nude bathing is permitted on a delimited stretch of Playa Chihuahua. The Intendencia de Maldonado's Digesto Departamental (arts. R.104-R.106, from Res. 7823/2012) permits naturist practice between Arroyo El Potrero (west), the southward projection of the main avenue (east) and the dune line (north), and orders informational signage of the limits. A later Resolución 08839/2012, available only as a copy on a hotel website, moves the eastern limit to calle El Foque; the Digesto does not reflect it.",
+      "facilities": [],
+      "sourceUrl": "https://digesto.maldonado.gub.uy/detalle-articulo/1571",
+      "lastVerifiedAt": "2026-08-22",
+      "published": true
+    }
+  ]
+}

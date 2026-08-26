@@ -1,0 +1,41 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Limnos"
+  },
+  "beaches": [
+    {
+      "slug": "gomati-limnos",
+      "name": "Gomati",
+      "municipality": "Lemnos",
+      "latitude": 39.983,
+      "longitude": 25.128,
+      "dressCode": "nudity-permitted",
+      "recognition": "community-reported",
+      "confidence": "medium",
+      "summary": "Nude bathing is customary on the central part of the sandy beach, by the dunes. A naturist directory carries July 2022 and August 2024 reports citing local confirmation; a beach bar operates at one end. No designation or signage is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/neaegean:limnos",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "thanos-nudist-cove",
+      "name": "Thanos (nudist cove)",
+      "municipality": "Lemnos",
+      "latitude": 39.827,
+      "longitude": 25.128,
+      "dressCode": "nudity-permitted",
+      "recognition": "community-reported",
+      "confidence": "medium",
+      "summary": "Nude bathing is reported in a small cove beyond a rock at the end of the beach. A naturist directory carries July 2022 and August 2024 reports, the 2022 one citing local confirmation; reaching it means wading a few metres. The main beach with its bars is swimwear.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/neaegean:limnos",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

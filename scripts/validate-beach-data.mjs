@@ -129,6 +129,9 @@ function validateBeach(file, beach, index) {
   validateNullableEnum(file, `${field}.recognition`, beach.recognition, RECOGNITION_LEVELS);
   validateNullableEnum(file, `${field}.confidence`, beach.confidence, CONFIDENCE_LEVELS);
 
+  if (beach.municipality !== null && !isNonEmptyString(beach.municipality)) {
+    addError(file, `${field}.municipality`, 'must be null or a non-empty string');
+  }
   if (beach.summary !== null && typeof beach.summary !== 'string') {
     addError(file, `${field}.summary`, 'must be null or a string');
   }
@@ -210,7 +213,7 @@ function validateFile(file, data) {
     addError(file, 'scope', 'must be an object');
   } else {
     validateKnownKeys(file, 'scope', data.scope, KNOWN_SCOPE_KEYS);
-    for (const property of ['countryCode', 'countryName', 'region', 'municipality']) {
+    for (const property of ['countryCode', 'countryName', 'region']) {
       if (!isNonEmptyString(data.scope[property])) {
         addError(file, `scope.${property}`, 'must be a non-empty string');
       }
@@ -221,11 +224,11 @@ function validateFile(file, data) {
 
     // The folder is derived from the scope (shared/place.mjs), which is how the site links
     // a listing to this file's history on GitHub.
-    if (['countryCode', 'region', 'municipality'].every((property) => isNonEmptyString(data.scope[property]))) {
+    if (['countryCode', 'region'].every((property) => isNonEmptyString(data.scope[property]))) {
       const expected = dataFilePath(data.scope);
       const actual = path.relative(process.cwd(), file).split(path.sep).join('/');
       if (actual !== expected) {
-        addError(file, 'scope', `belongs at ${expected} (derived from countryCode, region and municipality)`);
+        addError(file, 'scope', `belongs at ${expected} (derived from countryCode and region)`);
       }
     }
   }

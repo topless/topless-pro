@@ -35,6 +35,6 @@ export function placeSlug(value) {
 }
 
 /** The repo-relative path of the candidate file a scope belongs in. */
-export function dataFilePath({ countryCode, region, municipality }) {
-  return `data/${countryCode.toLowerCase()}/${placeSlug(region)}/${placeSlug(municipality)}/beaches.json`;
+export function dataFilePath({ countryCode, region }) {
+  return `data/${countryCode.toLowerCase()}/${placeSlug(region)}/beaches.json`;
 }

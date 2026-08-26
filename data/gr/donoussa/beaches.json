@@ -1,0 +1,56 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Donoussa"
+  },
+  "beaches": [
+    {
+      "slug": "donoussa-livadi",
+      "name": "Livadi (Donoussa)",
+      "municipality": "Naxos and Small Cyclades",
+      "latitude": 37.101,
+      "longitude": 25.842,
+      "dressCode": "clothing-optional",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude bathing predominates; free campers use the trees behind the beach. A naturist directory carries reports from 2010 to June 2023, and a Greek travel listicle from August 2025 calls it one of the island's freest spots. Campers dress when the beach boat calls.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/cyclades:donoussa",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "donoussa-kedros",
+      "name": "Kedros",
+      "municipality": "Naxos and Small Cyclades",
+      "latitude": 37.103,
+      "longitude": 25.818,
+      "dressCode": "clothing-optional",
+      "recognition": "tolerated",
+      "confidence": "low",
+      "summary": "Nude and clothed bathers mix across the whole beach; most bathe nude. A naturist directory carries reports most years from 2003 to June 2023, with 50-80% nude reported in 2019-2023. Tents have been banned from the beach itself since 2014; a taverna operates behind it.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/cyclades:donoussa",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "donoussa-tripiti",
+      "name": "Tripiti (Kalotaritissa)",
+      "municipality": "Naxos and Small Cyclades",
+      "latitude": 37.127,
+      "longitude": 25.829,
+      "dressCode": "clothing-optional",
+      "recognition": "tolerated",
+      "confidence": "low",
+      "summary": "Nude bathing is usual; the other Kalotaritissa beaches are in swimwear. A naturist directory carries reports from 2013 to May 2023, mostly finding the beach nude. An August 2018 visit found it fully clothed, with 'No nudism' signs reported on the neighbouring beaches.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/cyclades:donoussa",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

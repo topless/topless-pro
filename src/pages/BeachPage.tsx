@@ -143,11 +143,11 @@ export function BeachPage() {
         {beach.facilities.length > 0 && (
           <div><dt>Facilities</dt><dd>{beach.facilities.join(', ')}</dd></div>
         )}
-        {beach.region && beach.municipality && (
+        {beach.region && (
           <div>
             <dt>Listing history</dt>
             <dd>
-              <a href={`${REPO_URL}/commits/main/${dataFilePath({ countryCode: beach.countryCode, region: beach.region, municipality: beach.municipality })}`} rel="noreferrer">Every change, on GitHub<span aria-hidden="true"> ↗</span></a>
+              <a href={`${REPO_URL}/commits/main/${dataFilePath({ countryCode: beach.countryCode, region: beach.region })}`} rel="noreferrer">Every change, on GitHub<span aria-hidden="true"> ↗</span></a>
               <small>Who changed what, and when.</small>
             </dd>
           </div>

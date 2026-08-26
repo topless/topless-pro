@@ -1,0 +1,26 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Larissa"
+  },
+  "beaches": [
+    {
+      "slug": "rakopotamos",
+      "name": "Rakopotamos",
+      "municipality": "Agia",
+      "latitude": 39.665,
+      "longitude": 22.985,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude bathing is reported at the third, southern cove; the first coves are swimwear. Regional press articles from June 2022 and July 2025 name it a nudist cove, and a naturist directory carries visitor reports from 2014 and 2019 describing the cove as almost fully nude with free campers.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:thessaly",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

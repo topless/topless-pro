@@ -1,0 +1,41 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "NO",
+    "countryName": "Norway",
+    "region": "Oslo"
+  },
+  "beaches": [
+    {
+      "slug": "huk-naturiststrand",
+      "name": "Huk naturiststrand (Bygdøy)",
+      "municipality": "Oslo",
+      "latitude": 59.895,
+      "longitude": 10.674,
+      "dressCode": "nudity-permitted",
+      "recognition": "official",
+      "confidence": "medium",
+      "summary": "A naturist beach lies directly beside the main textile beach at Huk. Oslo kommune's Huk badeplass page lists 'Naturiststrand rett ved' among the facilities; Norsk naturistforbund files Huk under its official beaches and says a narrow bay separates the naturist beach from the textile beach. Neither source cites rules, signage or a decree.",
+      "facilities": [],
+      "sourceUrl": "https://www.oslo.kommune.no/natur-kultur-og-fritid/tur-og-friluftsliv/badeplasser-og-temperaturer/huk/",
+      "lastVerifiedAt": "2026-08-22",
+      "published": true
+    },
+    {
+      "slug": "langoyene-naturistomrade",
+      "name": "Langøyene naturistområde",
+      "municipality": "Oslo",
+      "latitude": 59.8675,
+      "longitude": 10.723,
+      "dressCode": "nudity-permitted",
+      "recognition": "official",
+      "confidence": "high",
+      "summary": "Oslo kommune designates a naturist area on the south side of Søndre Langøyene. The municipal page lists it among the island's facilities; the rest of the island, including the main bathing beach, is not designated. Norsk naturistforbund reproduces a map of the area credited to Bymiljøetaten; neither source mentions signage or enforcement.",
+      "facilities": [],
+      "sourceUrl": "https://www.oslo.kommune.no/natur-kultur-og-fritid/tur-og-friluftsliv/badeplasser-og-temperaturer/langoyene/",
+      "lastVerifiedAt": "2026-08-22",
+      "published": true
+    }
+  ]
+}

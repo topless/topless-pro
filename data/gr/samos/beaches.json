@@ -1,0 +1,41 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Samos"
+  },
+  "beaches": [
+    {
+      "slug": "tsamadou",
+      "name": "Tsamadou",
+      "municipality": "Eastern Samos",
+      "latitude": 37.7846,
+      "longitude": 26.8687,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude bathing is customary at the eastern end, right of the snack bar. The Samos regional-unit tourism page calls it a formerly well-known nudist beach with few nudists today; a naturist directory carries consistent visitor reports from 1999 to 2018. No decree or signage is documented.",
+      "facilities": [],
+      "sourceUrl": "https://visit.samos.gr/index.php/el/samos-gr/ti-na-deite/paralies/item/75-tsamadou",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "fournaki-samos",
+      "name": "Fournaki",
+      "municipality": "Western Samos",
+      "latitude": 37.704,
+      "longitude": 26.666,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude bathing is usual in the string of coves west of the main Votsalakia beach. A naturist directory carries consistent reports from 2000 to August 2024; the 2024 report finds the coves clothing-optional to fully nude. The first cove with sunbeds is swimwear; no designation is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/neaegean:samos",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

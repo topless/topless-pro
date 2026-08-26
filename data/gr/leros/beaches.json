@@ -1,0 +1,26 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Leros"
+  },
+  "beaches": [
+    {
+      "slug": "kokkina-leros",
+      "name": "Kokkina",
+      "municipality": "Leros",
+      "latitude": 37.113,
+      "longitude": 26.845,
+      "dressCode": "clothing-optional",
+      "recognition": "community-reported",
+      "confidence": "low",
+      "summary": "Nude bathing is reported when the beach is quiet. A naturist directory carries reports from 2020 and 2023; nudism pauses when Greek families arrive, and a tiny adjacent cove has 'nudist' painted on a rock. No designation is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/dodecanese:leros",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

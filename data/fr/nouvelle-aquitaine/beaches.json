@@ -1,0 +1,56 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "FR",
+    "countryName": "France",
+    "region": "Nouvelle-Aquitaine"
+  },
+  "beaches": [
+    {
+      "slug": "euronat-grayan",
+      "name": "Plage d'Euronat",
+      "municipality": "Grayan-et-l'Hôpital",
+      "latitude": 45.4275,
+      "longitude": -1.1715,
+      "dressCode": "clothing-optional",
+      "recognition": "official",
+      "confidence": "high",
+      "summary": "The Euronat beach and the beach south of it are reserved for naturists. The commune's arrêté n°2025-41D (art. 6) reserves both 'plus particulièrement' to naturists of the Euronat site; a lifeguarded zone runs 250 m either side of the post from 15 June to 14 September 2025. Art. 8 forbids naturism at Le Gurp beach, with limits marked by signs.",
+      "facilities": [],
+      "sourceUrl": "https://www.grayan.fr/ad_attachment/arr%C3%AAt%C3%A9%20plage%20Euronat%20centre%20202541D.pdf",
+      "lastVerifiedAt": "2026-08-22",
+      "published": true
+    },
+    {
+      "slug": "montalivet-chm",
+      "name": "Plage naturiste du CHM Montalivet",
+      "municipality": "Vendays-Montalivet",
+      "latitude": 45.3545,
+      "longitude": -1.1595,
+      "dressCode": "clothing-optional",
+      "recognition": "official",
+      "confidence": "high",
+      "summary": "The commune designates the whole CHM beach as a naturist beach. Bathing arrêté D-2026-235 of 30 June 2026 heads Article 5 'Plage naturiste du Centre Hélio Marin (C.H.M)' and sets lifeguard cover there daily 6 June–13 September 2026 plus May weekends, but does not itself state nudity rules; the FFN Aquitaine council dates the authorising arrêté to 21 July 1967. Article 12 bans, throughout the regulated zone, dress 'portant atteinte à la pudeur et aux bonnes mœurs'.",
+      "facilities": [],
+      "sourceUrl": "https://www.vendays-montalivet.fr/wp-content/uploads/2026/07/D-2026-235.pdf",
+      "lastVerifiedAt": "2026-08-22",
+      "published": true
+    },
+    {
+      "slug": "arnaoutchot",
+      "name": "Plage d'Arnaoutchot",
+      "municipality": "Vielle-Saint-Girons",
+      "latitude": 43.9285,
+      "longitude": -1.3625,
+      "dressCode": "clothing-optional",
+      "recognition": "official",
+      "confidence": "high",
+      "summary": "Naturism is authorised across Arnaoutchot beach by municipal arrêté of 4 July 1974. The FFN Aquitaine council lists it among the region's ten officially authorised naturist beaches; Landes Attractivité lists it as a supervised naturist beach with lifeguards in July, August and early September.",
+      "facilities": [],
+      "sourceUrl": "https://naturisme-aquitaine.fr/plages-naturistes-aquitaine/",
+      "lastVerifiedAt": "2026-08-22",
+      "published": true
+    }
+  ]
+}

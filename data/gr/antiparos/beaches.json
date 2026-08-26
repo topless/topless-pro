@@ -1,0 +1,41 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Antiparos"
+  },
+  "beaches": [
+    {
+      "slug": "antiparos-camping-beach",
+      "name": "Camping Beach (Antiparos)",
+      "municipality": "Antiparos",
+      "latitude": 37.0485,
+      "longitude": 25.0795,
+      "dressCode": "nudity-permitted",
+      "recognition": "official",
+      "confidence": "high",
+      "summary": "Nude bathing is permitted on part of Camping beach, north of Antiparos town. The Municipality of Antiparos states on its beaches page that nudism is permitted on a section of the beach, without identifying the section; the rest is ordinary swimwear use. Visitor reports through 2023 place the nude section on the smaller beach beyond the headland facing Diplo islet and describe a painted \"official nudist beach\" sign present in some years and absent in others.",
+      "facilities": [],
+      "sourceUrl": "https://antiparos.gr/en/beaches/",
+      "lastVerifiedAt": "2026-08-22",
+      "published": true
+    },
+    {
+      "slug": "antiparos-livadia",
+      "name": "Livadia",
+      "municipality": "Antiparos",
+      "latitude": 37.01,
+      "longitude": 25.043,
+      "dressCode": "nudity-permitted",
+      "recognition": "community-reported",
+      "confidence": "low",
+      "summary": "Nude bathing is reported beyond the low rock ridge at the far end of the beach. A naturist directory carries visitor reports from 1998 to 2022; the far section was fully nude in 2017 and 2018 and about half nude in 2022, while the near end is mixed or textile. The beach is remote, reached by a rough west-coast road.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/cyclades:antiparos",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

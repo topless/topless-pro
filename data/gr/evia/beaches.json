@@ -1,0 +1,41 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Evia"
+  },
+  "beaches": [
+    {
+      "slug": "chiliadou",
+      "name": "Chiliadou",
+      "municipality": "Dirfys-Messapia",
+      "latitude": 38.648,
+      "longitude": 23.97,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "low",
+      "summary": "Nude bathing is established at one end of the beach, beyond the rocks. Greek press pieces from 2018 and 2020 and a naturist directory with reports from 2013 and August 2017 describe it among the busiest naturist beaches in Greece; no designation by a named authority is documented.",
+      "facilities": [],
+      "sourceUrl": "https://www.flowmagazine.gr/hiliadou_h_agaphmenh_paralia_gumnistwn/",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "nea-styra-onion-beach",
+      "name": "Nea Styra south (Onion beach)",
+      "municipality": "Karystos",
+      "latitude": 38.17,
+      "longitude": 24.01,
+      "dressCode": "clothing-optional",
+      "recognition": "community-reported",
+      "confidence": "low",
+      "summary": "Mixed nude and clothed use is reported on the beach south of the Venus Beach Hotel. A naturist directory carries one visitor report from September 2023 relaying hotel staff describing it as clothing-optional; no other report is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/sporades:evia",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

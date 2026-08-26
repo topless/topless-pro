@@ -1,0 +1,56 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "AU",
+    "countryName": "Australia",
+    "region": "New South Wales"
+  },
+  "beaches": [
+    {
+      "slug": "obelisk-beach",
+      "name": "Obelisk Beach",
+      "municipality": "Mosman",
+      "latitude": -33.8272,
+      "longitude": 151.2567,
+      "dressCode": "clothing-optional",
+      "recognition": "official",
+      "confidence": "high",
+      "summary": "Nude bathing is permitted across Obelisk Beach. Mosman Council lists Obelisk and Cobblers as nude bathing areas in Sydney Harbour National Park, and Obelisk Beach is a designated beach under s.633 of the NSW Local Government Act 1993, so council notices cannot prohibit nudity there.",
+      "facilities": [],
+      "sourceUrl": "https://www.mosman.nsw.gov.au/recreation/beaches",
+      "lastVerifiedAt": "2026-08-22",
+      "published": true
+    },
+    {
+      "slug": "cobblers-beach",
+      "name": "Cobblers Beach",
+      "municipality": "Mosman",
+      "latitude": -33.8232,
+      "longitude": 151.2556,
+      "dressCode": "clothing-optional",
+      "recognition": "official",
+      "confidence": "high",
+      "summary": "Nude bathing is permitted across Cobblers Beach. NSW National Parks describes it as a designated nude bathing area in Sydney Harbour National Park, and Mosman Council lists Cobblers and Obelisk as nude bathing areas. Clothing is required in the surrounding bushland and on the grassed area directly behind the beach.",
+      "facilities": [],
+      "sourceUrl": "https://www.nationalparks.nsw.gov.au/things-to-do/swimming-spots/cobblers-beach",
+      "lastVerifiedAt": "2026-08-22",
+      "published": true
+    },
+    {
+      "slug": "lady-bay-beach",
+      "name": "Lady Bay (Lady Jane) Beach",
+      "municipality": "Woollahra",
+      "latitude": -33.8375,
+      "longitude": 151.2797,
+      "dressCode": "clothing-optional",
+      "recognition": "official",
+      "confidence": "high",
+      "summary": "NSW law names Lady Bay (Lady Jane) Beach as a designated beach for nude bathing. Section 633 of the Local Government Act 1993 applies to the whole beach and the adjacent sea: being nude there is excluded from the section's offence, and no council notice can prohibit nude bathing or being nude at the beach.",
+      "facilities": [],
+      "sourceUrl": "https://legislation.nsw.gov.au/view/html/inforce/current/act-1993-030#sec.633",
+      "lastVerifiedAt": "2026-08-22",
+      "published": true
+    }
+  ]
+}

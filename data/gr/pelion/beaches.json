@@ -1,0 +1,41 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Pelion"
+  },
+  "beaches": [
+    {
+      "slug": "melani",
+      "name": "Melani",
+      "municipality": "South Pelion",
+      "latitude": 39.238,
+      "longitude": 23.298,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "low",
+      "summary": "Nude bathing is reported on the northern part, beyond the rocks. A naturist directory carries visitor reports from 2007 to June 2019 describing that part as almost fully nude with free campers; no report newer than 2019 is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:thessaly",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "parisaina",
+      "name": "Parisaina (Chorefto north)",
+      "municipality": "Zagora-Mouresi",
+      "latitude": 39.468,
+      "longitude": 23.114,
+      "dressCode": "nudity-permitted",
+      "recognition": "community-reported",
+      "confidence": "low",
+      "summary": "Nude bathing is reported at the northern end, mixed with clothed campers. A naturist directory carries visitor reports from July 2016 and July 2021; the 2021 report says Tourkopigi beach, up the path beyond the north end, was used all nude.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:thessaly",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

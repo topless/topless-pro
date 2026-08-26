@@ -1,0 +1,41 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Karpathos"
+  },
+  "beaches": [
+    {
+      "slug": "kato-lefkos",
+      "name": "Kato Lefkos (northern beaches)",
+      "municipality": "Karpathos",
+      "latitude": 35.611,
+      "longitude": 27.076,
+      "dressCode": "clothing-optional",
+      "recognition": "tolerated",
+      "confidence": "low",
+      "summary": "Nude bathing is established on the beaches north of the last textile beach. A naturist directory carries reports from 2011 to 2018 describing nearly all-nude use, and a 2018 report mentions a sign indicating the nudist beach on entering Lefkos. No newer report is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/dodecanese:karpathos",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "diakoftis-karpathos",
+      "name": "Diakoftis",
+      "municipality": "Karpathos",
+      "latitude": 35.418,
+      "longitude": 27.125,
+      "dressCode": "nudity-permitted",
+      "recognition": "community-reported",
+      "confidence": "low",
+      "summary": "Nude bathing is reported on the twin beach across the dune at Diakoftis. A naturist directory carries a 2016 report describing all-nude use with rental umbrellas next to the clothed beach and a 2018 report of nude use at quieter coves nearby; no designation or signage is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/dodecanese:karpathos",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

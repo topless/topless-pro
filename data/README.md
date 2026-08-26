@@ -1,17 +1,18 @@
 # Beach candidate data
 
-Candidate data is organized by country and locality:
+Candidate data is organized by country and region — one file per region:
 
 ```text
-data/<country-code>/<region>/<municipality>/beaches.json
+data/<country-code>/<region>/beaches.json
 ```
 
 The folder names are derived from `scope` — the country code in lower case, then the
-region and municipality as lower-case ASCII slugs (`Neos Marmaras` → `neos-marmaras`) —
-and the validator checks that they match, because the site links each listing to this
-file's change history on GitHub.
+region as a lower-case ASCII slug (`Klaipėda County` → `klaipeda-county`) — and the
+validator checks that they match, because the site links each listing to this file's
+change history on GitHub. A region is what visitors search for: an island (Samos,
+Mykonos, Corfu), a regional unit or district on a mainland (Attica, Messinia, Algarve).
 
-Each file starts with `"$schema": "../../../beaches.schema.json"` so an editor can
+Each file starts with `"$schema": "../../beaches.schema.json"` so an editor can
 autocomplete field names and enum values and flag typos as you type. The schema is a
 convenience; the rules below are enforced by `scripts/validate-beach-data.mjs`.
 
@@ -20,9 +21,9 @@ live once under `scope`; the importer copies them to each D1 row.
 
 ## Fields
 
-`scope` needs all four of `countryCode` (upper-case ISO 3166-1 alpha-2, matching the
-country folder), `countryName`, `region` and `municipality` — they are the folder names.
-Unknown keys anywhere in the file are rejected, so a typo cannot silently drop a field.
+`scope` needs all three of `countryCode` (upper-case ISO 3166-1 alpha-2, matching the
+country folder), `countryName` and `region`. Unknown keys anywhere in the file are
+rejected, so a typo cannot silently drop a field.
 
 The D1 schema requires these values for every imported beach:
 
@@ -31,6 +32,9 @@ The D1 schema requires these values for every imported beach:
   listing; it creates a new beach and the importer unpublishes the old one.
 - `name`
 - `countryCode` and `countryName` — taken from `scope`
+- `municipality` — per beach and optional: the municipality the local authority uses
+  (Δήμος, commune, county). Shown in the location line and the page title when present;
+  null when it would only repeat the region or add administrative noise.
 - `latitude` and `longitude`
 - `dressCode`
 - `recognition`

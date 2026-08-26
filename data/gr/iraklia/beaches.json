@@ -1,0 +1,26 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Iraklia"
+  },
+  "beaches": [
+    {
+      "slug": "iraklia-livadi",
+      "name": "Livadi (Iraklia)",
+      "municipality": "Naxos and Small Cyclades",
+      "latitude": 36.837,
+      "longitude": 25.44,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "low",
+      "summary": "Nude bathing is usual past the volleyball net at the far end. A naturist directory carries reports from 2002 to May 2019; official signs ban camping but do not mention nudity, and police warned campers in 2013 without troubling nude bathers.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/cyclades:iraklia",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}
