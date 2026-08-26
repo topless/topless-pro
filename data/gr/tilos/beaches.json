@@ -1,0 +1,41 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Tilos"
+  },
+  "beaches": [
+    {
+      "slug": "eristos",
+      "name": "Eristos",
+      "municipality": "Tilos",
+      "latitude": 36.437,
+      "longitude": 27.345,
+      "dressCode": "nudity-permitted",
+      "recognition": "official",
+      "confidence": "low",
+      "summary": "Nude bathing is established at the far south-eastern end, beyond the taverna. A June 2022 directory report describes Greek-language signposting of the nude area and says the beach is supported by the local council; earlier reports run from 2003. The rest of the beach is swimwear and topless.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/dodecanese:tilos",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "plaka-tilos",
+      "name": "Plaka (northern end)",
+      "municipality": "Tilos",
+      "latitude": 36.464,
+      "longitude": 27.323,
+      "dressCode": "nudity-permitted",
+      "recognition": "disputed",
+      "confidence": "low",
+      "summary": "The northern end is used for nude bathing. A naturist directory carries reports from 2003 and 2011 describing an official 'Nudism area' sign; a charter-company guide instead reports a 'no nudism' sign with naturist use continuing at the far end. No directory report newer than 2011 is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/dodecanese:tilos",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

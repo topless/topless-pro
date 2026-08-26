@@ -1,0 +1,41 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Agistri"
+  },
+  "beaches": [
+    {
+      "slug": "halikiada-agistri",
+      "name": "Halikiada (Chalikiada), Agistri",
+      "municipality": "Agistri",
+      "latitude": 37.697,
+      "longitude": 23.361,
+      "dressCode": "clothing-optional",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude and clothed bathers mix across this pebble cove southeast of Skala. A naturist directory carries visitor reports from 1998 to 2022, with about half of bathers nude on busy days and more off-season; a local tourism site and 2025 press also describe it as the island's naturist beach. Reports from 2019 note intrusive photography by clothed day-trippers; wild camping is common.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/saronic:agistri",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "dragonera-agistri",
+      "name": "Dragonera, Agistri",
+      "municipality": "Agistri",
+      "latitude": 37.689,
+      "longitude": 23.331,
+      "dressCode": "nudity-permitted",
+      "recognition": "disputed",
+      "confidence": "low",
+      "summary": "Nude bathing is reported at the two ends of this otherwise swimwear beach. A naturist directory carries visitor reports from 2016 and 2019, while stating that nude sunbathing and wild camping are officially not tolerated there; no newer report is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/saronic:agistri",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

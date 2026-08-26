@@ -1,0 +1,41 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Pieria"
+  },
+  "beaches": [
+    {
+      "slug": "olympiaki-akti",
+      "name": "Olympiaki Akti south",
+      "municipality": "Katerini",
+      "latitude": 40.2385,
+      "longitude": 22.596,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "low",
+      "summary": "Nude bathing is reported south of Olympiaki Akti towards the river mouth. A naturist directory carries visitor reports from 2016 and 2017 and calls the use long-standing; a second directory entry published in 2021 reports mostly male nude use about 1 km past the last houses. No designation is documented and the area is open to walkers.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:macedonia",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "korinos",
+      "name": "Korinos",
+      "municipality": "Katerini",
+      "latitude": 40.31,
+      "longitude": 22.63,
+      "dressCode": "nudity-permitted",
+      "recognition": "disputed",
+      "confidence": "low",
+      "summary": "Nude bathing between Paralia and Korinos is reported and contested. A naturist directory carries undated reports of nudism along this stretch, and a local news blog records that residents called a 'nudist beach' label on Google Maps illegal and had it removed in August 2017 after two years of complaints. No authority has designated the beach either way.",
+      "facilities": [],
+      "sourceUrl": "https://korinosnews.blogspot.com/2017/08/google.html",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

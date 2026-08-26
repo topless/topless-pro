@@ -2,27 +2,50 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://topless.pro/schemas/beaches.schema.json",
   "title": "topless.pro beach candidates",
-  "description": "One file per municipality under data/<country-code>/<region>/<municipality>/beaches.json. This schema gives editors autocomplete and typo checks; the policy rules (evidence, publishing bar, slug uniqueness) are enforced by scripts/validate-beach-data.mjs.",
+  "description": "One file per region under data/<country-code>/<region>/beaches.json. This schema gives editors autocomplete and typo checks; the policy rules (evidence, publishing bar, slug uniqueness) are enforced by scripts/validate-beach-data.mjs.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schemaVersion", "scope", "beaches"],
+  "required": [
+    "schemaVersion",
+    "scope",
+    "beaches"
+  ],
   "properties": {
-    "$schema": { "type": "string" },
-    "schemaVersion": { "const": 1 },
+    "$schema": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "const": 1
+    },
     "scope": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["countryCode", "countryName", "region", "municipality"],
+      "required": [
+        "countryCode",
+        "countryName",
+        "region"
+      ],
       "properties": {
-        "countryCode": { "type": "string", "pattern": "^[A-Z]{2}$", "description": "ISO 3166-1 alpha-2, upper case; must match the country folder." },
-        "countryName": { "type": "string", "minLength": 1 },
-        "region": { "type": "string", "minLength": 1 },
-        "municipality": { "type": "string", "minLength": 1 }
+        "countryCode": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$",
+          "description": "ISO 3166-1 alpha-2, upper case; must match the country folder."
+        },
+        "countryName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "region": {
+          "type": "string",
+          "minLength": 1
+        }
       }
     },
     "beaches": {
       "type": "array",
-      "items": { "$ref": "#/definitions/beach" }
+      "items": {
+        "$ref": "#/definitions/beach"
+      }
     }
   },
   "definitions": {
@@ -30,8 +53,19 @@
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "slug", "name", "latitude", "longitude", "dressCode", "recognition", "confidence",
-        "summary", "facilities", "sourceUrl", "lastVerifiedAt", "published"
+        "slug",
+        "name",
+        "municipality",
+        "latitude",
+        "longitude",
+        "dressCode",
+        "recognition",
+        "confidence",
+        "summary",
+        "facilities",
+        "sourceUrl",
+        "lastVerifiedAt",
+        "published"
       ],
       "properties": {
         "slug": {
@@ -40,37 +74,108 @@
           "maxLength": 120,
           "description": "Permanent: it is the URL and the database key. Renaming a slug creates a new beach and unpublishes the old one."
         },
-        "name": { "type": "string", "minLength": 1 },
-        "latitude": { "type": ["number", "null"], "minimum": -90, "maximum": 90 },
-        "longitude": { "type": ["number", "null"], "minimum": -180, "maximum": 180 },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "municipality": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The municipality the local authority uses (Δήμος, commune, county); optional. Shown in the location line and the page title when present."
+        },
+        "latitude": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": -90,
+          "maximum": 90
+        },
+        "longitude": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": -180,
+          "maximum": 180
+        },
         "dressCode": {
-          "type": ["string", "null"],
-          "enum": ["swimwear-required", "topless-permitted", "clothing-optional", "nudity-permitted", "unknown", null],
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "swimwear-required",
+            "topless-permitted",
+            "clothing-optional",
+            "nudity-permitted",
+            "unknown",
+            null
+          ],
           "description": "What happens here. clothing-optional = nude and clothed use mix across the whole beach; nudity-permitted = nude bathing in a recognisable part only."
         },
         "recognition": {
-          "type": ["string", "null"],
-          "enum": ["official", "tolerated", "community-reported", "disputed", null],
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "official",
+            "tolerated",
+            "community-reported",
+            "disputed",
+            null
+          ],
           "description": "How firm the practice is: official (law, signage, designation), tolerated (established local practice), community-reported (unconfirmed), disputed (sources conflict)."
         },
         "confidence": {
-          "type": ["string", "null"],
-          "enum": ["low", "medium", "high", null],
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            null
+          ],
           "description": "Confidence in the dressCode, not in the beach's identity. high requires a sourceUrl."
         },
-        "summary": { "type": ["string", "null"], "description": "1–3 sentences for visitors; required to publish. Appended to the search-result description after the name, place and classification and cut at 160 characters, so put the key fact in the first sentence." },
-        "facilities": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "summary": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "1–3 sentences for visitors; required to publish. Appended to the search-result description after the name, place and classification and cut at 160 characters, so put the key fact in the first sentence."
+        },
+        "facilities": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
         "sourceUrl": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "pattern": "^https?://",
           "description": "Evidence for the dress-code claim, not for the beach's existence. Map pins and link shorteners are rejected by the validator. Required to publish."
         },
         "lastVerifiedAt": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
           "description": "The day the source was last checked (YYYY-MM-DD, not in the future). Required to publish."
         },
-        "published": { "type": "boolean" }
+        "published": {
+          "type": "boolean"
+        }
       }
     }
   }

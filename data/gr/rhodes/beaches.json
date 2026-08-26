@@ -1,0 +1,41 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Rhodes"
+  },
+  "beaches": [
+    {
+      "slug": "faliraki-mandomata",
+      "name": "Mandomata (Faliraki nudist beach)",
+      "municipality": "Rhodes",
+      "latitude": 36.3285,
+      "longitude": 28.215,
+      "dressCode": "clothing-optional",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude bathing is the practice across this cove at the south end of Faliraki bay. The Municipality of Rhodes' Kallithea guide describes the Kathara area as known for its nudist beach; press and local guides report a 'Nudist Beach – FKK' sign past the Muses hotel, with sunbeds and a canteen. No decree or licence designating the beach has been located; a 2018 hoteliers' association statement calls it Rhodes' only official nudist beach.",
+      "facilities": [],
+      "sourceUrl": "https://www.rhodes.gr/kallithea/",
+      "lastVerifiedAt": "2026-08-22",
+      "published": true
+    },
+    {
+      "slug": "tsambika-south",
+      "name": "Tsambika (southern end)",
+      "municipality": "Rhodes",
+      "latitude": 36.222,
+      "longitude": 28.149,
+      "dressCode": "nudity-permitted",
+      "recognition": "official",
+      "confidence": "medium",
+      "summary": "Nude bathing occupies a signed, fenced section at the southern end. A naturist directory carries visitor reports from 2015 to 2025 describing 'Nudist Beach' signs, a separating fence and a cantina run for the nude section; Rhodes travel guides also list the section. No municipal decree is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/dodecanese:rhodes",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

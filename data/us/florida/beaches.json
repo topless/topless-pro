@@ -1,0 +1,26 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "US",
+    "countryName": "United States",
+    "region": "Florida"
+  },
+  "beaches": [
+    {
+      "slug": "haulover-beach",
+      "name": "Haulover Beach (clothing-optional section)",
+      "municipality": "Miami-Dade County",
+      "latitude": 25.9095,
+      "longitude": -80.1222,
+      "dressCode": "nudity-permitted",
+      "recognition": "official",
+      "confidence": "high",
+      "summary": "Nude use is accepted on the northern one-third of the beach, towers #12 to #16. Miami-Dade County's park page lists this section as its Clothing Optional Beach, where visitors swim and sunbathe without clothing; the rest of the beach is swimwear use. Volunteer beach ambassadors on the section provide information about etiquette.",
+      "facilities": [],
+      "sourceUrl": "https://www.miamidade.gov/parks/haulover.asp",
+      "lastVerifiedAt": "2026-08-22",
+      "published": true
+    }
+  ]
+}

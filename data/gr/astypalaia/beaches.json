@@ -1,0 +1,41 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Astypalaia"
+  },
+  "beaches": [
+    {
+      "slug": "tzanaki",
+      "name": "Tzanaki",
+      "municipality": "Astypalaia",
+      "latitude": 36.537,
+      "longitude": 26.329,
+      "dressCode": "clothing-optional",
+      "recognition": "tolerated",
+      "confidence": "low",
+      "summary": "The pebble coves south of Livadia are in use as the island's naturist beach. A naturist directory carries consistent reports from 2007 to 2018, with a signposted path from the road; a 2011 press mention called it a nudist beach. No formal designation is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/dodecanese:astipalea",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "vatses",
+      "name": "Vatses",
+      "municipality": "Astypalaia",
+      "latitude": 36.524,
+      "longitude": 26.315,
+      "dressCode": "nudity-permitted",
+      "recognition": "community-reported",
+      "confidence": "low",
+      "summary": "Nude bathing is reported at the southern side, away from the beach bar. A naturist directory carries visitor reports from 2013 and 2018 describing a roughly half-nude mix with topless common on the textile side; no designation or signage is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/dodecanese:astipalea",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

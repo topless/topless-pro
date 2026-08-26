@@ -1,0 +1,26 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Poros"
+  },
+  "beaches": [
+    {
+      "slug": "ntana-gerolimani-poros",
+      "name": "Ntana / Gerolimani, Poros",
+      "municipality": "Poros",
+      "latitude": 37.523,
+      "longitude": 23.424,
+      "dressCode": "nudity-permitted",
+      "recognition": "community-reported",
+      "confidence": "low",
+      "summary": "Occasional nude use is reported at stony beaches near the Ntana headland. The rarely visited beaches lie past Russian Bay; a naturist directory carries reports up to 2015, including nude swimming from visiting yachts, and a 2023 Greek press article names remote beaches at Gerolimena. The directory itself asks for up-to-date reports.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/saronic:poros",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

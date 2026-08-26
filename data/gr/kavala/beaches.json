@@ -1,0 +1,41 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Kavala"
+  },
+  "beaches": [
+    {
+      "slug": "keramoti",
+      "name": "Keramoti",
+      "municipality": "Nestos",
+      "latitude": 40.8535,
+      "longitude": 24.7335,
+      "dressCode": "nudity-permitted",
+      "recognition": "community-reported",
+      "confidence": "low",
+      "summary": "Nude bathing is reported at the eastern end of Keramoti's long beach. One naturist directory carries a detailed but undated entry placing the nudist area beyond the military zone; a second directory entry published in 2021 agrees. No designation is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:macedonia",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "loutra-eleftheron",
+      "name": "Loutra Eleftheron",
+      "municipality": "Pangaio",
+      "latitude": 40.83,
+      "longitude": 24.24,
+      "dressCode": "clothing-optional",
+      "recognition": "tolerated",
+      "confidence": "low",
+      "summary": "Nude bathing is reported along most of this remote beach west of Nea Peramos. A naturist directory carries visitor reports from 2016, 2020 and 2022 describing 90-100% nude use and an informally marked nudist area in the middle; a Greek camping forum post from around 2013 agrees. No designation by any authority is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:macedonia",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

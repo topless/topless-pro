@@ -1,0 +1,56 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Kythira"
+  },
+  "beaches": [
+    {
+      "slug": "fyri-ammos-kalamou",
+      "name": "Fyri Ammos (Kalamos)",
+      "municipality": "Kythira",
+      "latitude": 36.17,
+      "longitude": 23.048,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "low",
+      "summary": "Nude bathing is reported beyond the rocks north of the beach-bar entrance. A naturist directory carries visitor reports from 2016 to 2022; the 2022 report confirms the northern part is used nude even with the bar open. No designation or signage is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/saronic:kythera",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "kombonada",
+      "name": "Kombonada",
+      "municipality": "Kythira",
+      "latitude": 36.197,
+      "longitude": 23.058,
+      "dressCode": "nudity-permitted",
+      "recognition": "community-reported",
+      "confidence": "low",
+      "summary": "Nude bathing is reported on the southern part, away from the beach bar. A naturist directory carries visitor reports from 2017 and 2020 describing the southern stretch as nude; no designation or signage is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/saronic:kythera",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "limni-palaiopoli",
+      "name": "Limni (Palaiopoli)",
+      "municipality": "Kythira",
+      "latitude": 36.222,
+      "longitude": 23.048,
+      "dressCode": "clothing-optional",
+      "recognition": "community-reported",
+      "confidence": "low",
+      "summary": "Nude and clothed bathers mix along the whole beach west of Palaiopoli. A naturist directory carries visitor reports from 2017, calling it established as clothing-optional, and from 2020, when it was entirely nude. No designation or signage is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/saronic:kythera",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Fourni"
+  },
+  "beaches": [
+    {
+      "slug": "elidaki-fourni",
+      "name": "Elidaki",
+      "municipality": "Fournoi Korseon",
+      "latitude": 37.567,
+      "longitude": 26.481,
+      "dressCode": "clothing-optional",
+      "recognition": "community-reported",
+      "confidence": "low",
+      "summary": "Nude bathing is usual on the small sandy bay just north of Petrokopio. A naturist directory carries reports from 2015, 2018 and June 2022 describing it as almost fully nudist and recognised as naturist; no signage or designation is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/neaegean:fourni",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

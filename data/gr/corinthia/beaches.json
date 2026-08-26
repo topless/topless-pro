@@ -1,0 +1,41 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Corinthia"
+  },
+  "beaches": [
+    {
+      "slug": "loutraki-canal",
+      "name": "Loutraki (south end)",
+      "municipality": "Loutraki-Perachora-Agioi Theodoroi",
+      "latitude": 37.948,
+      "longitude": 22.984,
+      "dressCode": "nudity-permitted",
+      "recognition": "community-reported",
+      "confidence": "low",
+      "summary": "Nude bathing is reported at the southern end of the beach, near the Corinth Canal. A naturist directory carries a 2019 report of secluded fully nudist coves behind the Pappas Hotel and a July 2023 forum report calling the canal-end section well tolerated and widely known.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:peloponnese",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "zoireza",
+      "name": "Zoireza",
+      "municipality": "Loutraki-Perachora-Agioi Theodoroi",
+      "latitude": 38.031,
+      "longitude": 23.026,
+      "dressCode": "nudity-permitted",
+      "recognition": "community-reported",
+      "confidence": "low",
+      "summary": "Nude bathing is reported in the right-hand cove of this remote beach. A naturist directory carries visitor reports from July 2019, when the right cove was fully nudist, and August 2020, when the visitors were the only ones nude among campers. Access is a steep 200 m path from the Schinos-Alkyonides road.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:peloponnese",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

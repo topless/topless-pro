@@ -1,0 +1,41 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "FR",
+    "countryName": "France",
+    "region": "Provence-Alpes-Côte d'Azur"
+  },
+  "beaches": [
+    {
+      "slug": "piemanson-zone-naturiste",
+      "name": "Plage de Piémanson (zone naturiste)",
+      "municipality": "Arles",
+      "latitude": 43.35,
+      "longitude": 4.81,
+      "dressCode": "nudity-permitted",
+      "recognition": "official",
+      "confidence": "high",
+      "summary": "A marked area beyond the ordinary beach is reserved for naturists. The Ville d'Arles page states this; the Arles tourist office says the beach becomes naturist about 1 km to the left of the access, as far as the Rhône mouth, and the Union régionale naturiste cites a municipal arrêté of 23 June 1982 whose text is not online. The tourist office states that bivouac, camping, caravanning, barbecues and fires are prohibited.",
+      "facilities": [],
+      "sourceUrl": "https://arles.fr/vivre-a-arles/faire-du-sport/les-equipements-de-loisirs/plage/piemanson-la-plage-darles-100-nature/",
+      "lastVerifiedAt": "2026-08-22",
+      "published": true
+    },
+    {
+      "slug": "ile-du-levant-plage-des-grottes",
+      "name": "Plage des Grottes (Île du Levant)",
+      "municipality": "Hyères",
+      "latitude": 43.047,
+      "longitude": 6.462,
+      "dressCode": "clothing-optional",
+      "recognition": "official",
+      "confidence": "high",
+      "summary": "Full nudity is the rule on Plage des Grottes by municipal arrêté. Hyères' arrêté of 14 March 1978 (n°908), amended by n°288 of 8 April 2005, places the beach, its corniche and the shore between the Marine Nationale fence and the Aygadon stream in Zone A, reserved to naturists, for the summer season; Zone B permits nudity and Zone C (port, village square, establishments open to the public) prohibits it. The Syndicat d'Héliopolis posts the signs and staffs the controls at each end of Zone A; municipal wardens and the police enforce the arrêté.",
+      "facilities": [],
+      "sourceUrl": "https://www.iledulevant-heliopolis.org/wp-content/uploads/2020/11/ARRETE-PRATIQUE-DU-NATURISME-1.pdf",
+      "lastVerifiedAt": "2026-08-22",
+      "published": true
+    }
+  ]
+}

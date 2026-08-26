@@ -1,0 +1,41 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Argolida"
+  },
+  "beaches": [
+    {
+      "slug": "salanti-saladi",
+      "name": "Salanti (Saladi Beach)",
+      "municipality": "Ermionida",
+      "latitude": 37.437,
+      "longitude": 23.134,
+      "dressCode": "unknown",
+      "recognition": "community-reported",
+      "confidence": "low",
+      "summary": "Greece's first naturist hotel opened on this beach in 1980. Press retellings from 2021 and 2025 document the nudist-only hotel, the expulsion of its guests by villagers by boat the same year, and the now-derelict building slated for redevelopment; no current dress-code reports are documented.",
+      "facilities": [],
+      "sourceUrl": "https://www.gargalianoionline.gr/%CE%B3%CF%85%CE%BC%CE%BD%CE%B9%CF%83%CE%BC%CF%8C%CF%82-%CF%83%CF%84%CE%B7%CE%BD-%CF%80%CE%B5%CE%BB%CE%BF%CF%80%CF%8C%CE%BD%CE%BD%CE%B7%CF%83%CE%BF-%CF%8C%CF%84%CE%B1%CE%BD-%CE%BF%CE%B9-%CE%BD%CF%84/",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "kantia",
+      "name": "Kantia",
+      "municipality": "Nafplio",
+      "latitude": 37.528,
+      "longitude": 22.95,
+      "dressCode": "nudity-permitted",
+      "recognition": "community-reported",
+      "confidence": "low",
+      "summary": "Nude bathing is reported right of the beach access, west of Kantia village. A naturist directory carries visitor reports from 2018 and 2019 with several nude couples on a 200 m section, and an August 2020 visit when the couple were the only ones nude. No designation is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:peloponnese",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

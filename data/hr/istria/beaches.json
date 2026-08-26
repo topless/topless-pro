@@ -1,0 +1,26 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "HR",
+    "countryName": "Croatia",
+    "region": "Istria"
+  },
+  "beaches": [
+    {
+      "slug": "valalta-rovinj",
+      "name": "Valalta (FKK Valalta naturist resort)",
+      "municipality": "Rovinj",
+      "latitude": 45.118,
+      "longitude": 13.632,
+      "dressCode": "clothing-optional",
+      "recognition": "official",
+      "confidence": "high",
+      "summary": "Valalta is a closed naturist resort where dressed bathing is prohibited. The operator's 2026 house rules state the resort is intended exclusively for naturists and prohibit bathing, sunbathing or staying on the beach or pools while dressed, with a designated beach area where clothes are tolerated for minors. Entry requires a Valalta Loyalty Card and management may deny hospitality to guests who do not comply with the house rules.",
+      "facilities": [],
+      "sourceUrl": "https://valalta.hr/page/download/house-rules",
+      "lastVerifiedAt": "2026-08-22",
+      "published": true
+    }
+  ]
+}

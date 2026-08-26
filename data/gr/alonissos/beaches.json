@@ -1,0 +1,56 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Alonissos"
+  },
+  "beaches": [
+    {
+      "slug": "vithisma",
+      "name": "Vithisma",
+      "municipality": "Alonissos",
+      "latitude": 39.139,
+      "longitude": 23.853,
+      "dressCode": "clothing-optional",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude bathing is reported across the beach, with clothed visitors occasional. A naturist directory carries visitor reports from 2000 to August 2025 describing it as regularly 100 percent naturist; access is a steep path ending in a ladder.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/sporades:alonissos",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "mikros-mourtias",
+      "name": "Mikros Mourtias",
+      "municipality": "Alonissos",
+      "latitude": 39.148,
+      "longitude": 23.834,
+      "dressCode": "clothing-optional",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude and clothed bathers mix on the bay below Old Alonissos village. A naturist directory carries visitor reports from 2015 to August 2025; a 2015 report says an island map sold in Patitiri and a multilingual sign on a ruined house mark it as a nudist beach.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/sporades:alonissos",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "spartines",
+      "name": "Spartines Bay",
+      "municipality": "Alonissos",
+      "latitude": 39.167,
+      "longitude": 23.877,
+      "dressCode": "nudity-permitted",
+      "recognition": "community-reported",
+      "confidence": "medium",
+      "summary": "Nude bathing is reported on the third beach of the bay. A naturist directory carries visitor reports from 2017 to August 2025; a 2017 report describes an objection to nudity on the middle beach, with locals pointing to the third beach as the nude one.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/sporades:alonissos",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

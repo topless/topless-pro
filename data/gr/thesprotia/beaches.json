@@ -1,0 +1,26 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Thesprotia"
+  },
+  "beaches": [
+    {
+      "slug": "mikro-drafi",
+      "name": "Mikro Drafi",
+      "municipality": "Igoumenitsa",
+      "latitude": 39.39,
+      "longitude": 20.23,
+      "dressCode": "clothing-optional",
+      "recognition": "community-reported",
+      "confidence": "low",
+      "summary": "Nude use is reported across this small pebble cove south of Syvota. A naturist directory carries visitor reports from 2012 to 2019; the 2012 report notes the mix swings between fully clothed and fully nude, the 2019 report found only nude visitors. No designation is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:epirus",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

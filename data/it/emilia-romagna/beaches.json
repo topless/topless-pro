@@ -1,0 +1,26 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "IT",
+    "countryName": "Italy",
+    "region": "Emilia-Romagna"
+  },
+  "beaches": [
+    {
+      "slug": "lido-di-dante-bassona",
+      "name": "Spiaggia della Bassona, Lido di Dante (spiaggia naturista)",
+      "municipality": "Ravenna",
+      "latitude": 44.38226,
+      "longitude": 12.320234,
+      "dressCode": "nudity-permitted",
+      "recognition": "official",
+      "confidence": "medium",
+      "summary": "Nude use is permitted on a marked 400 m stretch south of Lido di Dante. A seasonal Comune di Ravenna mayoral ordinance, first signed 25 June 2020 and last confirmed renewed for 25 May–22 September 2024, allows 'clothing optional' use from 50 m past the pine-wood path for about 400 m, marked by a windbreak and signs. Dune crossing outside the paths is prohibited; the designation applies only to the marked stretch.",
+      "facilities": [],
+      "sourceUrl": "https://www.fenait.org/luogo-naturista/5",
+      "lastVerifiedAt": "2026-08-22",
+      "published": true
+    }
+  ]
+}

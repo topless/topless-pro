@@ -1,0 +1,26 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "CA",
+    "countryName": "Canada",
+    "region": "British Columbia"
+  },
+  "beaches": [
+    {
+      "slug": "wreck-beach",
+      "name": "Wreck Beach (Pacific Spirit Regional Park)",
+      "municipality": "Vancouver",
+      "latitude": 49.2622,
+      "longitude": -123.2615,
+      "dressCode": "clothing-optional",
+      "recognition": "official",
+      "confidence": "high",
+      "summary": "Clothing-optional along the Pacific Spirit foreshore except Acadia Beach. Metro Vancouver's park page states the beach, except for Acadia Beach, is clothing optional; beach regulations add no alcohol, fires, camping or loud amplified music, and the beach closes at sunset.",
+      "facilities": [],
+      "sourceUrl": "https://metrovancouver.org/services/regional-parks/park/pacific-spirit-regional-park",
+      "lastVerifiedAt": "2026-08-22",
+      "published": true
+    }
+  ]
+}

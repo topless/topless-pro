@@ -10,12 +10,13 @@ import {
 // The importer's SQL, executed against the real schema in workerd. Storage is isolated
 // per test, so each one starts from the migrations plus the demo fixtures.
 
-const scope = { countryCode: 'GR', countryName: 'Greece', region: 'Chalkidiki', municipality: 'Sithonia' };
+const scope = { countryCode: 'GR', countryName: 'Greece', region: 'Chalkidiki' };
 
 function candidate(overrides: Partial<BeachCandidate> = {}): BeachCandidate {
   return {
     slug: 'kavourotrypes',
     name: 'Kavourotrypes',
+    municipality: 'Sithonia',
     latitude: 40.1265909,
     longitude: 23.9693838,
     dressCode: 'nudity-permitted',
@@ -31,7 +32,7 @@ function candidate(overrides: Partial<BeachCandidate> = {}): BeachCandidate {
 }
 
 function file(beaches: BeachCandidate[]): BeachFile {
-  return { path: 'data/gr/chalkidiki/sithonia/beaches.json', data: { schemaVersion: 1, scope, beaches } };
+  return { path: 'data/gr/chalkidiki/beaches.json', data: { schemaVersion: 1, scope, beaches } };
 }
 
 async function runImport(files: BeachFile[]): Promise<string[]> {

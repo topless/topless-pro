@@ -1,0 +1,26 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "ES",
+    "countryName": "Spain",
+    "region": "Catalonia"
+  },
+  "beaches": [
+    {
+      "slug": "mar-bella-barcelona",
+      "name": "Platja de la Mar Bella",
+      "municipality": "Barcelona",
+      "latitude": 41.4015,
+      "longitude": 2.2115,
+      "dressCode": "nudity-permitted",
+      "recognition": "official",
+      "confidence": "high",
+      "summary": "Part of Mar Bella is a designated naturist area. The Ajuntament de Barcelona's beach page states the beach has a space dedicated to naturist use and lists 'Platja naturista' among its equipment; the page does not say where on the beach the area is.",
+      "facilities": [],
+      "sourceUrl": "https://www.barcelona.cat/ca/que-pots-fer-a-bcn/banys-i-platges/platja-de-la-mar-bella",
+      "lastVerifiedAt": "2026-08-22",
+      "published": true
+    }
+  ]
+}

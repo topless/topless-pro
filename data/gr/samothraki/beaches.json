@@ -1,0 +1,41 @@
+{
+  "$schema": "../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Samothraki"
+  },
+  "beaches": [
+    {
+      "slug": "platia-varades-samothraki",
+      "name": "Platia–Varades (Therma)",
+      "municipality": "Samothraki",
+      "latitude": 40.499,
+      "longitude": 25.625,
+      "dressCode": "nudity-permitted",
+      "recognition": "official",
+      "confidence": "high",
+      "summary": "A 500 m nudist stretch is designated east of the Platia camping, towards Varades. The Samothraki municipal council approved the designation unanimously on 6 April 2026 as a pilot, on a proposal by three local professional associations, shifting it 300 m west and shortening it from 800 m to 500 m. Councillors noted in the same meeting that nudism elsewhere remains prohibited under art. 353 of the penal code.",
+      "facilities": [],
+      "sourceUrl": "https://opencouncil.gr/samothraki/apr6_2026",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "kipos-samothraki",
+      "name": "Kipos",
+      "municipality": "Samothraki",
+      "latitude": 40.418,
+      "longitude": 25.677,
+      "dressCode": "clothing-optional",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude and clothed bathers mix along the pebble beach, naturists usually in the majority. A naturist directory carries reports from 2016 to August 2024 and a regional press listicle lists it among Greek nudist beaches. The beach designated by the municipality in April 2026 is a different one, near Therma.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/neaegean:samothrace",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

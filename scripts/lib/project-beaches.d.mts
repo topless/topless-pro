@@ -5,12 +5,12 @@ export interface BeachScope {
   countryCode: string;
   countryName: string;
   region: string;
-  municipality: string;
 }
 
 export interface BeachCandidate {
   slug: string;
   name: string;
+  municipality: string | null;
   latitude: number | null;
   longitude: number | null;
   dressCode: string | null;
