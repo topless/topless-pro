@@ -1,0 +1,96 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Lefkada",
+    "municipality": "Lefkada"
+  },
+  "beaches": [
+    {
+      "slug": "pefkoulia",
+      "name": "Pefkoulia",
+      "latitude": 38.803,
+      "longitude": 20.63,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude bathing is established on the northern part, beyond the rocks. A naturist directory carries consistent visitor reports from 2016 to 2023; the far north is a gay cruising area. No designation exists: in an August 2018 council exchange the mayor of Lefkada said no beach is legally a nudist beach and complaints are a police matter.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/ionian:lefkas",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "gialos-lefkada",
+      "name": "Gialos",
+      "latitude": 38.655,
+      "longitude": 20.548,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude bathing is reported on the southern part of the beach. A naturist directory carries visitor reports from 2017, 2019 and 2023; the stretch south of the abandoned canteen is described as nude for about 2 km. No designation or signage is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/ionian:lefkas",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "milos-lefkada",
+      "name": "Milos",
+      "latitude": 38.789,
+      "longitude": 20.615,
+      "dressCode": "clothing-optional",
+      "recognition": "tolerated",
+      "confidence": "low",
+      "summary": "Nude and clothed bathers mix across the beach, reached by footpath or taxi-boat. A naturist directory carries visitor reports from 2017 to 2020 estimating up to 80% nude, concentrating at one end depending on the report. No designation or signage is documented; a local beach guide lists it as a nudist beach.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/ionian:lefkas",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "megali-petra",
+      "name": "Megali Petra",
+      "latitude": 38.752,
+      "longitude": 20.589,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "low",
+      "summary": "Nude bathing is reported beyond the big rock that names the beach. A naturist directory carries visitor reports from 2016 to 2021; the section behind the rock is described as nearly all nude. No designation or signage is documented; access is by a 300 m footpath near Kalamitsi.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/ionian:lefkas",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "kathisma-south",
+      "name": "Kathisma (southern coves)",
+      "latitude": 38.7724,
+      "longitude": 20.5985,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "low",
+      "summary": "Nude bathing is reported beyond the rocks at the southern end. The main beach with the tavernas is textile. A naturist directory carries visitor reports from 2015 to 2021; a 2021 note says the third cove and the beach called Gaidaros are the same place. No designation or signage is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/ionian:lefkas",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "egremni",
+      "name": "Egremni",
+      "latitude": 38.628,
+      "longitude": 20.543,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "low",
+      "summary": "Nude bathing is reported at the southern part, below the cliffs. A naturist directory carries visitor reports up to 2021, when the rebuilt access road and stairway reopened after the 2015 earthquake. The directory notes growing commercialisation may affect nude use; no designation is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/ionian:lefkas",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Ikaria",
+    "municipality": "Ikaria"
+  },
+  "beaches": [
+    {
+      "slug": "nas-ikaria",
+      "name": "Nas",
+      "latitude": 37.6287,
+      "longitude": 26.0207,
+      "dressCode": "clothing-optional",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude and swimsuit bathers mix on the small beach, nude mostly at the western half. A naturist directory carries reports from 2005 to July 2024; Greek press articles describe it as a nudist beach. Municipal 'no nudists' signs went up in 2013 and were reported gone by 2018.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/neaegean:ikaria",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

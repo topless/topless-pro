@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Attica",
+    "municipality": "Markopoulo Mesogaias"
+  },
+  "beaches": [
+    {
+      "slug": "vravrona",
+      "name": "Vravrona rocks",
+      "latitude": 37.9207,
+      "longitude": 24.0307,
+      "dressCode": "nudity-permitted",
+      "recognition": "community-reported",
+      "confidence": "low",
+      "summary": "Nude bathing is reported at two rocky spots on a peninsula past Vravrona. A naturist directory carries visitor reports from 2017 and 2020 describing a regular community said to have used the place for about 30 years; no report newer than 2020 is documented. There is no beach, only rocks and steps to the sea.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:athens",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

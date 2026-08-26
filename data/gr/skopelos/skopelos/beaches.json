@@ -1,0 +1,40 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Skopelos",
+    "municipality": "Skopelos"
+  },
+  "beaches": [
+    {
+      "slug": "velanio",
+      "name": "Velanio",
+      "latitude": 39.0855,
+      "longitude": 23.7365,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude bathing is established beyond the rocks; the first stretch is swimwear. A naturist directory carries visitor reports from 2001 to September 2023, and a January 2012 press article says the mayor proposed an official nudist designation to the municipal council; no decree is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/sporades:skopelos",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "milia-skopelos",
+      "name": "Milia",
+      "latitude": 39.098,
+      "longitude": 23.629,
+      "dressCode": "nudity-permitted",
+      "recognition": "community-reported",
+      "confidence": "low",
+      "summary": "Nude bathing is reported at the far end of the beach, near the rocks. A naturist directory carries visitor reports from 2002 to September 2023; a 2023 report says FKK was painted on rocks, while a July 2022 report found nude use not possible in peak season.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/sporades:skopelos",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

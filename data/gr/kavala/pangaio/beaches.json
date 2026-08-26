@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Kavala",
+    "municipality": "Pangaio"
+  },
+  "beaches": [
+    {
+      "slug": "loutra-eleftheron",
+      "name": "Loutra Eleftheron",
+      "latitude": 40.83,
+      "longitude": 24.24,
+      "dressCode": "clothing-optional",
+      "recognition": "tolerated",
+      "confidence": "low",
+      "summary": "Nude bathing is reported along most of this remote beach west of Nea Peramos. A naturist directory carries visitor reports from 2016, 2020 and 2022 describing 90-100% nude use and an informally marked nudist area in the middle; a Greek camping forum post from around 2013 agrees. No designation by any authority is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:macedonia",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

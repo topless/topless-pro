@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Attica",
+    "municipality": "Vari-Voula-Vouliagmeni"
+  },
+  "beaches": [
+    {
+      "slug": "limanakia-vouliagmeni",
+      "name": "Limanakia (B' Limanaki), Vouliagmeni",
+      "latitude": 37.8014,
+      "longitude": 23.7939,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "medium",
+      "summary": "Nude bathing is established in two rocky coves between Vouliagmeni and Varkiza. A naturist directory carries visitor reports from the 2000s to 2022; Greek press listicles from 2024 and 2025 also name B' Limanakia. Reports describe a largely gay male crowd; no designation or signage is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:athens",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

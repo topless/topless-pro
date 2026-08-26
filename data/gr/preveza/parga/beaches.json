@@ -1,0 +1,40 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Preveza",
+    "municipality": "Parga"
+  },
+  "beaches": [
+    {
+      "slug": "artolithia",
+      "name": "Artolithia",
+      "latitude": 39.218,
+      "longitude": 20.476,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "low",
+      "summary": "Nude use is reported on the left part of Artolithia beach near Riza. A naturist directory carries consistent visitor reports from 2006 to 2019; the 2012 report notes textile families sometimes present alongside naturists. No designation is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:epirus",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "agia-pelagia-lefka",
+      "name": "Agia Pelagia (Lefka)",
+      "latitude": 39.211,
+      "longitude": 20.482,
+      "dressCode": "nudity-permitted",
+      "recognition": "community-reported",
+      "confidence": "low",
+      "summary": "Nude use is reported at the northern side of Agia Pelagia (Lefka) beach. A naturist directory carries visitor reports from 2015, 2016 and 2019; the 2016 report found no clear naturist area but few visitors on a long beach. No designation is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:epirus",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

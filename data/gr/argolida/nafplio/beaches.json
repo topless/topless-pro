@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Argolida",
+    "municipality": "Nafplio"
+  },
+  "beaches": [
+    {
+      "slug": "kantia",
+      "name": "Kantia",
+      "latitude": 37.528,
+      "longitude": 22.95,
+      "dressCode": "nudity-permitted",
+      "recognition": "community-reported",
+      "confidence": "low",
+      "summary": "Nude bathing is reported right of the beach access, west of Kantia village. A naturist directory carries visitor reports from 2018 and 2019 with several nude couples on a 200 m section, and an August 2020 visit when the couple were the only ones nude. No designation is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:peloponnese",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

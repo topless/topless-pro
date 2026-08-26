@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Messinia",
+    "municipality": "West Mani"
+  },
+  "beaches": [
+    {
+      "slug": "trahila",
+      "name": "Trahila / Kataphygi rocks",
+      "latitude": 36.805,
+      "longitude": 22.281,
+      "dressCode": "clothing-optional",
+      "recognition": "community-reported",
+      "confidence": "low",
+      "summary": "Nude bathing from the rocks is reported south of Agios Dimitrios, toward Trahila. A naturist directory carries reports from 2011 (naked and clothed bathers roughly half and half) and September 2020 (mixed but predominantly naked). Rock platforms rather than a beach; partly visible from the road.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:peloponnese",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

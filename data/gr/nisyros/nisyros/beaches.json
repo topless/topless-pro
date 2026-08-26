@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Nisyros",
+    "municipality": "Nisyros"
+  },
+  "beaches": [
+    {
+      "slug": "pachia-ammos-nisyros",
+      "name": "Pachia Ammos",
+      "latitude": 36.62,
+      "longitude": 27.2,
+      "dressCode": "clothing-optional",
+      "recognition": "community-reported",
+      "confidence": "low",
+      "summary": "Nude bathing is reported along the beach, fully so south of the middle. A naturist directory carries visitor reports from 2007 and 2009, including naturist campers; no newer report and no designation or signage are documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/dodecanese:nissiros",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

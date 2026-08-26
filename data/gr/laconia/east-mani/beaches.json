@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../beaches.schema.json",
+  "schemaVersion": 1,
+  "scope": {
+    "countryCode": "GR",
+    "countryName": "Greece",
+    "region": "Laconia",
+    "municipality": "East Mani"
+  },
+  "beaches": [
+    {
+      "slug": "vathy-gythio",
+      "name": "Vathy (Gythio)",
+      "latitude": 36.688,
+      "longitude": 22.515,
+      "dressCode": "nudity-permitted",
+      "recognition": "tolerated",
+      "confidence": "low",
+      "summary": "Nude bathing is established mid-beach between Camping Zeus and Mikro Chorio. A naturist directory carries independent visitor reports from 2017 to 2020 calling that middle section fully nudist, with the rest of the bay in swimwear. No designation or signage is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:peloponnese",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    }
+  ]
+}

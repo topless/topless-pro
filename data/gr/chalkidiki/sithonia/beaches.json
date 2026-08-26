@@ -161,6 +161,48 @@
       "recognition": "disputed",
       "confidence": "medium",
       "summary": "Nude bathing is reported on the small coves south-east of the main beach. Directory reports from 2015–2022 conflict: some describe the coves as fully nude with free campers, one says a beach bar on the cliffs ended nude use there; the main beach is swimwear use. The municipality cleared unauthorised camping structures here in August 2026."
+    },
+    {
+      "slug": "bara-sithonia",
+      "name": "Bara",
+      "latitude": 40.198,
+      "longitude": 23.92,
+      "dressCode": "clothing-optional",
+      "recognition": "community-reported",
+      "confidence": "low",
+      "summary": "Nude use is reported across this small cove south of Fava beach at Vourvourou. A naturist directory carries two visitor reports, from July 2021 and May 2022, both finding few people and most of them nude. No designation is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:halkidiki",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "portokali-beach",
+      "name": "Portokali (Orange) Beach",
+      "latitude": 40.177,
+      "longitude": 23.984,
+      "dressCode": "nudity-permitted",
+      "recognition": "community-reported",
+      "confidence": "low",
+      "summary": "Nude bathing is reported on the rocks right of the main Portokali beach. A naturist directory carries a 2022 visitor report describing the main beach as swimwear with a signposted nudist spot on the rocks; an older undated report put the beach at 50-70% nude. Who placed the signboards is not documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:halkidiki",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
+    },
+    {
+      "slug": "porto-karras",
+      "name": "Porto Karras coves",
+      "latitude": 40.048,
+      "longitude": 23.788,
+      "dressCode": "nudity-permitted",
+      "recognition": "community-reported",
+      "confidence": "low",
+      "summary": "Nude bathing is reported in small coves along the Porto Karras coast. A naturist directory describes about 5 km of small beaches below the estate road, with a 2022 update reporting mostly nude use. The land belongs to the resort; no stated policy is documented.",
+      "facilities": [],
+      "sourceUrl": "http://capnbarefoot.wikidot.com/mainland:halkidiki",
+      "lastVerifiedAt": "2026-08-23",
+      "published": true
     }
   ]
 }
