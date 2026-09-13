@@ -30,7 +30,10 @@ These shaped the sequence; each was a choice with a stated default, and the defa
 7. **Map order.** Provider-neutral "open in" links → pre-rendered static locator images →
    interactive MapLibre map with self-hosted tiles at roughly 50 published beaches across three
    areas (when R2 is enabled and the account moves to Paid). Third-party tile hosts are out
-   under the privacy stance.
+   under the privacy stance. *Revised September 2026:* with 237 listings and no R2, the
+   interactive map shipped without tiles at all — Natural Earth coastlines (1:110m, 1:50m and
+   1:10m in four-degree tiles) generated at build time and served from the Worker's own
+   assets, drawn on a canvas. A locator, not a street map; see M13.
 8. **Measurement.** Workers Logs only (already on, three-day retention). The About page is
    corrected to say so. Analytics Engine waits for a written list of decisions it would change.
 9. **Pilot success.** Publish whichever Sithonia candidates meet the evidence policy; never
@@ -87,7 +90,9 @@ These shaped the sequence; each was a choice with a stated default, and the defa
   names GitHub as a processor. *Gate: decision 6; measured traffic or the first real report.*
 - [ ] **M10 · Static locator images.** A local render step from a small PMTiles extract,
   images committed like generated SQL; also `og:image` and the no-JS fallback.
-  *Gate: ≥ 10 published beaches or a second area; a one-hour native-render spike.*
+  *Gate: ≥ 10 published beaches or a second area; a one-hour native-render spike.* Largely
+  superseded by the M13 map, whose basemap pipeline could render these offline if a per-beach
+  image is still wanted for `og:image`.
 - [ ] **M11 · Open data and a versioned API.** `/api/v1` with CORS on GET, `ETag`, Cache API,
   rate limiting; GeoJSON and CSV downloads; "Reuse this data" on About. *Gate: M8.*
 
@@ -96,11 +101,15 @@ These shaped the sequence; each was a choice with a stated default, and the defa
 - [ ] **M12 · Analytics Engine counting.** Worker-side, no script, no IP; monthly export
   because retention is three months; disclosure in the same PR.
   *Gate: a written list of the decisions the numbers would change.*
-- [ ] **M13 · The interactive map.** MapLibre loaded only behind a Map control; Protomaps
-  PMTiles in an EU R2 bucket served tile-by-tile through the Worker with Cache API; glyphs and
-  sprites self-hosted; CSP gains `worker-src 'self'` and `blob:` in `img-src`; CI size check
-  on both chunks; tile-route log hygiene. *Gate: ~50 beaches across three areas; R2 enabled;
-  Workers Paid.*
+- [~] **M13 · The interactive map.** Shipped in September 2026 as `/map` without MapLibre or
+  tiles: a lazily loaded canvas map of Natural Earth coastlines served from this site (see
+  `README.md`, "The map's coastlines"), one focusable button per beach or cluster, a
+  dress-code filter, a card linking to the listing, a `?beach=` deep link from every beach
+  page and the view kept in the address. No CSP change, nothing requested from any other host.
+  Still open, if street-level detail is ever wanted: Protomaps PMTiles in an EU R2 bucket
+  served through the Worker with Cache API, MapLibre behind the same page, `worker-src 'self'`
+  and `blob:` in the CSP. *Gate for that step: a stated need for detail below ~1 km; R2
+  enabled; Workers Paid.*
 
 ## Deferred, with the trigger that reopens each
 

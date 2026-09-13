@@ -11,6 +11,8 @@
   --coral-soft: #fbe3dd;
   --line: #cbd2ce;
   --line-strong: #6f7f7a;
+  --map-sea: #cfe0dc;
+  --map-land: #f7f4ea;
   --radius-s: 6px;
   --fs-0: .75rem;
   --fs-1: .875rem;
@@ -37,7 +39,8 @@ main:focus { outline: none; }
 .brand { display: grid; text-decoration: none; color: var(--ink); font-size: var(--fs-3); font-weight: 700; letter-spacing: -.02em; line-height: 1.1; }
 .brand-tld { font-weight: 400; }
 .brand small { font-size: var(--fs-0); font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-muted); margin-top: .2rem; }
-.header-link { display: inline-flex; align-items: center; min-height: 44px; padding: 0 .75rem; margin-right: -.75rem; font-weight: 600; text-decoration: none; color: var(--ink); }
+.header-links { display: flex; gap: .25rem; margin-right: -.75rem; }
+.header-link { display: inline-flex; align-items: center; min-height: 44px; padding: 0 .75rem; font-weight: 600; text-decoration: none; color: var(--ink); }
 footer { padding: 2rem var(--gutter); background: #112f2b; color: #fff; }
 footer p { margin: .25rem 0 0; color: rgba(255, 255, 255, .7); }
 .eyebrow { margin: 0; text-transform: uppercase; letter-spacing: .12em; font-size: var(--fs-0); font-weight: 700; }
@@ -129,7 +132,7 @@ footer p { margin: .25rem 0 0; color: rgba(255, 255, 255, .7); }
 .correction-panel button { justify-self: start; border: 0; border-radius: 999px; background: var(--sea-deep); color: #fff; min-height: 44px; padding: .7rem 1.2rem; font-weight: 600; cursor: pointer; }
 .form-status { margin: .75rem 0 0; min-height: 1.5em; }
 .form-note { margin: 0; font-size: var(--fs-1); color: var(--ink-muted); }
-.honeypot { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.visually-hidden, .honeypot { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 
 /* States */
 .empty-state, .error { display: grid; justify-items: start; gap: .75rem; margin: 0; padding: 1.25rem; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-s); }
@@ -149,6 +152,35 @@ footer p { margin: .25rem 0 0; color: rgba(255, 255, 255, .7); }
 .guidance-chips { display: flex !important; flex-wrap: wrap; gap: .4rem !important; }
 .guidance-key li { color: var(--ink-muted); line-height: 1.45; }
 
+/* Map: coastlines on a canvas, one button per beach above it */
+.map-page { padding: 2rem var(--gutter) 3.5rem; }
+.map-page h1 { margin: .25rem 0 0; font-size: var(--fs-4); }
+.map-intro { max-width: 65ch; margin: .75rem 0 0; color: var(--ink-muted); }
+.map-page .filter-row { padding-bottom: 1rem; }
+.map-frame { position: relative; height: clamp(360px, 70vh, 760px); overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius-s); background: var(--map-sea); touch-action: none; user-select: none; -webkit-user-select: none; cursor: grab; }
+.map-frame:active { cursor: grabbing; }
+.map-frame canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+.map-pins { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.map-pin { position: absolute; top: 0; left: 0; display: grid; place-items: center; width: 28px; height: 28px; margin: -14px 0 0 -14px; padding: 0; border: 0; background: transparent; pointer-events: auto; cursor: pointer; }
+.map-pin::before { content: ""; width: 12px; height: 12px; border: 2px solid #fff; border-radius: 50%; background: var(--sea-deep); box-shadow: 0 1px 3px rgba(0, 0, 0, .35); }
+.map-pin.is-selected::before { box-shadow: 0 0 0 3px var(--coral), 0 1px 3px rgba(0, 0, 0, .35); }
+.map-pin:focus-visible { outline: none; }
+.map-pin:focus-visible::before { outline: 3px solid var(--coral); outline-offset: 2px; }
+.map-pin-cluster { width: auto; min-width: 34px; height: 34px; margin: -17px 0 0 -17px; padding: 0 .55rem; border: 2px solid #fff; border-radius: 999px; background: var(--sea-deep); color: #fff; font-size: var(--fs-1); font-weight: 700; box-shadow: 0 1px 3px rgba(0, 0, 0, .35); }
+.map-pin-cluster::before { display: none; }
+.map-pin-cluster:focus-visible { outline: 3px solid var(--coral); outline-offset: 2px; }
+.map-controls { position: absolute; top: .75rem; right: .75rem; display: grid; gap: .25rem; }
+.map-controls button { width: 44px; height: 44px; border: 1px solid var(--line-strong); border-radius: var(--radius-s); background: var(--surface); color: var(--ink); font-size: 1.375rem; font-weight: 700; line-height: 1; cursor: pointer; }
+.map-credit { position: absolute; right: .5rem; bottom: .3rem; margin: 0; padding: 0 .35rem; border-radius: 3px; background: rgba(255, 255, 255, .75); font-size: var(--fs-0); color: var(--ink-muted); }
+.map-overlay { position: absolute; left: .75rem; right: 4.5rem; bottom: .75rem; pointer-events: none; }
+.map-card { position: relative; max-width: 360px; padding: .9rem 2.5rem .9rem 1rem; border: 1px solid var(--line); border-radius: var(--radius-s); background: var(--surface); box-shadow: 0 6px 20px rgba(0, 0, 0, .14); pointer-events: auto; }
+.map-card h2 { margin: .15rem 0 .4rem; font-size: 1.125rem; }
+.map-card .eyebrow { color: var(--ink-muted); }
+.map-card .provenance { margin: 0 0 .6rem; }
+.map-card-link { font-weight: 600; }
+.map-card-close { position: absolute; top: .25rem; right: .25rem; width: 40px; height: 40px; border: 0; border-radius: var(--radius-s); background: transparent; color: var(--ink-muted); font-size: 1.5rem; line-height: 1; cursor: pointer; }
+.map-link { display: inline-block; margin-top: .35rem; font-weight: 600; }
+
 /* About: definition lists reuse the real chips and glyphs */
 .definitions { margin: .75rem 0 0; }
 .definitions div { display: grid; grid-template-columns: minmax(150px, 200px) 1fr; gap: 1rem; align-items: start; padding: .7rem 0; border-top: 1px solid var(--line); }
@@ -164,4 +196,7 @@ footer p { margin: .25rem 0 0; color: rgba(255, 255, 255, .7); }
   .hero h1 { font-size: var(--fs-3); }
   .launch-state { gap: 1.5rem; padding: 1.25rem 1rem; }
   .section-heading { flex-direction: column; align-items: start; gap: .25rem; }
+  .map-page { padding-top: 1.5rem; padding-bottom: 2.5rem; }
+  .map-frame { height: clamp(320px, 60vh, 520px); border-radius: 0; margin: 0 -5vw; border-left: 0; border-right: 0; }
+  .map-overlay { right: .75rem; }
 }

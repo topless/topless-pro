@@ -179,6 +179,32 @@ describe('topless.pro Worker', () => {
     expect(asset.headers.get('content-type')).toContain('image/svg+xml');
   });
 
+  it('injects canonical metadata on the map page and lists it in the sitemap', async () => {
+    const page = await exports.default.fetch('https://topless.pro/map');
+    expect(page.status).toBe(200);
+    const html = await page.text();
+    expect(html).toContain('<title>Map of listed beaches — topless.pro</title>');
+    expect(html).toContain('<link rel="canonical" href="https://topless.pro/map">');
+    expect(html).not.toContain('noindex');
+
+    const sitemap = await exports.default.fetch('https://topless.pro/sitemap.xml');
+    await expect(sitemap.text()).resolves.toContain('<loc>https://topless.pro/map</loc>');
+  });
+
+  it('serves coastline files with a long cache lifetime and the security headers', async () => {
+    const tile = await exports.default.fetch('https://topless.pro/basemap/v1/tiles/50_31.json');
+    expect(tile.status).toBe(200);
+    expect(tile.headers.get('content-type')).toContain('application/json');
+    expect(tile.headers.get('Cache-Control')).toBe('public, max-age=2592000, immutable');
+    expect(tile.headers.get('X-Content-Type-Options')).toBe('nosniff');
+    await expect(tile.json()).resolves.toEqual({ rings: [], tiles: [] });
+
+    // Only the coastline files get the long lifetime; other assets keep their own headers.
+    const icon = await exports.default.fetch('https://topless.pro/favicon.svg');
+    expect(icon.status).toBe(200);
+    expect(icon.headers.get('Cache-Control')).toBeNull();
+  });
+
   it('serves robots.txt pointing at the sitemap', async () => {
     const robots = await exports.default.fetch('https://topless.pro/robots.txt');
     expect(robots.status).toBe(200);

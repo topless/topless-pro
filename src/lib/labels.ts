@@ -6,6 +6,8 @@ export const SITE_TITLE = 'topless.pro — Beach dress codes: official, tolerate
 export const SITE_DESCRIPTION = 'Beach-by-beach guidance on topless and nude bathing — the official rule, the local custom and the source, kept separate.';
 export const ABOUT_TITLE = 'How we classify beaches — topless.pro';
 export const ABOUT_DESCRIPTION = 'How topless.pro labels beaches: official rules, local custom and unconfirmed reports kept apart, with a confidence level for each.';
+export const MAP_TITLE = 'Map of listed beaches — topless.pro';
+export const MAP_DESCRIPTION = 'Every listed beach on one map, filtered by what to wear. Drawn in your browser from Natural Earth coastlines — no map provider is contacted.';
 export const REPO_URL = 'https://github.com/topless/topless-pro';
 // The issue form asks for a source that shows the rule, so suggestions arrive pre-filtered.
 export const SUGGEST_URL = `${REPO_URL}/issues/new?template=suggest-a-beach.yml`;

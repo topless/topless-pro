@@ -3,6 +3,8 @@ import type { Context } from 'hono';
 import {
   ABOUT_DESCRIPTION,
   ABOUT_TITLE,
+  MAP_DESCRIPTION,
+  MAP_TITLE,
   SITE_DESCRIPTION,
   SITE_TITLE,
   confidenceLabels,
@@ -33,6 +35,9 @@ const WWW_HOST = `www.${CANONICAL_HOST}`;
 const CANONICAL_ORIGIN = `https://${CANONICAL_HOST}`;
 const META_DESCRIPTION_LIMIT = 160;
 const PUBLIC_CACHE_CONTROL = 'public, max-age=300, stale-while-revalidate=3600';
+// Coastline files live under a versioned path and change only with a data upgrade.
+const BASEMAP_PATH_PREFIX = '/basemap/';
+const BASEMAP_CACHE_CONTROL = 'public, max-age=2592000, immutable';
 const CONTENT_SECURITY_POLICY = [
   "default-src 'self'",
   "script-src 'self'",
@@ -496,6 +501,13 @@ app.get('/about', (c) =>
     canonicalPath: '/about',
   }));
 
+app.get('/map', (c) =>
+  renderShell(c, {
+    title: MAP_TITLE,
+    description: MAP_DESCRIPTION,
+    canonicalPath: '/map',
+  }));
+
 app.get('/beaches/:slug', async (c) => {
   const [beach, shell] = await Promise.all([
     getPublishedBeach(c.env.DB, c.req.param('slug')),
@@ -534,6 +546,7 @@ app.get('/sitemap.xml', async (c) => {
 
   const entries = [
     { path: '/' },
+    { path: '/map' },
     { path: '/about' },
     ...result.results.map((row) => ({
       path: `/beaches/${row.slug}`,
@@ -564,6 +577,11 @@ app.notFound(async (c) => {
 
   const asset = await c.env.ASSETS.fetch(c.req.raw);
   if (asset.status !== 404) {
+    if (path.startsWith(BASEMAP_PATH_PREFIX)) {
+      const cached = new Response(asset.body, asset);
+      cached.headers.set('Cache-Control', BASEMAP_CACHE_CONTROL);
+      return cached;
+    }
     return asset;
   }
 

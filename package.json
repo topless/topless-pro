@@ -7,8 +7,11 @@
     "node": "^22.13.0 || >=24.0.0"
   },
   "scripts": {
+    "predev": "npm run -s basemap",
     "dev": "vite",
+    "prebuild": "npm run -s basemap",
     "build": "tsc -b && vite build",
+    "basemap": "node scripts/build-basemap.mjs",
     "check": "npm run data:validate && tsc -b && wrangler types worker-configuration.d.ts --include-runtime=false --check",
     "test": "npm run test:scripts && npm run test:ui && npm run test:worker",
     "test:scripts": "vitest run --config vitest.scripts.config.ts",
@@ -53,6 +56,7 @@
     "typescript": "7.0.2",
     "vite": "^8.2.2",
     "vitest": "^4.1.11",
+    "world-atlas": "^2.0.2",
     "wrangler": "^4.125.0"
   }
 }
