@@ -52,6 +52,7 @@ describe('BeachPage', () => {
       'https://www.google.com/maps/search/?api=1&query=35,25',
     );
     expect(screen.getByRole('link', { name: /Apple Maps/ })).toHaveAttribute('href', 'https://maps.apple.com/?ll=35,25&q=Example%20Beach');
+    expect(screen.getByRole('link', { name: 'Show on the site map' })).toHaveAttribute('href', '/map?beach=example-beach');
     expect(screen.getByRole('link', { name: /Every change, on GitHub/ })).toHaveAttribute(
       'href',
       'https://github.com/topless/topless-pro/commits/main/data/gr/crete/beaches.json',

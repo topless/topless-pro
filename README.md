@@ -25,6 +25,9 @@ level. Display labels and their one-line definitions live in `src/lib/labels.ts`
 - Worker-injected page metadata: per-route titles, descriptions, canonical URLs,
   OpenGraph tags, and schema.org `Beach` JSON-LD, plus honest 404s with `noindex`
   for unknown paths and unpublished beaches
+- A map of every published listing at `/map`, drawn in the browser from Natural Earth
+  coastlines that this site serves itself (no map provider, no third-party request), with
+  clustering, a dress-code filter and a shareable view in the address
 - Security headers on every response (HSTS, nosniff, frame denial, no-referrer,
   restrictive Permissions-Policy) and a strict CSP outside local development
 - Vitest tests for the editorial scripts (Node) and the UI (jsdom), plus Worker/D1 integration tests running in `workerd`
@@ -37,6 +40,8 @@ The Worker exposes:
 - `GET /api/beaches/:slug`
 - `POST /api/corrections`
 - `GET /robots.txt` and `GET /sitemap.xml` (generated from published listings)
+- `GET /basemap/v1/…` — the generated coastline files, served as static assets with a
+  30-day cache lifetime
 
 ## Requirements
 
@@ -76,6 +81,17 @@ npm run db:clear-demo:local
 ```
 
 This cleanup command always targets local D1 state and is not a production migration.
+
+## The map's coastlines
+
+`public/basemap/v1/` is generated, not committed. `npm run basemap` (run automatically before
+`dev` and `build`, and a no-op once the output matches) turns the Natural Earth land polygons
+shipped in the `world-atlas` package into three layers on the unit-square Mercator plane: a
+world outline (1:110m), a country-level layer (1:50m) and 1:10m coastlines cut into
+four-degree tiles wherever a coastline runs. The wire format is in `shared/basemap.mjs`; the
+cutting in `scripts/lib/basemap.mjs`. Beach positions are only good to about a kilometre and
+the 1:10m data to a few hundred metres, so the map stops at zoom 11; the beach page's
+"open in" links are the way to a street-level map.
 
 ## Research beach candidates
 

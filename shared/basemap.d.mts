@@ -1,0 +1,10 @@
+export const MAX_LATITUDE: number;
+export const QUANTUM: number;
+export const TILE_DEGREES: number;
+export function project(longitude: number, latitude: number): [number, number];
+export function unproject(u: number, v: number): [number, number];
+export function encodeRing(ring: ReadonlyArray<readonly [number, number]>): number[] | null;
+export function decodeRing(encoded: ArrayLike<number>): Float64Array;
+export function tileIndex(longitude: number, latitude: number): [number, number];
+export function tileId(column: number, row: number): string;
+export function tileBounds(column: number, row: number): [number, number, number, number];

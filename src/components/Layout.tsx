@@ -21,12 +21,13 @@ export function Layout({ children }: { children: ReactNode }) {
 
   // Forward navigation (a tap on a row) opens the new page at the top with
   // focus at the start of the content. Back/Forward are left to the per-entry
-  // restore. Comparing history keys, not counting renders, survives
+  // restore, and an in-place replace (the map recording its view) is not a
+  // page change at all. Comparing history keys, not counting renders, survives
   // StrictMode's effect re-run.
   useEffect(() => {
     if (previousKey.current === location.key) return;
     previousKey.current = location.key;
-    if (navigationType === 'POP') return;
+    if (navigationType !== 'PUSH') return;
     window.scrollTo(0, 0);
     mainRef.current?.focus({ preventScroll: true });
   }, [location.key, navigationType]);
@@ -38,7 +39,10 @@ export function Layout({ children }: { children: ReactNode }) {
           <span aria-hidden="true">topless<span className="brand-tld">.pro</span></span>
           <small>Beach dress-code reference</small>
         </Link>
-        <Link className="header-link" to="/about">About</Link>
+        <nav className="header-links" aria-label="Site">
+          <Link className="header-link" to="/map">Map</Link>
+          <Link className="header-link" to="/about">About</Link>
+        </nav>
       </header>
       <main ref={mainRef} tabIndex={-1}>{children}</main>
       <footer>

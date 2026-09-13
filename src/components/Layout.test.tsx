@@ -9,6 +9,7 @@ function Page({ name }: { name: string }) {
     <>
       <h1>{name}</h1>
       <button onClick={() => navigate('/other')}>Go forward</button>
+      <button onClick={() => navigate('?v=1', { replace: true })}>Replace in place</button>
       <button onClick={() => navigate(-1)}>Go back</button>
     </>
   );
@@ -40,6 +41,13 @@ describe('Layout navigation', () => {
 
   it('does not reset scroll or focus on first render', () => {
     renderApp();
+    expect(scrollTo).not.toHaveBeenCalled();
+    expect(document.activeElement).toBe(document.body);
+  });
+
+  it('leaves scroll and focus alone when the page rewrites its own address', () => {
+    renderApp();
+    fireEvent.click(screen.getByRole('button', { name: 'Replace in place' }));
     expect(scrollTo).not.toHaveBeenCalled();
     expect(document.activeElement).toBe(document.body);
   });

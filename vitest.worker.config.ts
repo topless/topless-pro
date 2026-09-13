@@ -23,7 +23,8 @@ export default defineConfig({
             // for any method; existing assets reject non-GET/HEAD with 405.
             const url = new URL(request.url);
             const isShell = url.pathname === '/' || url.pathname === '/index.html';
-            if (!isShell && !url.pathname.endsWith('.svg')) {
+            const isBasemap = url.pathname.startsWith('/basemap/') && url.pathname.endsWith('.json');
+            if (!isShell && !isBasemap && !url.pathname.endsWith('.svg')) {
               return new Response('Not Found', {
                 status: 404,
                 headers: { 'content-type': 'text/plain; charset=utf-8' },
@@ -37,6 +38,11 @@ export default defineConfig({
               // tests can assert the Worker strips it from transformed pages.
               return new Response(shellHtml, {
                 headers: { 'content-type': 'text/html; charset=utf-8', etag: '"test-shell-etag"' },
+              });
+            }
+            if (isBasemap) {
+              return new Response('{"rings":[],"tiles":[]}', {
+                headers: { 'content-type': 'application/json', etag: '"test-basemap-etag"' },
               });
             }
             return new Response('<svg xmlns="http://www.w3.org/2000/svg"/>', {

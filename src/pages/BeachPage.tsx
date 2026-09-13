@@ -138,6 +138,7 @@ export function BeachPage() {
               ))}
             </ul>
             <small>{beach.latitude}, {beach.longitude} · opens in another app or site</small>
+            <Link className="map-link" to={`/map?beach=${beach.slug}`}>Show on the site map</Link>
           </dd>
         </div>
         {beach.facilities.length > 0 && (
