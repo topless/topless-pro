@@ -19,8 +19,23 @@ jobs:
           cache: npm
       - run: npm ci
       # Gate only shipped dependencies; dev-toolchain advisories arrive via
-      # Dependabot instead of freezing unrelated PRs.
-      - run: npm audit --omit=dev --audit-level=high
+      # Dependabot instead of freezing unrelated PRs. npm exits 1 both for a
+      # finding and for a registry outage, and only the finding is a reason to
+      # block a PR: an outage becomes a warning on the run instead, with
+      # Dependabot's security updates covering the gap. npm has already retried
+      # internally by then, so no extra retry loop. If npm ever renames the
+      # outage message the step falls back to failing, never to passing.
+      - name: Audit shipped dependencies
+        shell: bash
+        run: |
+          if npm audit --omit=dev --audit-level=high 2>&1 | tee "$RUNNER_TEMP/npm-audit.log"; then
+            exit 0
+          fi
+          if grep -q 'audit endpoint returned an error' "$RUNNER_TEMP/npm-audit.log"; then
+            echo '::warning title=npm audit skipped::The registry audit endpoint failed, so shipped dependencies were not audited on this run.'
+            exit 0
+          fi
+          exit 1
       - run: npm run check
       - run: npm test
       - run: npm run build
